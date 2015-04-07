@@ -7,54 +7,34 @@
 float Quaternion::M_Radius=.8 ;
 
 // Constructors
-Quaternion::Quaternion(void) {
-	M_X_Component=0 ;
-	M_Y_Component=0 ;
-	M_Z_Component=0 ;
-	M_Phi=1 ;
+Quaternion::Quaternion(void) : Vector(0, 0, 0), _phi(1) {
 }
 
-Quaternion::Quaternion(float X_Component, float Y_Component, float Z_Component, float Phi) {
-	M_X_Component=X_Component ;
-	M_Y_Component=Y_Component ;
-	M_Z_Component=Z_Component ;
-	M_Phi=Phi ;
+Quaternion::Quaternion(float X_Component, float Y_Component, float Z_Component, float Phi) :
+	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {
 }
 
+/*
 Quaternion &Quaternion::operator = (const Vector &vector) {
-	M_X_Component=vector[1] ;
-	M_Y_Component=vector[2] ;
-	M_Z_Component=vector[3] ;
+	_self = vector._self;
 	return *this ;
 }
-
-Quaternion &Quaternion::operator = (const Quaternion &quaternion) {
-	M_X_Component=quaternion[1] ;
-	M_Y_Component=quaternion[2] ;
-	M_Z_Component=quaternion[3] ;
-	M_Phi=quaternion[4] ;
-	return *this ;
-}
-
-// Destructor
-Quaternion::~Quaternion(void) {
-}
+*/
 
 // Facilitators
 void Quaternion::Normalize(void) {
-	float Scalar=M_X_Component*M_X_Component + M_Y_Component*M_Y_Component +
-		M_Z_Component*M_Z_Component + M_Phi*M_Phi ;
+	float Scalar=_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2] + _phi*_phi ;
 	if(Scalar==0)
 		Scalar=1.0 ;
 	Scale(1/Scalar) ;
-	M_Phi/=Scalar ;
+	_phi/=Scalar ;
 }
 
 void Quaternion::Trackball(float Old_X_Coord, float Old_Y_Coord,
 						   float New_X_Coord, float New_Y_Coord) {
 	if(Old_X_Coord==New_X_Coord && Old_Y_Coord==New_Y_Coord) {
         Zero() ;
-        M_Phi=1 ;
+        _phi=1 ;
         return ;
 	}
 
@@ -79,23 +59,23 @@ void Quaternion::Build(Vector Axis, float Phi) {
 	Axis.Normalize() ;
 	*this=Axis ;
 	Scale((float)sin(Phi/2) ) ;
-	M_Phi=(float)cos(Phi/2) ;
+	_phi=(float)cos(Phi/2) ;
 }
 
 void Quaternion::Build_Rotation_Matrix(float Matrix[4][4]) {
-	Matrix[0][0]=1-2*(M_Y_Component*M_Y_Component + M_Z_Component*M_Z_Component) ;
-	Matrix[0][1]=2*(M_X_Component*M_Y_Component - M_Z_Component*M_Phi) ;
-	Matrix[0][2]=2*(M_Z_Component*M_X_Component + M_Y_Component*M_Phi) ;
+	Matrix[0][0]=1-2*(_self[1]*_self[1] + _self[2]*_self[2]) ;
+	Matrix[0][1]=2*(_self[0]*_self[1] - _self[2]*_phi) ;
+	Matrix[0][2]=2*(_self[2]*_self[0] + _self[1]*_phi) ;
 	Matrix[0][3]=0 ;
 
-	Matrix[1][0]=2*(M_X_Component*M_Y_Component + M_Z_Component*M_Phi) ;
-	Matrix[1][1]=1-2*(M_Z_Component*M_Z_Component + M_X_Component*M_X_Component) ;
-	Matrix[1][2]=2*(M_Y_Component*M_Z_Component - M_X_Component*M_Phi) ;
+	Matrix[1][0]=2*(_self[0]*_self[1] + _self[2]*_phi) ;
+	Matrix[1][1]=1-2*(_self[2]*_self[2] + _self[0]*_self[0]) ;
+	Matrix[1][2]=2*(_self[1]*_self[2] - _self[0]*_phi) ;
 	Matrix[1][3]=0 ;
 
-	Matrix[2][0]=2*(M_Z_Component*M_X_Component - M_Y_Component*M_Phi) ;
-	Matrix[2][1]=2*(M_Y_Component*M_Z_Component + M_X_Component*M_Phi) ;
-	Matrix[2][2]=1-2*(M_Y_Component*M_Y_Component + M_X_Component*M_X_Component) ;
+	Matrix[2][0]=2*(_self[2]*_self[0] - _self[1]*_phi) ;
+	Matrix[2][1]=2*(_self[1]*_self[2] + _self[0]*_phi) ;
+	Matrix[2][2]=1-2*(_self[1]*_self[1] + _self[0]*_self[0]) ;
 	Matrix[2][3]=0 ;
 
 	Matrix[3][0]=0 ;
@@ -106,15 +86,15 @@ void Quaternion::Build_Rotation_Matrix(float Matrix[4][4]) {
 
 Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
 	Quaternion Temp ;
-	Temp[1]=M_Y_Component*quaternion[3] - M_Z_Component*quaternion[2] ;
-	Temp[2]=M_Z_Component*quaternion[1] - M_X_Component*quaternion[3] ;
-	Temp[3]=M_X_Component*quaternion[2] - M_Y_Component*quaternion[1] ;
+	Temp[1]=_self[1]*quaternion[3] - _self[2]*quaternion[2] ;
+	Temp[2]=_self[2]*quaternion[1] - _self[0]*quaternion[3] ;
+	Temp[3]=_self[0]*quaternion[2] - _self[1]*quaternion[1] ;
 	return Temp ;
 }
 
 float Quaternion::operator | (const Quaternion &quaternion) {
-	return M_X_Component*quaternion[1] + M_Y_Component*quaternion[2] +
-		M_Z_Component*quaternion[3] ;
+	return _self[0]*quaternion[1] + _self[1]*quaternion[2] +
+		_self[2]*quaternion[3] ;
 }
 
 
@@ -125,12 +105,12 @@ Quaternion Quaternion::operator + (const Quaternion &quaternion) {
 	Temp1.Scale(quaternion[4]) ;
 
 	Temp2=quaternion ;
-	Temp2.Scale(M_Phi) ;
+	Temp2.Scale(_phi) ;
 
 	Temp3=quaternion * *this ;
-	Returner=(Vector)Temp1+(Vector)Temp2+(Vector)Temp3 ;
+	Returner = (Vector)Temp1 + (Vector)Temp2 + (Vector)Temp3 ;
 
-	Returner[4]=M_Phi*quaternion[4] - (*this|quaternion) ;
+	Returner[4]=_phi*quaternion[4] - (*this|quaternion) ;
 
 	Returner.Normalize() ;
 
@@ -142,16 +122,16 @@ Quaternion Quaternion::operator + (const Quaternion &quaternion) {
 float Quaternion::operator [] (int Index) const {
 	switch(Index) {
 	case 1:
-		return M_X_Component ;
+		return _self[0] ;
 		break ;
 	case 2:
-		return M_Y_Component ;
+		return _self[1] ;
 		break ;
 	case 3:
-		return M_Z_Component ;
+		return _self[2] ;
 		break ;
 	case 4:
-		return M_Phi ;
+		return _phi ;
 		break ;
 	default:
 		throw std::out_of_range("Quaternion");
@@ -162,16 +142,16 @@ float Quaternion::operator [] (int Index) const {
 float &Quaternion::operator [] (int Index) {
 	switch(Index) {
 	case 1:
-		return M_X_Component ;
+		return _self[0] ;
 		break ;
 	case 2:
-		return M_Y_Component ;
+		return _self[1] ;
 		break ;
 	case 3:
-		return M_Z_Component ;
+		return _self[2] ;
 		break ;
 	case 4:
-		return M_Phi ;
+		return _phi ;
 		break ;
 	default:
 		throw std::out_of_range("&Quaternion");

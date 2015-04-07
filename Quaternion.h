@@ -21,10 +21,6 @@ public:
 	Quaternion(void) ;
 	Quaternion(float X_Component, float Y_Component, float Z_Component, float Phi) ;
 	Quaternion &operator = (const Vector &vector) ;
-	Quaternion &operator = (const Quaternion &quaternion) ;
-
-	// Destructor
-	~Quaternion(void) ;
 
 	// Facilitators
 	void Normalize(void) ;
@@ -47,7 +43,7 @@ public:
 
 protected:
 	// Member Variables
-	float M_Phi ;
+	float _phi ;
 	//float M_Radius ;
 
 private:
