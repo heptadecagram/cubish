@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "Vector.h"
 
 // Constructors
@@ -86,8 +88,7 @@ float Vector::operator [] (int Index) const {
 		return M_Z_Component ;
 		break ;
 	default:
-		Die("Improper Vector Index: %d", Index) ;
-		break ;
+		throw std::out_of_range("Vector");
 	}
 }
 
@@ -122,7 +123,6 @@ float &Vector::operator [] (int Index) {
 		return M_Z_Component ;
 		break ;
 	default:
-		Die("Improper &Vector Index: %d", Index) ;
-		break ;
+		throw std::out_of_range("&Vector");
 	}
 }
