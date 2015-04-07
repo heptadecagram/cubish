@@ -10,16 +10,11 @@
 #ifndef LIAM_COLOR
 #define LIAM_COLOR
 
-#include <GLUT/glut.h>
-
 class Color {
 public:
 	// Constructors
 	Color(void) ;
 	Color(float Red, float Green, float Blue) ;
-
-	// Destructor
-	~Color(void) ;
 
 	// Facilitators
 	void Change_To(void) ;

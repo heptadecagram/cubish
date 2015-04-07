@@ -1,4 +1,6 @@
 
+#include <GLUT/glut.h>
+
 #include "Color.h"
 
 // Constructors
@@ -12,11 +14,6 @@ Color::Color(float Red, float Green, float Blue) {
 	M_Red=Red ;
 	M_Green=Green ;
 	M_Blue=Blue ;
-}
-
-
-// Destructor
-Color::~Color(void) {
 }
 
 
