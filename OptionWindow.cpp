@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "OptionWindow.h"
 
 // Defined in Output.cpp
@@ -142,14 +144,14 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		else if(Option_Save) {
 			FILE *Save_File=fopen("./CubeSave.1", "w") ;
 			if(Save_File==NULL)
-				Die("Could not open savefile for writing") ;
+				throw std::invalid_argument("Could not open savefile for writing") ;
 			Current_Cube->Save(Option_Color_List, Save_File) ;
 			fclose(Save_File) ;
 		}
 		else if(Option_Load) {
 			FILE *Save_File=fopen("./CubeSave.1", "r") ;
 			if(Save_File==NULL)
-				Die("Could not open savefile for reading") ;
+				throw std::invalid_argument("Could not open savefile for reading") ;
 			Current_Cube->Load(Option_Color_List, Save_File) ;
 			fclose(Save_File) ;
 

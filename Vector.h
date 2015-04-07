@@ -8,8 +8,6 @@
 
 #include <math.h>
 
-#include "Error.h"
-
 class Vector {
 public:
 	// Constructors

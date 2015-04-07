@@ -1,16 +1,14 @@
 
+#include <stdexcept>
+
 #include "Face.h"
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
 Face::Face(void) {
 	M_Tile=new Tile*[9] ;
-	if(M_Tile==NULL)
-		Die("Unable to allocate memory for new Face()") ;
 	for(int n=0; n<9; n++) {
 		M_Tile[n]=new Tile ;
-		if(M_Tile[n]==NULL)
-			Die("Unable to allocate memory for newFace([%d])", n) ;
 	}
 	M_Height=3 ;
 	M_Width=3 ;
@@ -18,12 +16,8 @@ Face::Face(void) {
 
 Face::Face(int Width, int Height, Color *color) {
 	M_Tile=new Tile*[Height*Width] ;
-	if(M_Tile==NULL)
-		Die("Unable to allocate memory for new Face(%d, %d)", Width, Height) ;
 	for(int n=0; n<Height*Width; n++) {
 		M_Tile[n]=new Tile ;
-		if(M_Tile[n]==NULL)
-			Die("Unable to allocate memory for new Face([%d])", n) ;
 		M_Tile[n]->Set_Color(color) ;
 	}
 	M_Height=Height ;
@@ -33,14 +27,10 @@ Face::Face(int Width, int Height, Color *color) {
 Face::Face(const Face &face) {
 	M_Height=face.Get_Height() ;
 	M_Width=face.Get_Width() ;
-	if(M_Tile==NULL)
-		Die("Unable to allocate memory for new &Face(%d, %d)", M_Width, M_Height) ;
 	M_Tile=new Tile*[M_Width*M_Height] ;
 	for(int n=0; n<M_Width; n++)
 		for(int nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile ;
-			if(M_Tile[n+nn*M_Width]==NULL)
-				Die("Unable to allocate memory for new &Face([%d])", n+nn*M_Width) ;
 			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() ) ;
 		}
 }
@@ -66,11 +56,9 @@ int Face::Get_Width(void) const {
 
 Tile *Face::Get_Tile(int Column, int Row) const {
 	if(Row<1 || Row>M_Height)
-		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
-				Column, Row, M_Width, M_Height) ;
+		throw std::out_of_range("Get_Tile");
 	if(Column<1 || Column>M_Width)
-		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
-				Column, Row, M_Width, M_Height) ;
+		throw std::out_of_range("Get_Tile");
 	return M_Tile[M_Width*(Row-1)+Column-1] ;
 }
 
@@ -108,8 +96,6 @@ void Face::Rotate_CCW() {
 void Face::Rotate_CW(void) {
 	// Store the old values in a temporary array
 	Tile **Temp=new Tile*[M_Height*M_Width] ;
-	if(Temp==NULL)
-		Die("Unable to allocate temporary Rotation Face") ;
 
 	// Copy the old values
 	for(int n=0; n<M_Height*M_Width; n++)
@@ -140,8 +126,6 @@ void Face::Spin_CW(void) {
 
 	// Create a temporary array of Tile to store the old Face
 	Tile **Temp=new Tile*[M_Height*M_Width] ;
-	if(Temp==NULL)
-		Die("Unable to allocate temporary Spin Face") ;
 
 	// Copy the old Face
 	for(int n=0; n<M_Height*M_Width; n++)
@@ -152,7 +136,7 @@ void Face::Spin_CW(void) {
 	M_Height=M_Width ;
 	M_Width=Temp_Size ;
 
-	for(n=0; n<M_Width; n++)
+	for(int n=0; n<M_Width; n++)
 		for(int nn=0; nn<M_Height; nn++)
 			// Use a bijection to map the coordinates
 			M_Tile[n+nn*M_Width]=Temp[nn+M_Height*(M_Width-1-n)] ;
@@ -171,11 +155,9 @@ void Face::Spin_CCW(void) {
 
 void Face::Set_Tile(int Column, int Row, Tile *tile) {
 	if(Row<1 || Row>M_Height)
-		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
-				Column, Row, M_Width, M_Height) ;
+		throw std::out_of_range("Set_Tile");
 	if(Column<1 || Column>M_Width)
-		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
-				Column, Row, M_Width, M_Height) ;
+		throw std::out_of_range("Set_Tile");
 
 	M_Tile[M_Width*(Row-1)+Column-1]=tile ;
 }
@@ -187,14 +169,10 @@ Face &Face::operator =(const Face &face) {
 	delete [] M_Tile ;
 	// Make a new array
 	M_Tile=new Tile*[M_Width*M_Height] ;
-	if(M_Tile==NULL)
-		Die("Unable to allocate temporary Equality Face") ;
 
 	for(int n=0; n<M_Width; n++)
 		for(int nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile ;
-			if(M_Tile[n+nn*M_Width]==NULL)
-				Die("Unable to allocate Tile for Face([%d])", M_Tile[n+nn*M_Width]) ;
 			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() ) ;
 		}
 	return *this ;

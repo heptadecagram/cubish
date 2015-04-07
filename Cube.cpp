@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "Cube.h"
 
 // Constructors
@@ -12,9 +14,6 @@ Cube::Cube(int Width, int Height, int Depth,
 	M_Sides[4]=new Face(Width, Depth, Side_5_Color) ;
 	M_Sides[5]=new Face(Width, Height, Side_6_Color) ;
 
-	for(int n=0; n<6; n++)
-		if(M_Sides[n]==NULL)
-			Die("Unable to allocate memory for Cube(%d, %d, %d) Faces", Width, Height, Depth) ;
 }
 
 // Destructor
@@ -547,7 +546,7 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 	int Depth=M_Sides[1]->Get_Width() ;
 
 	if(Offset>Depth || Offset<1)
-		Die("Cube_Rotate(%d): Depth out of Range", Offset) ;
+		throw std::out_of_range("Rotate_CW");
 
 	// Do not rotate on a single-thickness axis
 	if(Depth==1) {
@@ -578,7 +577,7 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 			M_Sides[2]->Set_Tile(Width-n, Depth-Offset+1, Temp_Tile) ;
 		}
 
-		for(n=0; n<Height; n++) {
+		for(int n=0; n<Height; n++) {
 			// Exchange the other side
 			Temp_Tile=M_Sides[3]->Get_Tile(Offset, n+1) ;
 			M_Sides[3]->Set_Tile(Offset, n+1, M_Sides[1]->Get_Tile(Depth-Offset+1, Height-n) ) ;
@@ -634,8 +633,7 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 		Returner=Rotate_CW(3, Row) ;
 		break ;
 	default:
-		Die("Cube_Twist(%d, %d, %d, %d)", Side, Column, Row, direction) ;
-		break ;
+		throw std::out_of_range("Twist");
 	}
 
 	// Leave the Cube the way we found it
@@ -653,7 +651,7 @@ bool Cube::Twist(Vector Position, Direction direction) {
 // This function returns the address of a side.  Useful for inspecting and mutating.
 Face *Cube::Get_Face(int Side) const {
 	if(Side>6 || Side<1)
-		Die("Get_Face(%d) out of range of (1, 6)", Side) ;
+		throw std::out_of_range("Get_Face");
 	return M_Sides[Side-1] ;
 }
 
@@ -755,7 +753,7 @@ int Cube::Set_Front(int Side) {
 		Returner=6 ;
 		break ;
 	default:
-		Die("Cube_Set_Front(%d) not within 1, 6", Side) ;
+		throw std::out_of_range("SetFront");
 	}
 	return Returner ;
 }

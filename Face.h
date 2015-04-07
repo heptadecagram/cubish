@@ -13,7 +13,6 @@
 #ifndef LIAM_FACE
 #define LIAM_FACE
 
-#include "Error.h"
 #include "Color.h"
 #include "Tile.h"
 
