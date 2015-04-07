@@ -470,8 +470,8 @@ void Cube::Save(Color **Color_List, FILE *File) {
 	for(int n1=0; n1<6; n1++)
 		for(int n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
 			for(int n3=1; n3<=M_Sides[n1]->Get_Width(); n3++)
-				for(int n4=0; n4<6; n4++)
-					if(M_Sides[n1]->Get_Tile(n3, n2)->Get_Color()==Color_List[n4])
+				for(char n4=0; n4<6; n4++)
+					if(M_Sides[n1]->Get_Tile(n3, n2)->Get_Color()==Color_List[(int)n4])
 						fprintf(File, "%c", n4) ;
 }
 
@@ -480,13 +480,13 @@ void Cube::Save(Color **Color_List, FILE *File) {
 void Cube::Load(Color **Color_List, FILE *File) {
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
-		int Red=0, Green=0, Blue=0 ;
+		char Red=0, Green=0, Blue=0 ;
 		fscanf(File, "%c%c%c", &Red, &Green, &Blue) ;
 		Color_List[n]->Set(Red/255.0, Green/255.0, Blue/255.0) ;
 	}
 
 	// The next three bytes are dimensions
-	int Width=1, Height=1, Depth=1 ;
+	char Width=1, Height=1, Depth=1 ;
 	fscanf(File, "%c%c%c", &Width, &Height, &Depth) ;
 
 	// Make new faces.  Memory is already allocated, so just point things
@@ -504,14 +504,14 @@ void Cube::Load(Color **Color_List, FILE *File) {
 	*M_Sides[4]=Temp_Face_5 ;
 	*M_Sides[5]=Temp_Face_6 ;
 
-	int Color_Index=0 ;
+	char Color_Index=0 ;
 	// Now, obtain the Color_List information stored in the file and put it on the
 	// Cube.
 	for(int n1=0; n1<6; n1++)
 		for(int n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
 			for(int n3=1; n3<=M_Sides[n1]->Get_Width(); n3++) {
 				fscanf(File, "%c", &Color_Index) ;
-				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[Color_Index]) ;
+				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[(int)Color_Index]) ;
 			}
 
 }

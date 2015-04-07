@@ -101,10 +101,10 @@ void Display(void) {
 	static int First_View=1 ;
 	if(First_View<50) {
 		time_t Begin, End ;
-		struct _timeb Begin_Milli, End_Milli ;
+		struct timeb Begin_Milli, End_Milli ;
 
 		Begin=time(NULL) ;
-		_ftime(&Begin_Milli) ;
+		ftime(&Begin_Milli) ;
 
 		// Draw things, but don't display them
 		glBegin(GL_QUADS) ;
@@ -117,7 +117,7 @@ void Display(void) {
 						glVertex3i(n1+1, n2, n3+1) ;
 					}
 		glEnd() ;
-		_ftime(&End_Milli) ;
+		ftime(&End_Milli) ;
 		End=time(NULL) ;
 
 		int Current_Render_Time ;
@@ -127,7 +127,8 @@ void Display(void) {
 			Current_Render_Time=Begin_Milli.millitm-End_Milli.millitm ;
 		static float Average_Render_Time=0 ;
 
-		Average_Render_Time=(First_View*Average_Render_Time + Current_Render_Time)/++First_View ;
+		Average_Render_Time=(First_View*Average_Render_Time + Current_Render_Time)/First_View ;
+		++First_View;
 
 		glutPostRedisplay() ;
 		if(First_View==50) {
@@ -682,6 +683,9 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 		Returner[2]=Origin[3] ;
 		Origin[1]=Origin[1]+6 ;
 		break ;
+	default:
+		break;
+		// What should NONE do?
 	}
 
 	switch(int(Origin[1]) ) {

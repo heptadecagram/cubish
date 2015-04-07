@@ -14,12 +14,12 @@ Quaternion::Quaternion(float X_Component, float Y_Component, float Z_Component, 
 	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {
 }
 
-/*
 Quaternion &Quaternion::operator = (const Vector &vector) {
-	_self = vector._self;
+	_self[0] = vector[1];
+	_self[1] = vector[2];
+	_self[2] = vector[3];
 	return *this ;
 }
-*/
 
 // Facilitators
 void Quaternion::Normalize(void) {
