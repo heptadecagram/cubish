@@ -13,18 +13,13 @@ class Vector {
 public:
 	// Constructors
 	Vector(void) ;
-	Vector(Vector &vector) ;
 	Vector(float X_Component, float Y_Component, float Z_Component) ;
-	Vector &operator = (const Vector &vector) ;
-
-	// Destructor
-	~Vector(void) ;
 
 	// Facilitators
-	Vector operator + (Vector &vector) ;
-	Vector operator - (Vector &vector) ;
-	Vector operator * (Vector &vector) ;
-	float operator | (Vector &vector) ;
+	Vector operator + (const Vector &vector) const;
+	Vector operator - (const Vector &vector) const;
+	Vector operator * (const Vector &vector) const;
+	float operator | (const Vector &vector) const;
 
 
 	// Inspectors
