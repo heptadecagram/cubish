@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "Quaternion.h"
 
 // This static variable keeps track of how far away from a viewed object we are
@@ -152,8 +154,7 @@ float Quaternion::operator [] (int Index) const {
 		return M_Phi ;
 		break ;
 	default:
-		Die("Improper Quaternion Index: %d", Index) ;
-		break ;
+		throw std::out_of_range("Quaternion");
 	}
 }
 
@@ -173,8 +174,7 @@ float &Quaternion::operator [] (int Index) {
 		return M_Phi ;
 		break ;
 	default:
-		Die("Improper &Quaternion Index: %d", Index) ;
-		break ;
+		throw std::out_of_range("&Quaternion");
 	}
 }
 
