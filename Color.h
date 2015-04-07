@@ -10,7 +10,7 @@
 #ifndef LIAM_COLOR
 #define LIAM_COLOR
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 class Color {
 public:

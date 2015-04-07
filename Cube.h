@@ -38,7 +38,7 @@
 #include <time.h>
 #include <stdio.h>
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "Face.h"
 #include "Vector.h"

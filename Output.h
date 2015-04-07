@@ -2,11 +2,13 @@
 #ifndef LIAM_OUTPUT
 #define LIAM_OUTPUT
 
-#include <GL/glut.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include <sys/timeb.h>
+
+#include <GLUT/glut.h>
 
 #include "Color.h"
 #include "Cube.h"
