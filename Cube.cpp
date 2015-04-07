@@ -1,13 +1,9 @@
-// File: Cube.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.05
 
 #include "Cube.h"
 
 // Constructors
-Cube::Cube(int Width, int Height, int Depth, 
-		   Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color, 
+Cube::Cube(int Width, int Height, int Depth,
+		   Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
 		   Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color) {
 	M_Sides[0]=new Face(Width, Height, Side_1_Color) ;
 	M_Sides[1]=new Face(Depth, Height, Side_2_Color) ;
@@ -15,7 +11,7 @@ Cube::Cube(int Width, int Height, int Depth,
 	M_Sides[3]=new Face(Depth, Height, Side_4_Color) ;
 	M_Sides[4]=new Face(Width, Depth, Side_5_Color) ;
 	M_Sides[5]=new Face(Width, Height, Side_6_Color) ;
-	
+
 	for(int n=0; n<6; n++)
 		if(M_Sides[n]==NULL)
 			Die("Unable to allocate memory for Cube(%d, %d, %d) Faces", Width, Height, Depth) ;
@@ -244,7 +240,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			Temp_Slice_Length=M_Sides[0]->Get_Width() ;
 
 		for(int nn=1; nn<=Temp_Slice_Length; nn++) {
-			
+
 			switch(n) {
 			case 2:
 				X_Coord=M_Sides[1]->Get_Width()-Depth+1 ;
@@ -415,14 +411,14 @@ void Cube::View_Side(int Side) {
 	}
 }
 
-// This function reverses the effects of View_Side().  See that function for 
+// This function reverses the effects of View_Side().  See that function for
 // explanation.
 void Cube::Undo_View_Side(int Side) {
 	int Width, Height, Depth ;
 	Width=M_Sides[0]->Get_Width() ;
 	Height=M_Sides[0]->Get_Height() ;
 	Depth=M_Sides[1]->Get_Width() ;
-	
+
 	switch(Side) {
 	case 1:
 		glTranslatef((float)Width/2, (float)Height/2, -(float)Depth/2) ;
@@ -452,10 +448,10 @@ void Cube::Undo_View_Side(int Side) {
 	}
 }
 
-// This function saves a Cube to an open file pointer.  Pass the appropriate 
+// This function saves a Cube to an open file pointer.  Pass the appropriate
 // Color information in case of sides with the same color.
 void Cube::Save(Color **Color_List, FILE *File) {
-	// Iterate through the Color_List, turning the RGB values into bytes, 
+	// Iterate through the Color_List, turning the RGB values into bytes,
 	// and then put them in the file
 	for(int n=0; n<6; n++) {
 		int Red=255.0*Color_List[n]->Get_Red() ;
@@ -465,12 +461,12 @@ void Cube::Save(Color **Color_List, FILE *File) {
 	}
 
 	// Put the dimensions of the Cube into the file as bytes
-	fprintf(File, "%c%c%c", M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(), 
+	fprintf(File, "%c%c%c", M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(),
 			M_Sides[1]->Get_Width() ) ;
 
 	// These insanely-nested for() loops go through the entire Cube, comparing
 	// the addresses of the Colors on the Cube and Color_List.  Note that addresses
-	// must be compared and not values.  Then print out the byte value of its 
+	// must be compared and not values.  Then print out the byte value of its
 	// Color_List index.
 	for(int n1=0; n1<6; n1++)
 		for(int n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
@@ -518,13 +514,13 @@ void Cube::Load(Color **Color_List, FILE *File) {
 				fscanf(File, "%c", &Color_Index) ;
 				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[Color_Index]) ;
 			}
-				
+
 }
 
 
 // Mutators
 // This function randomly picks a point on the cube and a direction, then
-// calls Twist() based on those numbers.  It is possible to specify a number 
+// calls Twist() based on those numbers.  It is possible to specify a number
 // of times to twist, default is 100, standard for competition.
 void Cube::Randomize(int Twists) {
 	Direction Random_Direction ;
@@ -539,7 +535,7 @@ void Cube::Randomize(int Twists) {
 }
 
 // This is the big cube-modifying function.  Given a side and a distance down that
-// side, rotate that slice of Cubeness.  Returns true if it was possible to 
+// side, rotate that slice of Cubeness.  Returns true if it was possible to
 // rotate in that direction.
 bool Cube::Rotate_CW(int Side, int Offset) {
 	// Reorient the sides of the Cube so we only have to solve this problem once
@@ -644,7 +640,7 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 
 	// Leave the Cube the way we found it
 	Set_Front(Old_Front) ;
-	return Returner ;	
+	return Returner ;
 }
 
 // Just an alias for Twist()
@@ -685,7 +681,7 @@ int Cube::Random(int Max) {
 }
 
 // This lifesaving function modifies the entire Cube so that the Cube now treats
-// the passed Side as its new front.  This way, algorithms only have to be 
+// the passed Side as its new front.  This way, algorithms only have to be
 // written for one side of the Cube.  The function returns the location of where
 // the old side 1 is.  Always remember to set the Cube back to normal after your
 // algorithm.
@@ -694,7 +690,7 @@ int Cube::Set_Front(int Side) {
 	Face *Front_Face=M_Sides[0] ;
 	int Returner ;
 
-	// This is the core.  Notice that Spin_*() function must be called on 
+	// This is the core.  Notice that Spin_*() function must be called on
 	// some of the Face to preserve the orientation of the Face with regard
 	// to the standard Cube.
 	switch(Side) {

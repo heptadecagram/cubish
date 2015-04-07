@@ -1,35 +1,32 @@
-// File: Cube.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.07
+//
 // The Cube class is an array of six Face classes, aranged in the following order:
 //
-//	+---+
-//	|   |
-//	| 3 |
-//	|   |
+//     +---+
+//     |   |
+//     | 3 |
+//     |   |
 // +---+---+---+
 // |   |   |   |
 // | 2 | 1 | 4 |
 // |   |   |   |
 // +---+---+---+
-//	|   |
-//	| 5 |
-//	|   |
-//	+---+
-//	|   |
-//	| 6 |
-//	|   |
-//	+---+
+//     |   |
+//     | 5 |
+//     |   |
+//     +---+
+//     |   |
+//     | 6 |
+//     |   |
+//     +---+
 //
 // Internally, lower all Face indicies by one.  Calling Get_Side() requires the use
-// of natural numbers.  A Cube can be rotated by calling Rotate_CW() or Rotate_CCW() 
+// of natural numbers.  A Cube can be rotated by calling Rotate_CW() or Rotate_CCW()
 // with a side, to indicate the direction of a vector rotation, and an integer offset
-// which determines how deep the rotation is.  An offset of 1 rotates on that face, 
+// which determines how deep the rotation is.  An offset of 1 rotates on that face,
 // an offset of 2 rotates the ring of Tile one layer down.  The Twist() functions work
-// by calling the Rotate_*() functions.  Twist() requires the side and coordinates of 
-// that side, as well as a direction to twist in.  By passing the appropriate 
-// file pointers, a Cube can be saved or loaded to disk using the Save() and Load() 
+// by calling the Rotate_*() functions.  Twist() requires the side and coordinates of
+// that side, as well as a direction to twist in.  By passing the appropriate
+// file pointers, a Cube can be saved or loaded to disk using the Save() and Load()
 // functions.  Is_Solved() calls the Is_Solved() function for each individual Face.
 // The Make_*() functions generate OpenGL list identifiers for use in glCallList().
 // A Cube can be randomized using the Random() function.
@@ -53,7 +50,7 @@ class Cube {
 public:
 	// Constructors
 	Cube(int Width, int Height, int Depth,
-		 Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color, 
+		 Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
 		 Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color) ;
 
 	// Desctructor
@@ -69,7 +66,7 @@ public:
 
 	void Save(Color **Color_List, FILE *File) ;
 	void Load(Color **Color_List, FILE *File) ;
-	
+
 	// Mutators
 	void Randomize(int Twists=100) ;
 	bool Rotate_CW(int Side, int Offset=1) ;
@@ -85,7 +82,7 @@ private:
 	// Private Functions
 	int Random(int Max) ;
 	int Set_Front(int Side) ;
-	
+
 	// Member Variables
 	Face *M_Sides[6] ;
 } ;

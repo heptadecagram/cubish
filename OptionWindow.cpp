@@ -1,8 +1,3 @@
-// File: OptionWindow.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
-//
 
 #include "OptionWindow.h"
 
@@ -52,11 +47,11 @@ void New_Window(Color **Color_Array) {
 	// Define a viewing volume
 	glViewport(0, 0, Option_Window_Width, Option_Window_Height) ;
 	glMatrixMode(GL_PROJECTION) ;
-	gluOrtho2D(-Option_Window_Width/2.0, Option_Window_Width/2.0, 
+	gluOrtho2D(-Option_Window_Width/2.0, Option_Window_Width/2.0,
 			   -Option_Window_Height/2.0, Option_Window_Height/2.0) ;
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0) ;
 	glMatrixMode(GL_MODELVIEW) ;
-	
+
 	// Get everything ready to draw
 	Make_All_Option_Lists() ;
 
@@ -138,7 +133,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Color_Window(Option_Color_List[Side-1]) ;
 			Is_Color_Window_Open=true ;
 		}
-		else if(!Is_Dimension_Window_Open && 
+		else if(!Is_Dimension_Window_Open &&
 				(Option_Width || Option_Height || Option_Depth) ) {
 			int Dimension=Option_Width?1:Option_Height?2:3 ;
 			Dimension_Window(Dimension, Option_Color_List) ;
@@ -190,7 +185,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		Option_Width=true ;
 		Option_Color=false ;
 		Option_Line_List=Make_Option_Line_List() ;
-		glutPostRedisplay() ;	
+		glutPostRedisplay() ;
 	}
 	else if(X_Coord>2*X_Part && X_Coord<4*X_Part &&
 			Y_Coord>15*Y_Part && Y_Coord<25*Y_Part) {
@@ -198,7 +193,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		Option_Height=true ;
 		Option_Color=false ;
 		Option_Line_List=Make_Option_Line_List() ;
-		glutPostRedisplay() ;	
+		glutPostRedisplay() ;
 	}
 	else if(X_Coord>12*X_Part && X_Coord<14*X_Part &&
 			Y_Coord>25*Y_Part && Y_Coord<35*Y_Part) {
@@ -206,7 +201,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		Option_Depth=true ;
 		Option_Color=false ;
 		Option_Line_List=Make_Option_Line_List() ;
-		glutPostRedisplay() ;	
+		glutPostRedisplay() ;
 	}
 	else if(Option_Color || Option_Width || Option_Height || Option_Depth) {
 		glutSetCursor(GLUT_CURSOR_INHERIT) ;
@@ -218,8 +213,8 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		glutPostRedisplay() ;
 	}
 
-	if(X_Coord>X_Part && X_Coord<9*X_Part && 
-			Option_Window_Height-Y_Coord>Y_Part && 
+	if(X_Coord>X_Part && X_Coord<9*X_Part &&
+			Option_Window_Height-Y_Coord>Y_Part &&
 			Option_Window_Height-Y_Coord<9*Y_Part) {
 		Option_Exit=true ;
 		Option_Exit_List=Make_Option_Exit_List() ;
@@ -297,7 +292,7 @@ void Option_Reshape(int X_Size, int Y_Size) {
 
 	gluOrtho2D(-Option_Window_Width/2.0, Option_Window_Width/2.0,
 			-Option_Window_Height/2.0, Option_Window_Height/2.0) ;
-	
+
 	glViewport(0, 0, Option_Window_Width, Option_Window_Height) ;
 
 	glMatrixMode(GL_MODELVIEW) ;
@@ -584,7 +579,7 @@ int Make_Option_Line_List(void) {
 		glColor3f(1, 0, 0) ;
 	else
 		glColor3f(0, 0, 0) ;
-	
+
 	glBegin(GL_LINE_STRIP) ;
 		glVertex3f(-4*X_Part, 23*Y_Part, 0) ;
 		glVertex3f(-5*X_Part, 22*Y_Part, 0) ;

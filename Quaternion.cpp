@@ -1,7 +1,3 @@
-// File: Quaternion.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.03.21
 
 #include "Quaternion.h"
 
@@ -44,7 +40,7 @@ Quaternion::~Quaternion(void) {
 
 // Facilitators
 void Quaternion::Normalize(void) {
-	float Scalar=M_X_Component*M_X_Component + M_Y_Component*M_Y_Component + 
+	float Scalar=M_X_Component*M_X_Component + M_Y_Component*M_Y_Component +
 		M_Z_Component*M_Z_Component + M_Phi*M_Phi ;
 	if(Scalar==0)
 		Scalar=1.0 ;
@@ -52,14 +48,14 @@ void Quaternion::Normalize(void) {
 	M_Phi/=Scalar ;
 }
 
-void Quaternion::Trackball(float Old_X_Coord, float Old_Y_Coord, 
+void Quaternion::Trackball(float Old_X_Coord, float Old_Y_Coord,
 						   float New_X_Coord, float New_Y_Coord) {
 	if(Old_X_Coord==New_X_Coord && Old_Y_Coord==New_Y_Coord) {
         Zero() ;
         M_Phi=1 ;
         return ;
 	}
-	
+
 	Vector Old(Old_X_Coord, Old_Y_Coord, Sphere_Projection(Old_X_Coord, Old_Y_Coord) ) ;
 	Vector New(New_X_Coord, New_Y_Coord, Sphere_Projection(New_X_Coord, New_Y_Coord) ) ;
 
@@ -115,7 +111,7 @@ Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
 }
 
 float Quaternion::operator | (const Quaternion &quaternion) {
-	return M_X_Component*quaternion[1] + M_Y_Component*quaternion[2] + 
+	return M_X_Component*quaternion[1] + M_Y_Component*quaternion[2] +
 		M_Z_Component*quaternion[3] ;
 }
 
@@ -125,7 +121,7 @@ Quaternion Quaternion::operator + (const Quaternion &quaternion) {
 
 	Temp1=*this ;
 	Temp1.Scale(quaternion[4]) ;
-	
+
 	Temp2=quaternion ;
 	Temp2.Scale(M_Phi) ;
 

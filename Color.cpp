@@ -1,7 +1,3 @@
-// File: Color.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.02.07
 
 #include "Color.h"
 

@@ -1,10 +1,6 @@
-// File: OptionWindow.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.18
 //
-// Description: This file defines a window that provides user options to a 
-// Cube.  There are methods for changing color and size, randomizing and 
+// Description: This file defines a window that provides user options to a
+// Cube.  There are methods for changing color and size, randomizing and
 // solving, and saving and loading.
 
 #ifndef LIAM_OPTIONWINDOW

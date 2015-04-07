@@ -1,9 +1,5 @@
-// File: ColorPick.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
 //
-// Description: Creates a simple window that allows the user to pick a new 
+// Description: Creates a simple window that allows the user to pick a new
 // color, which is stored at the address of the color passed to Color_Window().
 
 #ifndef LIAM_COLORPICK

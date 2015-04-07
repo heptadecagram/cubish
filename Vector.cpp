@@ -1,7 +1,3 @@
-// File: Vector.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.03.19
 
 #include "Vector.h"
 

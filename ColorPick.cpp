@@ -1,7 +1,3 @@
-// File: ColorPick.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
 
 #include "ColorPick.h"
 
@@ -39,7 +35,7 @@ void Color_Window(Color *Old_Color) {
 	gluOrtho2D(0, Color_Window_Size, 0, Color_Window_Size) ;
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0) ;
 	glMatrixMode(GL_MODELVIEW) ;
-	
+
 	// A reasonable background color
 	glClearColor(.6, .6, .6, 0) ;
 }
@@ -82,7 +78,7 @@ void Color_Display(void) {
 				// If this is the old color, draw a white box
 				// around it to let the user know which one it
 				// is
-				if(int(Window_Color->Get_Red()*3)==n1 && 
+				if(int(Window_Color->Get_Red()*3)==n1 &&
 						int(Window_Color->Get_Green()*3)==n2 &&
 						int(Window_Color->Get_Blue()*3)==n3) {
 					glColor3f(.8, .8, .8) ;
@@ -164,8 +160,8 @@ void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		// If a user did not click in a quadrant, don't do anything
 		else
 			return ;
-		
-		// This block determines, by using the X_Coord, the green 
+
+		// This block determines, by using the X_Coord, the green
 		// content of the color clicked upon
 		if( (X_Coord>Part && X_Coord<4*Part) ||
 			(X_Coord>17*Part && X_Coord<20*Part) )
@@ -219,7 +215,7 @@ void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	}
 }
 
-// This function prevents users from resizing the window into sizes that are 
+// This function prevents users from resizing the window into sizes that are
 // unrelated to one another, creating distortion.
 void Color_Reshape(int X_Size, int Y_Size) {
 	// Find the smaller of the two sizes
@@ -227,7 +223,7 @@ void Color_Reshape(int X_Size, int Y_Size) {
 
 	// The smaller size defines the new edge of the window
 	Color_Window_Size=New_Size ;
-	
+
 	// Resize the window
 	glutReshapeWindow(Color_Window_Size, Color_Window_Size) ;
 	glMatrixMode(GL_PROJECTION) ;

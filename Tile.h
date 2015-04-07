@@ -1,11 +1,7 @@
-// File: Tile.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.02.12
 //
-// This file defines a Tile class which is a wrapper for a pointer to a Color.  A 
+// This file defines a Tile class which is a wrapper for a pointer to a Color.  A
 // Tile is simply for convenience of the programmer, and does not confer any speed
-// optimizations.  The address of the Color the Tile uses may be obtained with 
+// optimizations.  The address of the Color the Tile uses may be obtained with
 // Get_Color() and set with Set_Color().
 
 #ifndef LIAM_TILE

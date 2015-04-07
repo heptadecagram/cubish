@@ -1,7 +1,3 @@
-// File: Dimension.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
 //
 // This file defines the use for a OpenGL window that companions the Cube project
 // and allows for changes in size to the cube.  Dimension_Window() will create

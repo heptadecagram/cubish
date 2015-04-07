@@ -1,11 +1,3 @@
-// File: Main.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
-//
-// Description: This file contains the main() function for the program
-// _Liam's_Cubish_.  It creates a new Cube object and six Color objects,
-// stored in an array.
 
 #include <stdio.h>
 #include <string.h>
@@ -14,6 +6,9 @@
 #include "Cube.h"
 #include "Output.h"
 
+// Description: This file contains the main() function for the program
+// _Liam's_Cubish_.  It creates a new Cube object and six Color objects,
+// stored in an array.
 int main(int Argument_Count, char** Arguments) {
 
 	// Declare a default cube size

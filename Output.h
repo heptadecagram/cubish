@@ -1,7 +1,3 @@
-// File: Output.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
 
 #ifndef LIAM_OUTPUT
 #define LIAM_OUTPUT

@@ -1,7 +1,3 @@
-// File: Dimension.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.20
 
 #include "Dimension.h"
 
@@ -27,7 +23,7 @@ int Length_List ;
 // Window creation function
 void Dimension_Window(int Dimension, Color **Color_List) {
 	Dimension_Color_List=Color_List ;
-	// Figure out what dimension is being changed, and get ready to 
+	// Figure out what dimension is being changed, and get ready to
 	// use it when the Cube is resized
 	switch(Dimension) {
 	case 1:
@@ -46,11 +42,11 @@ void Dimension_Window(int Dimension, Color **Color_List) {
 		break ;
 	}
 	Current_Length=1 ;
-	
+
 	Dimension_Window_ID=glutCreateWindow("Size Picker") ;
 
 	Dimension_Window_Size=400 ;
-	
+
 	glutReshapeWindow(Dimension_Window_Size, Dimension_Window_Size/5.0) ;
 	glutPositionWindow(250, 300) ;
 
@@ -67,7 +63,7 @@ void Dimension_Window(int Dimension, Color **Color_List) {
 	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0) ;
 
 	glMatrixMode(GL_MODELVIEW) ;
-	
+
 	glClearColor(.6, .6, .6, 0) ;
 }
 
@@ -137,10 +133,10 @@ void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Depth=Current_Cube->Get_Face(2)->Get_Width() ;
 
 			// This next if-else-else block figures out what sides
-			// should be modified as the result of changing the 
-			// dimension chosen.  It looks nasty and bloats the 
-			// code, but it's fast, and doing it more modularly 
-			// would actually add more bloat rather than take it 
+			// should be modified as the result of changing the
+			// dimension chosen.  It looks nasty and bloats the
+			// code, but it's fast, and doing it more modularly
+			// would actually add more bloat rather than take it
 			// away.
 			if(Dimension_Side=='w') {
 				Face Temp_Face_1(Current_Length, Height, Dimension_Color_List[0]) ;
@@ -180,7 +176,7 @@ void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 				Current_Cube->Randomize() ;
 		}
 
-		/* 
+		/*
 		glutSetWindow(Option_Window_ID) ;
 		Make_All_Option_Lists() ;
 		glutPostRedisplay() ;
@@ -215,7 +211,7 @@ void Dimension_Passive_Motion(int X_Coord, int Y_Coord) {
 	glutPostRedisplay() ;
 }
 
-// This function prevents users from resizing the window into sizes that are 
+// This function prevents users from resizing the window into sizes that are
 // unrelated to one another, creating distortion.
 void Dimension_Reshape(int X_Size, int Y_Size) {
 	// Figure out which is smaller, the (appropriate) height or width

@@ -1,7 +1,3 @@
-// File: Tile.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.02.12
 
 #include "Tile.h"
 

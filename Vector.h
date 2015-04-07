@@ -1,10 +1,6 @@
-// File: Vector.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.03.19
 //
 // Description: This file implements a standard Vector() class.  Vector objects
-// can be added or subtracted ( + or - ), normalized, scaled, negated, and 
+// can be added or subtracted ( + or - ), normalized, scaled, negated, and
 // produce cross products ( * ) or dot products ( | ).
 
 #ifndef LIAM_VECTOR
@@ -31,7 +27,7 @@ public:
 	Vector operator * (Vector &vector) ;
 	float operator | (Vector &vector) ;
 
-	
+
 	// Inspectors
 	float Get_Length(void) const ;
 	int Get_Size(void) const ;

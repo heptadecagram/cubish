@@ -1,7 +1,3 @@
-// File: Quaternion.h
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.21
 //
 // Description: Quaternions are vectors with a rotation angle.  This file declars
 // a class Quaternion of such mathematical constructs.  These objects are very

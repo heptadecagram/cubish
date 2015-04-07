@@ -1,11 +1,6 @@
-// File: Face.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.03.11
-//
-// The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 #include "Face.h"
+// The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
 Face::Face(void) {
@@ -41,7 +36,7 @@ Face::Face(const Face &face) {
 	if(M_Tile==NULL)
 		Die("Unable to allocate memory for new &Face(%d, %d)", M_Width, M_Height) ;
 	M_Tile=new Tile*[M_Width*M_Height] ;
-	for(int n=0; n<M_Width; n++) 
+	for(int n=0; n<M_Width; n++)
 		for(int nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile ;
 			if(M_Tile[n+nn*M_Width]==NULL)
@@ -71,10 +66,10 @@ int Face::Get_Width(void) const {
 
 Tile *Face::Get_Tile(int Column, int Row) const {
 	if(Row<1 || Row>M_Height)
-		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n", 
+		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
 				Column, Row, M_Width, M_Height) ;
 	if(Column<1 || Column>M_Width)
-		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n", 
+		Die("Get_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
 				Column, Row, M_Width, M_Height) ;
 	return M_Tile[M_Width*(Row-1)+Column-1] ;
 }
@@ -147,7 +142,7 @@ void Face::Spin_CW(void) {
 	Tile **Temp=new Tile*[M_Height*M_Width] ;
 	if(Temp==NULL)
 		Die("Unable to allocate temporary Spin Face") ;
-	
+
 	// Copy the old Face
 	for(int n=0; n<M_Height*M_Width; n++)
 		Temp[n]=M_Tile[n] ;
@@ -176,10 +171,10 @@ void Face::Spin_CCW(void) {
 
 void Face::Set_Tile(int Column, int Row, Tile *tile) {
 	if(Row<1 || Row>M_Height)
-		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n", 
+		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
 				Column, Row, M_Width, M_Height) ;
 	if(Column<1 || Column>M_Width)
-		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n", 
+		Die("Set_Tile(%d, %d) Out of Bounds for [%d][%d]\n",
 				Column, Row, M_Width, M_Height) ;
 
 	M_Tile[M_Width*(Row-1)+Column-1]=tile ;
@@ -194,8 +189,8 @@ Face &Face::operator =(const Face &face) {
 	M_Tile=new Tile*[M_Width*M_Height] ;
 	if(M_Tile==NULL)
 		Die("Unable to allocate temporary Equality Face") ;
-	
-	for(int n=0; n<M_Width; n++) 
+
+	for(int n=0; n<M_Width; n++)
 		for(int nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile ;
 			if(M_Tile[n+nn*M_Width]==NULL)

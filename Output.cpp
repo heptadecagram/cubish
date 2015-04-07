@@ -1,7 +1,3 @@
-// File: Output.cpp
-// Author: Liam Bryan
-// Language: C++
-// Last Modified: 2002.04.19
 
 #include "Output.h"
 
@@ -33,7 +29,7 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 	Color_List=Color_Array ;
 	glutInit(&argc, argv) ;
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH) ;
-	
+
 	Window_ID=glutCreateWindow("Liam's Cubish") ;
 	glClearColor(.6, .6, .6, 0) ;
 	glDepthFunc(GL_LEQUAL) ;
@@ -61,7 +57,7 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 // If the viewpoint coordinates have been changed, readjust the matrix
 void Rotate_View(void) {
 	float Rotation_Matrix[4][4] ;
-	
+
 	glPopMatrix() ;
 	glPushMatrix() ;
 	New_Quaternion.Build_Rotation_Matrix(Rotation_Matrix) ;
@@ -227,10 +223,10 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 
 			// Develop pick rays for finding where in the viewing
 			// colume the user clicked
-			gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 0, Model, Projection, 
+			gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 0, Model, Projection,
 					Viewport, &X, &Y, &Z) ;
 			Vector Begin(X, Y, Z) ;
-			gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 1, Model, Projection, 
+			gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 1, Model, Projection,
 					Viewport, &X, &Y, &Z) ;
 			Vector End(X, Y, Z) ;
 
@@ -242,7 +238,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		else { // State==GLUT_UP
 			Cube_Twisting=false ;
 			// If there is an arrow present, change that cube
-			if(Arrow_Direction) {				
+			if(Arrow_Direction) {
 				Vector Cube_Place=Get_Twist_Side(Start_Vector, Arrow_Direction) ;
 				Slice_List=Current_Cube->Make_Slice_GL_List(Cube_Place[1], Cube_Place[2]) ;
 				Section_List=Current_Cube->Make_Section_GL_List(Cube_Place[1], Cube_Place[2]) ;
@@ -269,7 +265,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	}
 }
 
-// Standard idle function for moving the viewpoint.  Adds the quaternions 
+// Standard idle function for moving the viewpoint.  Adds the quaternions
 // together to create a single quaternion rotation.
 void Animate_Rotation(void) {
 	if(View_Spinning) {
@@ -351,10 +347,10 @@ void Motion(int X_Coord, int Y_Coord) {
 
 		// Develop pick rays for finding where in the viewing
 		// colume the user clicked
-		gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 0, Model, Projection, 
+		gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 0, Model, Projection,
 				Viewport, &X, &Y, &Z) ;
 		Vector Begin(X, Y, Z) ;
-		gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 1, Model, Projection, 
+		gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 1, Model, Projection,
 				Viewport, &X, &Y, &Z) ;
 		Vector End(X, Y, Z) ;
 
@@ -370,11 +366,11 @@ void Motion(int X_Coord, int Y_Coord) {
 
 	// If we are spinning the cube to view it
 	else if(Mouse_Dragging) {
-		// Perform a trackball projection from two-space to a 
+		// Perform a trackball projection from two-space to a
 		// quaternion
-		Old_Quaternion.Trackball( (float(2*beginx) - Window_Size)/Window_Size, 
+		Old_Quaternion.Trackball( (float(2*beginx) - Window_Size)/Window_Size,
 				(Window_Size - float(2*beginy) )/Window_Size,
-				(float(2*X_Coord) - Window_Size)/Window_Size, 
+				(float(2*X_Coord) - Window_Size)/Window_Size,
 				(Window_Size - float(2*Y_Coord) )/Window_Size) ;
 		View_Spinning=true ;
 		beginx=X_Coord ;
@@ -413,10 +409,10 @@ int Make_Arrow_GL_List(void) {
 	static int List_ID=glGenLists(1) ;
 
 	glNewList(List_ID, GL_COMPILE) ;
-	
+
 	Current_Cube->View_Side(Start_Vector[1]) ;
 	glTranslatef(Start_Vector[2]-.5, Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-Start_Vector[3]+.5, 0) ;
-	
+
 	float Angle=0 ;
 	switch(Arrow_Direction) {
 	case Up:
@@ -452,7 +448,7 @@ int Make_Arrow_GL_List(void) {
 
 int Get_Cube_Section(Cube *cube, int Side, int Depth) {
 	int List_ID=glGenLists(1) ;
-	
+
 	glNewList(List_ID, GL_COMPILE) ;
 	for(int n1=1; n1<=6; n1++) {
 
@@ -575,7 +571,7 @@ Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 	Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0 ;
 	Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0 ;
 	Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0 ;
-	
+
 	switch(int(Initial[1]) ) {
 	case 1:
 		Z_Temp=Begin[3]-Half_Depth ;
