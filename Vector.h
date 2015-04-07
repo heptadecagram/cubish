@@ -6,7 +6,8 @@
 #ifndef LIAM_VECTOR
 #define LIAM_VECTOR
 
-#include <math.h>
+#include <array>
+#include <cmath>
 
 class Vector {
 public:
@@ -40,10 +41,7 @@ public:
 	void operator - (void) ;
 
 protected:
-	// Member Variables
-	float M_X_Component ;
-	float M_Y_Component ;
-	float M_Z_Component ;
+	std::array<float, 3> _self;
 } ;
 
 #endif // LIAM_VECTOR
