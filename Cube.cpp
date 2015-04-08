@@ -1,7 +1,13 @@
 
-#include <stdexcept>
 
 #include "Cube.h"
+
+#include <cstdlib>
+#include <ctime>
+#include <cstdio>
+#include <stdexcept>
+
+#include <GLUT/glut.h>
 
 // Constructors
 Cube::Cube(int Width, int Height, int Depth,

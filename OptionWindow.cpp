@@ -1,7 +1,14 @@
 
+#include "OptionWindow.h"
+
+#include <cmath>
 #include <stdexcept>
 
-#include "OptionWindow.h"
+#include <GLUT/glut.h>
+
+#include "Output.h"
+#include "ColorPick.h"
+#include "Dimension.h"
 
 // Defined in Output.cpp
 extern int Window_ID, Option_Window_ID ;

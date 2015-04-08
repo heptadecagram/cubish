@@ -5,7 +5,7 @@
 #ifndef LIAM_COLORPICK
 #define LIAM_COLORPICK
 
-#include "OptionWindow.h"
+#include "Color.h"
 
 void Color_Window(Color *Old_Color) ;
 

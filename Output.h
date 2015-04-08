@@ -2,20 +2,9 @@
 #ifndef LIAM_OUTPUT
 #define LIAM_OUTPUT
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
-
-#include <sys/timeb.h>
-
-#include <GLUT/glut.h>
-
 #include "Color.h"
 #include "Cube.h"
 #include "Vector.h"
-#include "Quaternion.h"
-
-#include "OptionWindow.h"
 
 void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6]) ;
 

@@ -1,7 +1,8 @@
 
-#include <stdexcept>
-
 #include "Vector.h"
+
+#include <cmath>
+#include <stdexcept>
 
 // Constructors
 Vector::Vector(void) : _self({{ 0.0, 0.0, 0.0 }}) {
@@ -47,7 +48,7 @@ float Vector::operator | (const Vector &vector) const {
 
 // Inspectors
 float Vector::Get_Length(void) const {
-	return (float)sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]) ;
+	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]) ;
 }
 
 // Without this function, Vector objects are almost useless.  This allows the user

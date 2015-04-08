@@ -11,3 +11,5 @@ Cubish: $(OBJS)
 	$(CC) $(CXXFLAGS) $^ -o $@ $(LIBS)
 
 
+clean:
+	@rm *.o Cubish

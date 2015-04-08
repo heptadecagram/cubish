@@ -6,8 +6,7 @@
 #ifndef LIAM_DIMENSION
 #define LIAM_DIMENSION
 
-#include "OptionWindow.h"
-#include "Face.h"
+#include "Color.h"
 
 void Dimension_Window(int Dimension, Color **Color_List) ;
 

@@ -1,6 +1,11 @@
 
 #include "ColorPick.h"
 
+#include <GLUT/glut.h>
+
+#include "Cube.h"
+#include "OptionWindow.h"
+
 // Defined in Output.cpp or OptionWindow.cpp
 extern bool Is_Color_Window_Open ;
 extern int Cube_List ;

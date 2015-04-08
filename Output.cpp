@@ -1,6 +1,17 @@
 
 #include "Output.h"
 
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+#include <sys/timeb.h>
+
+#include <GLUT/glut.h>
+
+#include "OptionWindow.h"
+#include "Quaternion.h"
+
 // Since OpenGL is written in C, functions and variables must be global in scope
 Cube *Current_Cube ;
 Color **Color_List ;

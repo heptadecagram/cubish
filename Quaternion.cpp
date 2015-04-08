@@ -1,7 +1,8 @@
 
-#include <stdexcept>
-
 #include "Quaternion.h"
+
+#include <cmath>
+#include <stdexcept>
 
 // This static variable keeps track of how far away from a viewed object we are
 float Quaternion::M_Radius=.8 ;

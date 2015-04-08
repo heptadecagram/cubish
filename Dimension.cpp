@@ -1,6 +1,12 @@
 
 #include "Dimension.h"
 
+#include <GLUT/glut.h>
+
+#include "Cube.h"
+#include "Face.h"
+#include "Output.h"
+
 // These are defined in Output.cpp and OptionWindow.cpp
 extern bool Is_Dimension_Window_Open ;
 extern int Cube_List ;

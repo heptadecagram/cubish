@@ -6,9 +6,7 @@
 #ifndef LIAM_OPTIONWINDOW
 #define LIAM_OPTIONWINDOW
 
-#include "Output.h"
-#include "ColorPick.h"
-#include "Dimension.h"
+#include "Color.h"
 
 void New_Window(Color **Color_Array) ;
 

@@ -34,12 +34,6 @@
 #ifndef LIAM_CUBE
 #define LIAM_CUBE
 
-#include <stdlib.h>
-#include <time.h>
-#include <stdio.h>
-
-#include <GLUT/glut.h>
-
 #include "Face.h"
 #include "Vector.h"
 

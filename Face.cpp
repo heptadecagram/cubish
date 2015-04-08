@@ -1,7 +1,8 @@
 
+#include "Face.h"
+
 #include <stdexcept>
 
-#include "Face.h"
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors

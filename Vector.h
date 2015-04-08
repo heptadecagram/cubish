@@ -7,7 +7,6 @@
 #define LIAM_VECTOR
 
 #include <array>
-#include <cmath>
 
 class Vector {
 public:

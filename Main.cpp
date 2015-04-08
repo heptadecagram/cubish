@@ -1,6 +1,6 @@
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdlib>
+#include <GLUT/glut.h>
 
 #include "Color.h"
 #include "Cube.h"

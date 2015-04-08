@@ -11,8 +11,6 @@
 #ifndef LIAM_QUATERNION
 #define LIAM_QUATERNION
 
-#include <math.h>
-
 #include "Vector.h"
 
 class Quaternion: public Vector {
