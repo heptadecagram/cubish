@@ -2,7 +2,6 @@
 #include "Vector.h"
 
 #include <cmath>
-#include <stdexcept>
 
 // Constructors
 Vector::Vector(void) : _self({{ 0.0, 0.0, 0.0 }}) {
@@ -15,29 +14,29 @@ Vector::Vector(float X_Component, float Y_Component, float Z_Component) :
 // Facilitators
 // Adding two Vector objects
 Vector Vector::operator + (const Vector &vector) const {
-	Vector Temp ;
-	Temp[1]=_self[0]+vector[1] ;
-	Temp[2]=_self[1]+vector[2] ;
-	Temp[3]=_self[2]+vector[3] ;
-	return Temp ;
+	return Vector(
+			_self[0] + vector[1],
+			_self[1] + vector[2],
+			_self[2] + vector[3]
+			);
 }
 
 // Subtracting two Vector objects
 Vector Vector::operator - (const Vector &vector) const {
-	Vector Temp ;
-	Temp[1]=_self[0]-vector[1] ;
-	Temp[2]=_self[1]-vector[2] ;
-	Temp[3]=_self[2]-vector[3] ;
-	return Temp ;
+	return Vector(
+			_self[0] - vector[1],
+			_self[1] - vector[2],
+			_self[2] - vector[3]
+			);
 }
 
 // Cross product
 Vector Vector::operator * (const Vector &vector) const {
-	Vector Temp ;
-	Temp[1]=_self[1]*vector[3] - _self[2]*vector[2] ;
-	Temp[2]=_self[2]*vector[1] - _self[0]*vector[3] ;
-	Temp[3]=_self[0]*vector[2] - _self[1]*vector[1] ;
-	return Temp ;
+	return Vector(
+			_self[1]*vector[3] - _self[2]*vector[2],
+			_self[2]*vector[1] - _self[0]*vector[3],
+			_self[0]*vector[2] - _self[1]*vector[1]
+			);
 }
 
 // Dot product
@@ -69,9 +68,9 @@ void Vector::Normalize(void) {
 }
 
 void Vector::Scale(float Scalar) {
-	_self[0]*=Scalar ;
-	_self[1]*=Scalar ;
-	_self[2]*=Scalar ;
+	_self[0] *= Scalar ;
+	_self[1] *= Scalar ;
+	_self[2] *= Scalar ;
 }
 
 float &Vector::operator [] (int Index) {
