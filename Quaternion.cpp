@@ -16,9 +16,7 @@ Quaternion::Quaternion(float X_Component, float Y_Component, float Z_Component, 
 }
 
 Quaternion &Quaternion::operator = (const Vector &vector) {
-	_self[0] = vector[1];
-	_self[1] = vector[2];
-	_self[2] = vector[3];
+	Vector::operator=(vector);
 	return *this ;
 }
 
