@@ -38,47 +38,47 @@
 #include "Vector.h"
 
 // For use in the Twist() functions
-enum Direction { NONE, Up, Down, Left, Right } ;
+enum Direction { NONE, Up, Down, Left, Right };
 
 class Cube {
 public:
 	// Constructors
 	Cube(int Width, int Height, int Depth,
 		 Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
-		 Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color) ;
+		 Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color);
 
 	// Desctructor
-	~Cube(void) ;
+	~Cube(void);
 
 	// Facilitators
-	int Make_GL_List(void) ;
-	int Make_Section_GL_List(int Side, int Depth) ;
-	int Make_Slice_GL_List(int Side, int Depth) ;
+	int Make_GL_List(void);
+	int Make_Section_GL_List(int Side, int Depth);
+	int Make_Slice_GL_List(int Side, int Depth);
 
-	void View_Side(int Side) ;
-	void Undo_View_Side(int Side) ;
+	void View_Side(int Side);
+	void Undo_View_Side(int Side);
 
-	void Save(Color **Color_List, FILE *File) ;
-	void Load(Color **Color_List, FILE *File) ;
+	void Save(Color **Color_List, FILE *File);
+	void Load(Color **Color_List, FILE *File);
 
 	// Mutators
-	void Randomize(int Twists=100) ;
-	bool Rotate_CW(int Side, int Offset=1) ;
-	bool Rotate_CCW(int Side, int Offset=1) ;
-	bool Twist(int Side, int Column, int Row, Direction direction) ;
-	bool Twist(Vector Position, Direction direction) ;
+	void Randomize(int Twists=100);
+	bool Rotate_CW(int Side, int Offset=1);
+	bool Rotate_CCW(int Side, int Offset=1);
+	bool Twist(int Side, int Column, int Row, Direction direction);
+	bool Twist(Vector Position, Direction direction);
 
 	// Inspectors
-	Face *Get_Face(int Side) const ;
-	bool Is_Solved(void) const ;
+	Face *Get_Face(int Side) const;
+	bool Is_Solved(void) const;
 
 private:
 	// Private Functions
-	int Random(int Max) ;
-	int Set_Front(int Side) ;
+	int Random(int Max);
+	int Set_Front(int Side);
 
 	// Member Variables
-	Face *M_Sides[6] ;
-} ;
+	Face *M_Sides[6];
+};
 
 #endif // LIAM_CUBE

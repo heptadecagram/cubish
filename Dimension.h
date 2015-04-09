@@ -8,14 +8,14 @@
 
 #include "Color.h"
 
-void Dimension_Window(int Dimension, Color **Color_List) ;
+void Dimension_Window(int Dimension, Color **Color_List);
 
-void Dimension_Display(void) ;
+void Dimension_Display(void);
 
-void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) ;
+void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord);
 
-void Dimension_Reshape(int X_Size, int Y_Size) ;
+void Dimension_Reshape(int X_Size, int Y_Size);
 
-void Dimension_Passive_Motion(int X_Coord, int Y_Coord) ;
+void Dimension_Passive_Motion(int X_Coord, int Y_Coord);
 
 #endif // LIAM_DIMENSION

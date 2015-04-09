@@ -12,22 +12,22 @@
 class Tile {
 public:
 	// Constructors
-	Tile(void) ;
-	Tile(Color *color) ;
+	Tile(void);
+	Tile(Color *color);
 
 	// Destructor
-	~Tile(void) ;
+	~Tile(void);
 
 	// Facilitators
 
 	// Inspectors
-	Color *Get_Color(void) const ;
+	Color *Get_Color(void) const;
 
 	// Mutators
-	void Set_Color(Color *color) ;
+	void Set_Color(Color *color);
 
 protected:
-	Color *M_Color ;
-} ;
+	Color *M_Color;
+};
 
 #endif // LIAM_TILE

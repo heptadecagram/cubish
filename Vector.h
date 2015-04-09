@@ -11,8 +11,8 @@
 class Vector {
 public:
 	// Constructors
-	Vector(void) ;
-	Vector(float X_Component, float Y_Component, float Z_Component) ;
+	Vector(void);
+	Vector(float X_Component, float Y_Component, float Z_Component);
 
 	// Facilitators
 	Vector operator + (const Vector &vector) const;
@@ -22,21 +22,21 @@ public:
 
 
 	// Inspectors
-	float Get_Length(void) const ;
-	int Get_Size(void) const ;
-	float operator [] (int Index) const ;
+	float Get_Length(void) const;
+	int Get_Size(void) const;
+	float operator [] (int Index) const;
 
 
 	// Mutators
-	void Zero(void) ;
-	void Normalize(void) ;
-	void Scale(float Scalar) ;
-	float &operator [] (int Index) ;
-	void operator - (void) ;
+	void Zero(void);
+	void Normalize(void);
+	void Scale(float Scalar);
+	float &operator [] (int Index);
+	void operator - (void);
 
 protected:
 	std::array<float, 3> _self;
-} ;
+};
 
 #endif // LIAM_VECTOR
 

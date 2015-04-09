@@ -41,13 +41,13 @@ Vector Vector::operator * (const Vector &vector) const {
 
 // Dot product
 float Vector::operator | (const Vector &vector) const {
-	return _self[0]*vector[1] + _self[1]*vector[2] + _self[2]*vector[3] ;
+	return _self[0]*vector[1] + _self[1]*vector[2] + _self[2]*vector[3];
 }
 
 
 // Inspectors
 float Vector::Get_Length(void) const {
-	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]) ;
+	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]);
 }
 
 // Without this function, Vector objects are almost useless.  This allows the user
@@ -64,13 +64,13 @@ void Vector::Zero(void) {
 
 // Have some way to normalize a vector.  It's nice to have.
 void Vector::Normalize(void) {
-	Scale(1/Get_Length() ) ;
+	Scale(1/Get_Length() );
 }
 
 void Vector::Scale(float Scalar) {
-	_self[0] *= Scalar ;
-	_self[1] *= Scalar ;
-	_self[2] *= Scalar ;
+	_self[0] *= Scalar;
+	_self[1] *= Scalar;
+	_self[2] *= Scalar;
 }
 
 float &Vector::operator [] (int Index) {

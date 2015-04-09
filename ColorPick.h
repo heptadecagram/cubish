@@ -7,12 +7,12 @@
 
 #include "Color.h"
 
-void Color_Window(Color *Old_Color) ;
+void Color_Window(Color *Old_Color);
 
-void Color_Display(void) ;
+void Color_Display(void);
 
-void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) ;
+void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord);
 
-void Color_Reshape(int X_Size, int Y_Size) ;
+void Color_Reshape(int X_Size, int Y_Size);
 
 #endif // LIAM_COLORPICK

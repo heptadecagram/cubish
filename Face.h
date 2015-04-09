@@ -19,35 +19,35 @@
 class Face {
 public:
 	// Constructors
-	Face(void) ;
-	Face(int Width, int Height, Color *color) ;
-	Face(const Face &face) ;
+	Face(void);
+	Face(int Width, int Height, Color *color);
+	Face(const Face &face);
 
 	// Destructor
-	~Face(void) ;
+	~Face(void);
 
 	// Facilitators
 
 	// Inspectors
-	int Get_Height(void) const ;
-	int Get_Width(void) const ;
-	Tile *Get_Tile(int Column, int Row) const ;
-	bool Is_Solved(void) const ;
+	int Get_Height(void) const;
+	int Get_Width(void) const;
+	Tile *Get_Tile(int Column, int Row) const;
+	bool Is_Solved(void) const;
 
 	// Mutators
-	void Flood(Color *color) ;
-	void Set_Tile(int Column, int Row, Tile *tile) ;
-	void Rotate_CW(void) ;
-	void Rotate_CCW(void) ;
-	void Spin_CW(void) ;
-	void Spin_CCW(void) ;
+	void Flood(Color *color);
+	void Set_Tile(int Column, int Row, Tile *tile);
+	void Rotate_CW(void);
+	void Rotate_CCW(void);
+	void Spin_CW(void);
+	void Spin_CCW(void);
 
-	Face &operator=(const Face &face) ;
+	Face &operator=(const Face &face);
 
 protected:
-	int M_Height ;
-	int M_Width ;
-	Tile **M_Tile ;
-} ;
+	int M_Height;
+	int M_Width;
+	Tile **M_Tile;
+};
 
 #endif // LIAM_FACE

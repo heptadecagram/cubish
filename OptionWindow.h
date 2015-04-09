@@ -8,30 +8,30 @@
 
 #include "Color.h"
 
-void New_Window(Color **Color_Array) ;
+void New_Window(Color **Color_Array);
 
-void Option_Display(void) ;
+void Option_Display(void);
 
-void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) ;
+void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord);
 
-void Option_Passive_Motion(int X_Coord, int Y_Coord) ;
+void Option_Passive_Motion(int X_Coord, int Y_Coord);
 
-void Option_Reshape(int X_Size, int Y_Size) ;
+void Option_Reshape(int X_Size, int Y_Size);
 
-int Make_Option_Cube_List(Color **Color_Array) ;
+int Make_Option_Cube_List(Color **Color_Array);
 
-int Make_Option_Exit_List(void) ;
+int Make_Option_Exit_List(void);
 
-int Make_Option_Solved_List(void) ;
+int Make_Option_Solved_List(void);
 
-int Make_Option_Random_List(void) ;
+int Make_Option_Random_List(void);
 
-int Make_Option_Line_List(void) ;
+int Make_Option_Line_List(void);
 
-int Make_Option_Load_List(void) ;
+int Make_Option_Load_List(void);
 
-int Make_Option_Save_List(void) ;
+int Make_Option_Save_List(void);
 
-void Make_All_Option_Lists(void) ;
+void Make_All_Option_Lists(void);
 
 #endif // LIAM_OPTIONWINDOW
