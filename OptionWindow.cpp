@@ -346,10 +346,10 @@ int Make_Option_Cube_List(Color **Color_Array) {
 		glTranslatef(Location[1], Location[2], 0) ;
 		Color_Array[n]->Change_To() ;
 		glBegin(GL_QUADS) ;
-			glVertex3f(0, 0, 0) ;
-			glVertex3f(0, Option_Window_Height/5.0, 0) ;
-			glVertex3f(Option_Window_Width/4.0, Option_Window_Height/5.0, 0) ;
-			glVertex3f(Option_Window_Width/4.0, 0, 0) ;
+			glVertex3d(0, 0, 0) ;
+			glVertex3d(0, Option_Window_Height/5.0, 0) ;
+			glVertex3d(Option_Window_Width/4.0, Option_Window_Height/5.0, 0) ;
+			glVertex3d(Option_Window_Width/4.0, 0, 0) ;
 		glEnd() ; // GL_QUADS
 		glTranslatef(-Location[1], -Location[2], 0) ;
 
@@ -368,24 +368,24 @@ int Make_Option_Exit_List(void) {
 	glNewList(List_ID, GL_COMPILE) ;
 
 	glTranslatef(-20*X_Part, -25*Y_Part, 0) ;
-	glColor3f(.7, .7, .7) ;
+	glColor3d(.7, .7, .7) ;
 	glBegin(GL_QUADS) ;
-		glVertex3f(X_Part, Y_Part, 0) ;
-		glVertex3f(9*X_Part, Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(X_Part, 9*Y_Part, 0) ;
+		glVertex3d(X_Part, Y_Part, 0) ;
+		glVertex3d(9*X_Part, Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(X_Part, 9*Y_Part, 0) ;
 	glEnd() ; // GL_QUADS
 
 	if(Option_Exit)
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 	else
-		glColor3f(.6, .6, .6) ;
+		glColor3d(.6, .6, .6) ;
 	glLineWidth(5) ;
 	glBegin(GL_LINES) ;
-		glVertex3f(X_Part, Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(9*X_Part, Y_Part, 0) ;
-		glVertex3f(X_Part, 9*Y_Part, 0) ;
+		glVertex3d(X_Part, Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(9*X_Part, Y_Part, 0) ;
+		glVertex3d(X_Part, 9*Y_Part, 0) ;
 	glEnd() ; // GL_LINES
 	glTranslatef(20*X_Part, 25*Y_Part, 0) ;
 
@@ -404,41 +404,41 @@ int Make_Option_Solved_List(void) {
 	glTranslatef(-20*X_Part, 15*Y_Part, 0) ;
 	glBegin(GL_QUADS) ;
 		Option_Color_List[0]->Change_To() ;
-		glVertex3f(X_Part, Y_Part, 0) ;
-		glVertex3f(7*X_Part, Y_Part, 0) ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(X_Part, 7*Y_Part, 0) ;
+		glVertex3d(X_Part, Y_Part, 0) ;
+		glVertex3d(7*X_Part, Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(X_Part, 7*Y_Part, 0) ;
 
 		Option_Color_List[2]->Change_To() ;
-		glVertex3f(X_Part, 7*Y_Part, 0) ;
-		glVertex3f(3*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(X_Part, 7*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
 
 		Option_Color_List[3]->Change_To() ;
-		glVertex3f(7*X_Part, Y_Part, 0) ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 3*Y_Part, 0) ;
+		glVertex3d(7*X_Part, Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 3*Y_Part, 0) ;
 	glEnd() ; // GL_QUADS
 
 	if(Option_Solved) {
 		glLineWidth(2) ;
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(7*X_Part, Y_Part, 0) ;
-			glVertex3f(X_Part, Y_Part, 0) ;
-			glVertex3f(X_Part, 7*Y_Part, 0) ;
-			glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(7*X_Part, Y_Part, 0) ;
+			glVertex3d(7*X_Part, Y_Part, 0) ;
+			glVertex3d(X_Part, Y_Part, 0) ;
+			glVertex3d(X_Part, 7*Y_Part, 0) ;
+			glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(7*X_Part, Y_Part, 0) ;
 
-			glVertex3f(9*X_Part, 3*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-			glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 3*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 9*Y_Part, 0) ;
 
-			glVertex3f(3*X_Part, 9*Y_Part, 0) ;
-			glVertex3f(X_Part, 7*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(X_Part, 7*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 	}
 
@@ -459,113 +459,113 @@ int Make_Option_Random_List(void) {
 	glTranslatef(10*X_Part, 15*Y_Part, 0) ;
 	glBegin(GL_QUADS) ;
 		Option_Color_List[0]->Change_To() ;
-		glVertex3f(X_Part, Y_Part, 0) ;
-		glVertex3f(4*X_Part, Y_Part, 0) ;
-		glVertex3f(4*X_Part, 4*Y_Part, 0) ;
-		glVertex3f(X_Part, 4*Y_Part, 0) ;
+		glVertex3d(X_Part, Y_Part, 0) ;
+		glVertex3d(4*X_Part, Y_Part, 0) ;
+		glVertex3d(4*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(X_Part, 4*Y_Part, 0) ;
 
 		Option_Color_List[1]->Change_To() ;
-		glVertex3f(7*X_Part, Y_Part, 0) ;
-		glVertex3f(4*X_Part, Y_Part, 0) ;
-		glVertex3f(4*X_Part, 4*Y_Part, 0) ;
-		glVertex3f(7*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(7*X_Part, Y_Part, 0) ;
+		glVertex3d(4*X_Part, Y_Part, 0) ;
+		glVertex3d(4*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 4*Y_Part, 0) ;
 
 		Option_Color_List[2]->Change_To() ;
-		glVertex3f(X_Part, 7*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 4*Y_Part, 0) ;
-		glVertex3f(X_Part, 4*Y_Part, 0) ;
+		glVertex3d(X_Part, 7*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(X_Part, 4*Y_Part, 0) ;
 
 		Option_Color_List[3]->Change_To() ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 4*Y_Part, 0) ;
-		glVertex3f(7*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 4*Y_Part, 0) ;
 
 		Option_Color_List[4]->Change_To() ;
-		glVertex3f(X_Part, 7*Y_Part, 0) ;
-		glVertex3f(2*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(5*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(X_Part, 7*Y_Part, 0) ;
+		glVertex3d(2*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 7*Y_Part, 0) ;
 
 		Option_Color_List[5]->Change_To() ;
-		glVertex3f(2*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(3*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(6*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(5*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(2*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 8*Y_Part, 0) ;
 
 		Option_Color_List[0]->Change_To() ;
-		glVertex3f(4*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(5*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
 
 		Option_Color_List[1]->Change_To() ;
-		glVertex3f(5*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(6*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 8*Y_Part, 0) ;
 
 		Option_Color_List[2]->Change_To() ;
-		glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 5*Y_Part, 0) ;
-		glVertex3f(7*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(7*X_Part, 4*Y_Part, 0) ;
 
 		Option_Color_List[3]->Change_To() ;
-		glVertex3f(8*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 6*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 6*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 5*Y_Part, 0) ;
 
 		Option_Color_List[4]->Change_To() ;
-		glVertex3f(7*X_Part, 4*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 5*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 2*Y_Part, 0) ;
-		glVertex3f(7*X_Part, Y_Part, 0) ;
+		glVertex3d(7*X_Part, 4*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(7*X_Part, Y_Part, 0) ;
 
 		Option_Color_List[5]->Change_To() ;
-		glVertex3f(8*X_Part, 5*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 6*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 3*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 6*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 3*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 2*Y_Part, 0) ;
 
 	glEnd() ; // GL_QUADS
 
 	if(Option_Random) {
 		glLineWidth(2) ;
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(7*X_Part, Y_Part, 0) ;
-			glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(X_Part, 7*Y_Part, 0) ;
-			glVertex3f(X_Part, Y_Part, 0) ;
-			glVertex3f(7*X_Part, Y_Part, 0) ;
+			glVertex3d(7*X_Part, Y_Part, 0) ;
+			glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(X_Part, 7*Y_Part, 0) ;
+			glVertex3d(X_Part, Y_Part, 0) ;
+			glVertex3d(7*X_Part, Y_Part, 0) ;
 
-			glVertex3f(9*X_Part, 3*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 9*Y_Part, 0) ;
-			glVertex3f(7*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(1*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 9*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 3*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(7*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(1*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 9*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(X_Part, 4*Y_Part, 0) ;
-			glVertex3f(7*X_Part, 4*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 6*Y_Part, 0) ;
+			glVertex3d(X_Part, 4*Y_Part, 0) ;
+			glVertex3d(7*X_Part, 4*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 6*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(2*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(8*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(8*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(2*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(8*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(8*X_Part, 2*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(4*X_Part, Y_Part, 0) ;
-			glVertex3f(4*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(6*X_Part, 9*Y_Part, 0) ;
+			glVertex3d(4*X_Part, Y_Part, 0) ;
+			glVertex3d(4*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(6*X_Part, 9*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 	}
 
@@ -585,49 +585,49 @@ int Make_Option_Line_List(void) {
 
 	glLineWidth(3) ;
 	if(Option_Width)
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 	else
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 
 	glBegin(GL_LINE_STRIP) ;
-		glVertex3f(-4*X_Part, 23*Y_Part, 0) ;
-		glVertex3f(-5*X_Part, 22*Y_Part, 0) ;
-		glVertex3f(-4*X_Part, 21*Y_Part, 0) ;
-		glVertex3f(-5*X_Part, 22*Y_Part, 0) ;
-		glVertex3f(5*X_Part, 22*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 23*Y_Part, 0) ;
-		glVertex3f(5*X_Part, 22*Y_Part, 0) ;
-		glVertex3f(4*X_Part, 21*Y_Part, 0) ;
+		glVertex3d(-4*X_Part, 23*Y_Part, 0) ;
+		glVertex3d(-5*X_Part, 22*Y_Part, 0) ;
+		glVertex3d(-4*X_Part, 21*Y_Part, 0) ;
+		glVertex3d(-5*X_Part, 22*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 22*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 23*Y_Part, 0) ;
+		glVertex3d(5*X_Part, 22*Y_Part, 0) ;
+		glVertex3d(4*X_Part, 21*Y_Part, 0) ;
 	glEnd() ; // GL_LINE_STRIP
 
 	if(Option_Height)
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 	else
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 	glBegin(GL_LINE_STRIP) ;
-		glVertex3f(-18*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(-17*X_Part, 10*Y_Part, 0) ;
-		glVertex3f(-16*X_Part, 9*Y_Part, 0) ;
-		glVertex3f(-17*X_Part, 10*Y_Part, 0) ;
-		glVertex3f(-17*X_Part, 0, 0) ;
-		glVertex3f(-18*X_Part, 1*Y_Part, 0) ;
-		glVertex3f(-17*X_Part, 0, 0) ;
-		glVertex3f(-16*X_Part, 1*Y_Part, 0) ;
+		glVertex3d(-18*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(-17*X_Part, 10*Y_Part, 0) ;
+		glVertex3d(-16*X_Part, 9*Y_Part, 0) ;
+		glVertex3d(-17*X_Part, 10*Y_Part, 0) ;
+		glVertex3d(-17*X_Part, 0, 0) ;
+		glVertex3d(-18*X_Part, 1*Y_Part, 0) ;
+		glVertex3d(-17*X_Part, 0, 0) ;
+		glVertex3d(-16*X_Part, 1*Y_Part, 0) ;
 	glEnd() ; // GL_LINE_STRIP
 
 	if(Option_Depth)
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 	else
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 	glBegin(GL_LINE_STRIP) ;
-		glVertex3f(-8*X_Part, -1*Y_Part, 0) ;
-		glVertex3f(-7*X_Part, 0, 0) ;
-		glVertex3f(-6*X_Part, -1*Y_Part, 0) ;
-		glVertex3f(-7*X_Part, 0, 0) ;
-		glVertex3f(-7*X_Part, -10*Y_Part, 0) ;
-		glVertex3f(-8*X_Part, -9*Y_Part, 0) ;
-		glVertex3f(-7*X_Part, -10*Y_Part, 0) ;
-		glVertex3f(-6*X_Part, -9*Y_Part, 0) ;
+		glVertex3d(-8*X_Part, -1*Y_Part, 0) ;
+		glVertex3d(-7*X_Part, 0, 0) ;
+		glVertex3d(-6*X_Part, -1*Y_Part, 0) ;
+		glVertex3d(-7*X_Part, 0, 0) ;
+		glVertex3d(-7*X_Part, -10*Y_Part, 0) ;
+		glVertex3d(-8*X_Part, -9*Y_Part, 0) ;
+		glVertex3d(-7*X_Part, -10*Y_Part, 0) ;
+		glVertex3d(-6*X_Part, -9*Y_Part, 0) ;
 	glEnd() ; // GL_LINE_STRIP
 
 	glEndList() ; // List_ID
@@ -644,56 +644,56 @@ int Make_Option_Load_List(void) {
 
 	glTranslatef(10*X_Part, -25*Y_Part, 0) ;
 
-	glColor3f(0, 0, 1) ;
+	glColor3d(0, 0, 1) ;
 	glBegin(GL_QUADS) ;
-		glVertex3f(3*X_Part, 2*Y_Part, 0) ;
-		glVertex3f(3*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 2*Y_Part, 0) ;
 	glEnd() ; // GL_QUADS
 
-	glColor3f(.7, .7, .7) ;
+	glColor3d(.7, .7, .7) ;
 	glBegin(GL_POLYGON) ;
 		for(float f1=5; f1<=7; f1+=.1)
-			glVertex3f(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
+			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
 		for(float f2=5; f2<=7; f2+=.1)
-			glVertex3f(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
+			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
 	glEnd() ; // GL_POLYGON
 
 	glBegin(GL_TRIANGLES) ;
-		glVertex3f(6*X_Part, 2*Y_Part, 0) ;
-		glVertex3f(6*X_Part, 5*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 2*Y_Part, 0) ;
 	glEnd() ; // GL_TRIANGLES
 
 	if(Option_Load) {
 		glLineWidth(2) ;
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(3*X_Part, 2*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 2*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 2*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 		glBegin(GL_LINE_STRIP) ;
 			for(float f1=5; f1<=7; f1+=.1)
-				glVertex3f(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
+				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
 			for(float f2=7; f2>=5; f2-=.1)
-				glVertex3f(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
+				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 		glBegin(GL_QUADS) ;
-			glVertex3f(3*X_Part, 4*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 6*Y_Part, 0) ;
-			glVertex3f(5*X_Part, 6*Y_Part, 0) ;
-			glVertex3f(5*X_Part, 4*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 4*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 6*Y_Part, 0) ;
+			glVertex3d(5*X_Part, 6*Y_Part, 0) ;
+			glVertex3d(5*X_Part, 4*Y_Part, 0) ;
 		glEnd() ; // GL_QUADS
 		glBegin(GL_TRIANGLES) ;
-			glVertex3f(0, 5*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 3*Y_Part, 0) ;
+			glVertex3d(0, 5*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 3*Y_Part, 0) ;
 		glEnd() ; // GL_TRIANGLES
 	}
 
@@ -713,56 +713,56 @@ int Make_Option_Save_List(void) {
 
 	glTranslatef(10*X_Part, -15*Y_Part, 0) ;
 
-	glColor3f(0, 0, 1) ;
+	glColor3d(0, 0, 1) ;
 	glBegin(GL_QUADS) ;
-		glVertex3f(3*X_Part, 2*Y_Part, 0) ;
-		glVertex3f(3*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 8*Y_Part, 0) ;
-		glVertex3f(9*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(3*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 8*Y_Part, 0) ;
+		glVertex3d(9*X_Part, 2*Y_Part, 0) ;
 	glEnd() ; // GL_QUADS
 
-	glColor3f(.7, .7, .7) ;
+	glColor3d(.7, .7, .7) ;
 	glBegin(GL_POLYGON) ;
 		for(float f1=5; f1<=7; f1+=.1)
-			glVertex3f(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
+			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
 		for(float f2=5; f2<=7; f2+=.1)
-			glVertex3f(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
+			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
 	glEnd() ; // GL_POLYGON
 
 	glBegin(GL_TRIANGLES) ;
-		glVertex3f(6*X_Part, 2*Y_Part, 0) ;
-		glVertex3f(6*X_Part, 5*Y_Part, 0) ;
-		glVertex3f(8*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 2*Y_Part, 0) ;
+		glVertex3d(6*X_Part, 5*Y_Part, 0) ;
+		glVertex3d(8*X_Part, 2*Y_Part, 0) ;
 	glEnd() ; // GL_TRIANGLES
 
 	if(Option_Save) {
 		glLineWidth(2) ;
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f(3*X_Part, 2*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 8*Y_Part, 0) ;
-			glVertex3f(9*X_Part, 2*Y_Part, 0) ;
-			glVertex3f(3*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 8*Y_Part, 0) ;
+			glVertex3d(9*X_Part, 2*Y_Part, 0) ;
+			glVertex3d(3*X_Part, 2*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 		glBegin(GL_LINE_STRIP) ;
 			for(float f1=5; f1<=7; f1+=.1)
-				glVertex3f(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
+				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0) ;
 			for(float f2=7; f2>=5; f2-=.1)
-				glVertex3f(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
+				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 
-		glColor3f(1, 0, 0) ;
+		glColor3d(1, 0, 0) ;
 		glBegin(GL_QUADS) ;
-			glVertex3f(0, 6*Y_Part, 0) ;
-			glVertex3f(2*X_Part, 6*Y_Part, 0) ;
-			glVertex3f(2*X_Part, 4*Y_Part, 0) ;
-			glVertex3f(0, 4*Y_Part, 0) ;
+			glVertex3d(0, 6*Y_Part, 0) ;
+			glVertex3d(2*X_Part, 6*Y_Part, 0) ;
+			glVertex3d(2*X_Part, 4*Y_Part, 0) ;
+			glVertex3d(0, 4*Y_Part, 0) ;
 		glEnd() ; // GL_QUADS
 		glBegin(GL_TRIANGLES) ;
-			glVertex3f(2*X_Part, 7*Y_Part, 0) ;
-			glVertex3f(5*X_Part, 5*Y_Part, 0) ;
-			glVertex3f(2*X_Part, 3*Y_Part, 0) ;
+			glVertex3d(2*X_Part, 7*Y_Part, 0) ;
+			glVertex3d(5*X_Part, 5*Y_Part, 0) ;
+			glVertex3d(2*X_Part, 3*Y_Part, 0) ;
 		glEnd() ; // GL_TRIANGLES
 	}
 

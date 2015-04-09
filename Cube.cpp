@@ -42,16 +42,16 @@ int Cube::Make_GL_List(void) {
 				M_Sides[n1-1]->Get_Tile(n3, M_Sides[n1-1]->Get_Height()-n2+1)->Get_Color()->Change_To() ;
 				// Raise the height of all colored squares to avoid clipping problems
 				glBegin(GL_QUADS) ;
-					glVertex3f(n3-.9, n2-.9, .03) ;
-					glVertex3f(n3-.9, n2-.1, .03) ;
-					glVertex3f(n3-.1, n2-.1, .03) ;
-					glVertex3f(n3-.1, n2-.9, .03) ;
+					glVertex3d(n3-.9, n2-.9, .03) ;
+					glVertex3d(n3-.9, n2-.1, .03) ;
+					glVertex3d(n3-.1, n2-.1, .03) ;
+					glVertex3d(n3-.1, n2-.9, .03) ;
 				glEnd() ; // GL_QUADS
 			}
 		}
 
 		// Create a black background to put the colored squares on
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_QUADS) ;
 			glVertex3i(0, 0, 0) ;
 			glVertex3i(M_Sides[n1-1]->Get_Width(), 0, 0) ;
@@ -113,7 +113,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 					 (n1==3 && n2==Depth) || (n1==4 && n3==Depth) ||
 					 (n1==5 && n2==M_Sides[n1-1]->Get_Height()-Depth+1) ) ) {
 					// Black background squares
-					glColor3f(0, 0, 0) ;
+					glColor3d(0, 0, 0) ;
 					glBegin(GL_QUADS) ;
 						glVertex3i(n3-1, n2-1, 0) ;
 						glVertex3i(n3-1, n2, 0) ;
@@ -124,10 +124,10 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 					// Pretty colored squares are being drawn here
 					M_Sides[n1-1]->Get_Tile(n3, M_Sides[n1-1]->Get_Height()-n2+1)->Get_Color()->Change_To() ;
 					glBegin(GL_QUADS) ;
-						glVertex3f(n3-.9, n2-.9, .03) ;
-						glVertex3f(n3-.9, n2-.1, .03) ;
-						glVertex3f(n3-.1, n2-.1, .03) ;
-						glVertex3f(n3-.1, n2-.9, .03) ;
+						glVertex3d(n3-.9, n2-.9, .03) ;
+						glVertex3d(n3-.9, n2-.1, .03) ;
+						glVertex3d(n3-.1, n2-.1, .03) ;
+						glVertex3d(n3-.1, n2-.9, .03) ;
 					glEnd() ; // GL_QUADS
 				}
 			}
@@ -141,7 +141,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 
 	// Find how far down to go, change to black color
 	glTranslatef(0, 0, -Depth) ;
-	glColor3f(0, 0, 0) ;
+	glColor3d(0, 0, 0) ;
 
 	// Draw a black square on top, if it is open
 	if(Depth!=M_Sides[1]->Get_Width() ) {
@@ -268,7 +268,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			}
 
 			// Black background squares
-			glColor3f(0, 0, 0) ;
+			glColor3d(0, 0, 0) ;
 			glBegin(GL_QUADS) ;
 				glVertex3i(X_Coord-1, Y_Coord-1, 0) ;
 				glVertex3i(X_Coord-1, Y_Coord, 0) ;
@@ -280,10 +280,10 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			// Colored squares, raised for visibility
 			M_Sides[n-1]->Get_Tile(X_Coord, M_Sides[n-1]->Get_Height()-Y_Coord+1)->Get_Color()->Change_To() ;
 			glBegin(GL_QUADS) ;
-				glVertex3f(X_Coord-.9, Y_Coord-.9, .03) ;
-				glVertex3f(X_Coord-.9, Y_Coord-.1, .03) ;
-				glVertex3f(X_Coord-.1, Y_Coord-.1, .03) ;
-				glVertex3f(X_Coord-.1, Y_Coord-.9, .03) ;
+				glVertex3d(X_Coord-.9, Y_Coord-.9, .03) ;
+				glVertex3d(X_Coord-.9, Y_Coord-.1, .03) ;
+				glVertex3d(X_Coord-.1, Y_Coord-.1, .03) ;
+				glVertex3d(X_Coord-.1, Y_Coord-.9, .03) ;
 			glEnd() ; // GL_QUADS
 		}
 
@@ -298,7 +298,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 	glTranslatef(0, 0, -Depth) ;
 
 	// Draw black caps
-	glColor3f(0, 0, 0) ;
+	glColor3d(0, 0, 0) ;
 	glBegin(GL_QUADS) ;
 		glVertex3i(0, 0, 0) ;
 		glVertex3i(0, M_Sides[0]->Get_Height(), 0) ;
@@ -313,16 +313,16 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 				// Yay pretty colored squares (z-offset for viewability
 				M_Sides[5]->Get_Tile(nn, n)->Get_Color()->Change_To() ;
 				glBegin(GL_QUADS) ;
-					glVertex3f(nn-.9, n-.9, -.03) ;
-					glVertex3f(nn-.9, n-.1, -.03) ;
-					glVertex3f(nn-.1, n-.1, -.03) ;
-					glVertex3f(nn-.1, n-.9, -.03) ;
+					glVertex3d(nn-.9, n-.9, -.03) ;
+					glVertex3d(nn-.9, n-.1, -.03) ;
+					glVertex3d(nn-.1, n-.1, -.03) ;
+					glVertex3d(nn-.1, n-.9, -.03) ;
 				glEnd() ; // GL_QUADS
 			}
 
 	// Go up a bit and draw the other black cap
 	glTranslatef(0, 0, 1) ;
-	glColor3f(0, 0, 0) ;
+	glColor3d(0, 0, 0) ;
 	glBegin(GL_QUADS) ;
 		glVertex3i(0, 0, 0) ;
 		glVertex3i(0, M_Sides[0]->Get_Height(), 0) ;
@@ -337,10 +337,10 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 				// Change to the right color, draw the square at an offset
 				M_Sides[0]->Get_Tile(nn, M_Sides[0]->Get_Height()-n+1)->Get_Color()->Change_To() ;
 				glBegin(GL_QUADS) ;
-					glVertex3f(nn-.9, n-.9, .03) ;
-					glVertex3f(nn-.9, n-.1, .03) ;
-					glVertex3f(nn-.1, n-.1, .03) ;
-					glVertex3f(nn-.1, n-.9, .03) ;
+					glVertex3d(nn-.9, n-.9, .03) ;
+					glVertex3d(nn-.9, n-.1, .03) ;
+					glVertex3d(nn-.1, n-.1, .03) ;
+					glVertex3d(nn-.1, n-.9, .03) ;
 				glEnd() ; // GL_QUADS
 			}
 

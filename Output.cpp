@@ -90,15 +90,15 @@ void Rotate_View(void) {
 		Option_List=glGenLists(1) ;
 
 	glNewList(Option_List, GL_COMPILE) ;
-	glColor3f(Menu_Color[1], Menu_Color[2], Menu_Color[3]) ;
+	glColor3d(Menu_Color[1], Menu_Color[2], Menu_Color[3]) ;
 	glBegin(GL_QUADS) ;
-		glVertex3f(X, Y, Z) ;
+		glVertex3d(X, Y, Z) ;
 		gluUnProject(25, Window_Size-5, .15, Model, Projection, Viewport, &X, &Y, &Z) ;
-		glVertex3f(X, Y, Z) ;
+		glVertex3d(X, Y, Z) ;
 		gluUnProject(25, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z) ;
-		glVertex3f(X, Y, Z) ;
+		glVertex3d(X, Y, Z) ;
 		gluUnProject(5, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z) ;
-		glVertex3f(X, Y, Z) ;
+		glVertex3d(X, Y, Z) ;
 	glEnd() ; // GL_QUADS
 	glEndList() ; // Option_List
 }
@@ -442,11 +442,11 @@ int Make_Arrow_GL_List(void) {
 	glRotatef(Angle, 0, 0, 1) ;
 	glLineWidth(5) ;
 	glBegin(GL_LINE_STRIP) ;
-		glVertex3f(0, 0, .05) ;
-		glVertex3f(1, 0, .05) ;
-		glVertex3f(.75, .25, .05) ;
-		glVertex3f(1, 0, .05) ;
-		glVertex3f(.75, -.25, .05) ;
+		glVertex3d(0, 0, .05) ;
+		glVertex3d(1, 0, .05) ;
+		glVertex3d(.75, .25, .05) ;
+		glVertex3d(1, 0, .05) ;
+		glVertex3d(.75, -.25, .05) ;
 	glEnd() ;
 	glRotatef(-Angle, 0, 0, 1) ;
 
@@ -476,7 +476,7 @@ int Get_Cube_Section(Cube *cube, int Side, int Depth) {
 					glVertex3i(n3, n2-1, 0) ;
 				glEnd() ; // GL_QUADS
 
-				glColor3f(0, 0, 0) ;
+				glColor3d(0, 0, 0) ;
 				glBegin(GL_LINE_STRIP) ;
 					glVertex3i(n3-1, n2-1, 0) ;
 					glVertex3i(n3-1, n2, 0) ;

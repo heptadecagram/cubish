@@ -83,35 +83,35 @@ void Dimension_Display(void) {
 
 	// Draw a skeletal length of the old size
 	glLineWidth(2) ;
-	glColor3f(1, 1, 1) ;
+	glColor3d(1, 1, 1) ;
 	glBegin(GL_LINES) ;
-		glVertex3f(5*Part, 4*Part, 0) ;
-		glVertex3f(5*Part, 2*Part, 0) ;
+		glVertex3d(5*Part, 4*Part, 0) ;
+		glVertex3d(5*Part, 2*Part, 0) ;
 	glEnd() ; // GL_LINES
 	for(int n=1; n<=Old_Length; n++) {
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f((5+10*(n-1) )*Part, 2*Part, 0) ;
-			glVertex3f((5+10*n)*Part, 2*Part, 0) ;
-			glVertex3f((5+10*n)*Part, 4*Part, 0) ;
+			glVertex3d((5+10*(n-1) )*Part, 2*Part, 0) ;
+			glVertex3d((5+10*n)*Part, 2*Part, 0) ;
+			glVertex3d((5+10*n)*Part, 4*Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 	}
 
 	// Draw squares showing the current possible length
 	for(int nn=0; nn<Current_Length; nn++) {
-		glColor3f(.3, .3, .3) ;
+		glColor3d(.3, .3, .3) ;
 		glBegin(GL_QUADS) ;
-			glVertex3f((5+10*nn)*Part, 5*Part, 0) ;
-			glVertex3f((15+10*nn)*Part, 5*Part, 0) ;
-			glVertex3f((15+10*nn)*Part, 15*Part, 0) ;
-			glVertex3f((5+10*nn)*Part, 15*Part, 0) ;
+			glVertex3d((5+10*nn)*Part, 5*Part, 0) ;
+			glVertex3d((15+10*nn)*Part, 5*Part, 0) ;
+			glVertex3d((15+10*nn)*Part, 15*Part, 0) ;
+			glVertex3d((5+10*nn)*Part, 15*Part, 0) ;
 		glEnd() ; // GL_QUADS
-		glColor3f(0, 0, 0) ;
+		glColor3d(0, 0, 0) ;
 		glBegin(GL_LINE_STRIP) ;
-			glVertex3f((5+10*nn)*Part, 5*Part, 0) ;
-			glVertex3f((15+10*nn)*Part, 5*Part, 0) ;
-			glVertex3f((15+10*nn)*Part, 15*Part, 0) ;
-			glVertex3f((5+10*nn)*Part, 15*Part, 0) ;
-			glVertex3f((5+10*nn)*Part, 5*Part, 0) ;
+			glVertex3d((5+10*nn)*Part, 5*Part, 0) ;
+			glVertex3d((15+10*nn)*Part, 5*Part, 0) ;
+			glVertex3d((15+10*nn)*Part, 15*Part, 0) ;
+			glVertex3d((5+10*nn)*Part, 15*Part, 0) ;
+			glVertex3d((5+10*nn)*Part, 5*Part, 0) ;
 		glEnd() ; // GL_LINE_STRIP
 	}
 

@@ -19,7 +19,7 @@ Color::Color(float Red, float Green, float Blue) {
 
 // Facilitators
 void Color::Change_To(void) {
-	glColor3f(M_Red, M_Green, M_Blue) ;
+	glColor3d(M_Red, M_Green, M_Blue) ;
 }
 
 

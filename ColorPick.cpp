@@ -86,19 +86,19 @@ void Color_Display(void) {
 				if(int(Window_Color->Get_Red()*3)==n1 &&
 						int(Window_Color->Get_Green()*3)==n2 &&
 						int(Window_Color->Get_Blue()*3)==n3) {
-					glColor3f(.8, .8, .8) ;
+					glColor3d(.8, .8, .8) ;
 					glLineWidth(2) ;
 					glBegin(GL_LINE_STRIP) ;
-						glVertex3f(-Part/2, -Part/2, 0) ;
-						glVertex3f(7*Part/2, -Part/2, 0) ;
-						glVertex3f(7*Part/2, 7*Part/2, 0) ;
-						glVertex3f(-Part/2, 7*Part/2, 0) ;
-						glVertex3f(-Part/2, -Part/2, 0) ;
+						glVertex3d(-Part/2, -Part/2, 0) ;
+						glVertex3d(7*Part/2, -Part/2, 0) ;
+						glVertex3d(7*Part/2, 7*Part/2, 0) ;
+						glVertex3d(-Part/2, 7*Part/2, 0) ;
+						glVertex3d(-Part/2, -Part/2, 0) ;
 					glEnd() ; // GL_LINE_STRIP
 				}
 
 				// Draw the color, based on where we are
-				glColor3f(n1/3.0, n2/3.0, n3/3.0) ;
+				glColor3d(n1/3.0, n2/3.0, n3/3.0) ;
 				glBegin(GL_QUADS) ;
 					glVertex3i(0, 0, 0) ;
 					glVertex3i(3*Part, 0, 0) ;
