@@ -79,7 +79,7 @@ void Dimension_Display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Define Part, a logical unit of window measurement, useful for drawing
-	float Part=Dimension_Window_Size/100.0;
+	auto Part=Dimension_Window_Size/100.0;
 
 	// Draw a skeletal length of the old size
 	glLineWidth(2);
@@ -88,7 +88,7 @@ void Dimension_Display(void) {
 		glVertex3d(5*Part, 4*Part, 0);
 		glVertex3d(5*Part, 2*Part, 0);
 	glEnd(); // GL_LINES
-	for(int n=1; n<=Old_Length; n++) {
+	for(auto n=1; n<=Old_Length; n++) {
 		glBegin(GL_LINE_STRIP);
 			glVertex3d((5+10*(n-1) )*Part, 2*Part, 0);
 			glVertex3d((5+10*n)*Part, 2*Part, 0);
@@ -97,7 +97,7 @@ void Dimension_Display(void) {
 	}
 
 	// Draw squares showing the current possible length
-	for(int nn=0; nn<Current_Length; nn++) {
+	for(auto nn=0; nn<Current_Length; nn++) {
 		glColor3d(.3, .3, .3);
 		glBegin(GL_QUADS);
 			glVertex3d((5+10*nn)*Part, 5*Part, 0);
@@ -130,13 +130,12 @@ void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		// it is randomized
 		if(Old_Length!=Current_Length) {
 			// Save the state of the Cube before messing with it
-			bool Solved=Current_Cube->Is_Solved();
-			for(int n=1; n<=6; n++)
+			auto Solved=Current_Cube->Is_Solved();
+			for(auto n=1; n<=6; n++)
 				Current_Cube->Get_Face(n)->Flood(Dimension_Color_List[n-1]);
-			int Width, Height, Depth;
-			Width=Current_Cube->Get_Face(1)->Get_Width();
-			Height=Current_Cube->Get_Face(1)->Get_Height();
-			Depth=Current_Cube->Get_Face(2)->Get_Width();
+			auto Width=Current_Cube->Get_Face(1)->Get_Width();
+			auto Height=Current_Cube->Get_Face(1)->Get_Height();
+			auto Depth=Current_Cube->Get_Face(2)->Get_Width();
 
 			// This next if-else-else block figures out what sides
 			// should be modified as the result of changing the
@@ -201,13 +200,13 @@ void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 // Mouse-movement callback function.  Makes the big squares change in number.
 void Dimension_Passive_Motion(int X_Coord, int Y_Coord) {
 	// Figure out how many blocks the mouse has traveled in the X-axis
-	float X_Part=Dimension_Window_Size/10.0;
+	auto X_Part=Dimension_Window_Size/10.0;
 	X_Coord-=X_Part/2;
 
 	// Define a minimum length
 	Current_Length=1;
 	// Don't go further than 9 total blocks
-	for(int n=1; n<9; n++)
+	for(auto n=1; n<9; n++)
 		// If one hasn't traveled past the X-coordinate, prepare to
 		// draw another block
 		if(X_Coord>n*X_Part)
@@ -221,7 +220,7 @@ void Dimension_Passive_Motion(int X_Coord, int Y_Coord) {
 // unrelated to one another, creating distortion.
 void Dimension_Reshape(int X_Size, int Y_Size) {
 	// Figure out which is smaller, the (appropriate) height or width
-	int New_Size=X_Size>5*Y_Size?5*Y_Size:X_Size;
+	auto New_Size=X_Size>5*Y_Size?5*Y_Size:X_Size;
 
 	// Change the size
 	Dimension_Window_Size=New_Size;

@@ -104,7 +104,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Is_Option_Window_Open=false;
 		}
 		else if(Option_Solved && !Current_Cube->Is_Solved() ) {
-			for(int n=1; n<=6; n++)
+			for(auto n=1; n<=6; n++)
 				Current_Cube->Get_Face(n)->Flood(Option_Color_List[n-1]);
 			Option_Cube_List=Make_Option_Cube_List(Option_Color_List);
 			Option_Line_List=Make_Option_Line_List();
@@ -123,7 +123,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		}
 		else if(Option_Color && !Is_Color_Window_Open) {
 
-			float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+			auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 			int Side;
 
 			if(X_Coord<15*X_Part)
@@ -144,19 +144,19 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		}
 		else if(!Is_Dimension_Window_Open &&
 				(Option_Width || Option_Height || Option_Depth) ) {
-			int Dimension=Option_Width?1:Option_Height?2:3;
+			auto Dimension=Option_Width?1:Option_Height?2:3;
 			Dimension_Window(Dimension, Option_Color_List);
 			Is_Dimension_Window_Open=true;
 		}
 		else if(Option_Save) {
-			FILE *Save_File=fopen("./CubeSave.1", "w");
+			auto Save_File=fopen("./CubeSave.1", "w");
 			if(Save_File==NULL)
 				throw std::invalid_argument("Could not open savefile for writing");
 			Current_Cube->Save(Option_Color_List, Save_File);
 			fclose(Save_File);
 		}
 		else if(Option_Load) {
-			FILE *Save_File=fopen("./CubeSave.1", "r");
+			auto Save_File=fopen("./CubeSave.1", "r");
 			if(Save_File==NULL)
 				throw std::invalid_argument("Could not open savefile for reading");
 			Current_Cube->Load(Option_Color_List, Save_File);
@@ -176,7 +176,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 // The regualr mouse movement callback for GLUT
 void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	if((X_Coord>15*X_Part && X_Coord<25*X_Part && Y_Coord>5*Y_Part && Y_Coord<45*Y_Part) ||
 	   (X_Coord>5*X_Part && X_Coord<35*X_Part && Y_Coord>15*Y_Part && Y_Coord<25*Y_Part) ) {
@@ -288,7 +288,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 
 // Allowing for users that try to create odd-sized windows
 void Option_Reshape(int X_Size, int Y_Size) {
-	float New_Size=X_Size*5>Y_Size*4?Y_Size/5.0:X_Size/4.0;
+	auto New_Size=X_Size*5>Y_Size*4?Y_Size/5.0:X_Size/4.0;
 
 	Option_Window_Height=New_Size*5;
 	Option_Window_Width=New_Size*4;
@@ -309,11 +309,11 @@ void Option_Reshape(int X_Size, int Y_Size) {
 }
 
 int Make_Option_Cube_List(Color **Color_Array) {
-	int List_ID=glGenLists(1);
+	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
 
-	for(int n=0; n<6; n++) {
+	for(auto n=0; n<6; n++) {
 		Vector Location;
 		switch(n+1) {
 		case 1:
@@ -343,7 +343,7 @@ int Make_Option_Cube_List(Color **Color_Array) {
 		default:
 			break;
 		}
-		glTranslatef(Location[1], Location[2], 0);
+		glTranslated(Location[1], Location[2], 0);
 		Color_Array[n]->Change_To();
 		glBegin(GL_QUADS);
 			glVertex3d(0, 0, 0);
@@ -351,7 +351,7 @@ int Make_Option_Cube_List(Color **Color_Array) {
 			glVertex3d(Option_Window_Width/4.0, Option_Window_Height/5.0, 0);
 			glVertex3d(Option_Window_Width/4.0, 0, 0);
 		glEnd(); // GL_QUADS
-		glTranslatef(-Location[1], -Location[2], 0);
+		glTranslated(-Location[1], -Location[2], 0);
 
 	}
 
@@ -363,11 +363,11 @@ int Make_Option_Cube_List(Color **Color_Array) {
 int Make_Option_Exit_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
-	glTranslatef(-20*X_Part, -25*Y_Part, 0);
+	glTranslated(-20*X_Part, -25*Y_Part, 0);
 	glColor3d(.7, .7, .7);
 	glBegin(GL_QUADS);
 		glVertex3d(X_Part, Y_Part, 0);
@@ -387,7 +387,7 @@ int Make_Option_Exit_List(void) {
 		glVertex3d(9*X_Part, Y_Part, 0);
 		glVertex3d(X_Part, 9*Y_Part, 0);
 	glEnd(); // GL_LINES
-	glTranslatef(20*X_Part, 25*Y_Part, 0);
+	glTranslated(20*X_Part, 25*Y_Part, 0);
 
 	glEndList(); // List_ID
 
@@ -397,11 +397,11 @@ int Make_Option_Exit_List(void) {
 int Make_Option_Solved_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
-	glTranslatef(-20*X_Part, 15*Y_Part, 0);
+	glTranslated(-20*X_Part, 15*Y_Part, 0);
 	glBegin(GL_QUADS);
 		Option_Color_List[0]->Change_To();
 		glVertex3d(X_Part, Y_Part, 0);
@@ -442,7 +442,7 @@ int Make_Option_Solved_List(void) {
 		glEnd(); // GL_LINE_STRIP
 	}
 
-	glTranslatef(20*X_Part, -15*Y_Part, 0);
+	glTranslated(20*X_Part, -15*Y_Part, 0);
 
 	glEndList(); // List_ID
 
@@ -452,11 +452,11 @@ int Make_Option_Solved_List(void) {
 int Make_Option_Random_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
-	glTranslatef(10*X_Part, 15*Y_Part, 0);
+	glTranslated(10*X_Part, 15*Y_Part, 0);
 	glBegin(GL_QUADS);
 		Option_Color_List[0]->Change_To();
 		glVertex3d(X_Part, Y_Part, 0);
@@ -569,7 +569,7 @@ int Make_Option_Random_List(void) {
 		glEnd(); // GL_LINE_STRIP
 	}
 
-	glTranslatef(-10*X_Part, -15*Y_Part, 0);
+	glTranslated(-10*X_Part, -15*Y_Part, 0);
 
 	glEndList(); // List_ID
 
@@ -579,7 +579,7 @@ int Make_Option_Random_List(void) {
 int Make_Option_Line_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
@@ -638,11 +638,11 @@ int Make_Option_Line_List(void) {
 int Make_Option_Load_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
-	glTranslatef(10*X_Part, -25*Y_Part, 0);
+	glTranslated(10*X_Part, -25*Y_Part, 0);
 
 	glColor3d(0, 0, 1);
 	glBegin(GL_QUADS);
@@ -654,9 +654,9 @@ int Make_Option_Load_List(void) {
 
 	glColor3d(.7, .7, .7);
 	glBegin(GL_POLYGON);
-		for(float f1=5; f1<=7; f1+=.1)
+		for(auto f1=5.0; f1<=7; f1+=.1)
 			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-		for(float f2=5; f2<=7; f2+=.1)
+		for(auto f2=5.0; f2<=7; f2+=.1)
 			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
 	glEnd(); // GL_POLYGON
 
@@ -677,9 +677,9 @@ int Make_Option_Load_List(void) {
 			glVertex3d(3*X_Part, 2*Y_Part, 0);
 		glEnd(); // GL_LINE_STRIP
 		glBegin(GL_LINE_STRIP);
-			for(float f1=5; f1<=7; f1+=.1)
+			for(auto f1=5.0; f1<=7; f1+=.1)
 				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-			for(float f2=7; f2>=5; f2-=.1)
+			for(auto f2=7.0; f2>=5; f2-=.1)
 				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
 		glEnd(); // GL_LINE_STRIP
 
@@ -697,7 +697,7 @@ int Make_Option_Load_List(void) {
 		glEnd(); // GL_TRIANGLES
 	}
 
-	glTranslatef(-10*X_Part, 25*Y_Part, 0);
+	glTranslated(-10*X_Part, 25*Y_Part, 0);
 
 	glEndList(); // List_ID
 
@@ -707,11 +707,11 @@ int Make_Option_Load_List(void) {
 int Make_Option_Save_List(void) {
 	static int List_ID=glGenLists(1);
 
-	float X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
 	glNewList(List_ID, GL_COMPILE);
 
-	glTranslatef(10*X_Part, -15*Y_Part, 0);
+	glTranslated(10*X_Part, -15*Y_Part, 0);
 
 	glColor3d(0, 0, 1);
 	glBegin(GL_QUADS);
@@ -723,9 +723,9 @@ int Make_Option_Save_List(void) {
 
 	glColor3d(.7, .7, .7);
 	glBegin(GL_POLYGON);
-		for(float f1=5; f1<=7; f1+=.1)
+		for(auto f1=5.0; f1<=7; f1+=.1)
 			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-		for(float f2=5; f2<=7; f2+=.1)
+		for(auto f2=5.0; f2<=7; f2+=.1)
 			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
 	glEnd(); // GL_POLYGON
 
@@ -746,9 +746,9 @@ int Make_Option_Save_List(void) {
 			glVertex3d(3*X_Part, 2*Y_Part, 0);
 		glEnd(); // GL_LINE_STRIP
 		glBegin(GL_LINE_STRIP);
-			for(float f1=5; f1<=7; f1+=.1)
+			for(auto f1=5.0; f1<=7; f1+=.1)
 				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-			for(float f2=7; f2>=5; f2-=.1)
+			for(auto f2=7.0; f2>=5; f2-=.1)
 				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
 		glEnd(); // GL_LINE_STRIP
 
@@ -766,7 +766,7 @@ int Make_Option_Save_List(void) {
 		glEnd(); // GL_TRIANGLES
 	}
 
-	glTranslatef(-10*X_Part, 15*Y_Part, 0);
+	glTranslated(-10*X_Part, 15*Y_Part, 0);
 
 	glEndList(); // List_ID
 

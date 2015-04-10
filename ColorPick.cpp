@@ -50,35 +50,35 @@ void Color_Display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Part is a logical unit of the window's size
-	float Part=Color_Window_Size/33.0;
+	auto Part=Color_Window_Size/33.0;
 
 	// Draw four quadrants in the window
-	for(int n1=0; n1<4; n1++) {
+	for(auto n1=0; n1<4; n1++) {
 		// This switch handles the quadrant translations
 		switch(n1) {
 		case 0:
-			glTranslatef(Part, Part, 0);
+			glTranslated(Part, Part, 0);
 			break;
 		case 1:
-			glTranslatef(Part*17, Part, 0);
+			glTranslated(Part*17, Part, 0);
 			break;
 		case 2:
-			glTranslatef(Part, 17*Part, 0);
+			glTranslated(Part, 17*Part, 0);
 			break;
 		case 3:
-			glTranslatef(17*Part, 17*Part, 0);
+			glTranslated(17*Part, 17*Part, 0);
 			break;
 		default:
 			break;
 		}
 
 		// For each column
-		for(int n2=0; n2<4; n2++) {
-			glTranslatef(4*n2*Part, 0, 0);
+		for(auto n2=0; n2<4; n2++) {
+			glTranslated(4*n2*Part, 0, 0);
 
 			// For each row
-			for(int n3=0; n3<4; n3++) {
-				glTranslatef(0, 4*n3*Part, 0);
+			for(auto n3=0; n3<4; n3++) {
+				glTranslated(0, 4*n3*Part, 0);
 
 				// If this is the old color, draw a white box
 				// around it to let the user know which one it
@@ -107,25 +107,25 @@ void Color_Display(void) {
 				glEnd(); // GL_QUADS
 
 				// Move back
-				glTranslatef(0, -4*n3*Part, 0);
+				glTranslated(0, -4*n3*Part, 0);
 			}
 			// Move back
-			glTranslatef(-4*n2*Part, 0, 0);
+			glTranslated(-4*n2*Part, 0, 0);
 		}
 
 		// Move back for the last time
 		switch(n1) {
 		case 0:
-			glTranslatef(-Part, -Part, 0);
+			glTranslated(-Part, -Part, 0);
 			break;
 		case 1:
-			glTranslatef(-17*Part, -Part, 0);
+			glTranslated(-17*Part, -Part, 0);
 			break;
 		case 2:
-			glTranslatef(-Part, -17*Part, 0);
+			glTranslated(-Part, -17*Part, 0);
 			break;
 		case 3:
-			glTranslatef(-17*Part, -17*Part, 0);
+			glTranslated(-17*Part, -17*Part, 0);
 			break;
 		default:
 			break;
@@ -142,8 +142,8 @@ void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	if(State==GLUT_DOWN) {
 		// Adjust for window coordinates to logical ones
 		Y_Coord=Color_Window_Size-Y_Coord;
-		float Part=Color_Window_Size/33.0;
-		float Red, Green, Blue;
+		auto Part=Color_Window_Size/33.0;
+		double Red, Green, Blue;
 
 		// This if-else-else-else block determines the red content
 		if(X_Coord>Part && X_Coord<16*Part) {
@@ -224,7 +224,7 @@ void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 // unrelated to one another, creating distortion.
 void Color_Reshape(int X_Size, int Y_Size) {
 	// Find the smaller of the two sizes
-	float New_Size=X_Size>Y_Size?Y_Size:X_Size;
+	double New_Size=X_Size>Y_Size?Y_Size:X_Size;
 
 	// The smaller size defines the new edge of the window
 	Color_Window_Size=New_Size;

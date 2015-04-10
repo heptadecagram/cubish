@@ -17,35 +17,35 @@ class Quaternion: public Vector {
 public:
 	// Constructors
 	Quaternion(void);
-	Quaternion(float X_Component, float Y_Component, float Z_Component, float Phi);
+	Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi);
 	Quaternion &operator = (const Vector &vector);
 
 	// Facilitators
 	void Normalize(void);
-	void Trackball(float Old_X_Coord, float Old_Y_Coord, float New_X_Coord, float New_Y_Coord);
-	void Build(Vector Axis, float Phi);
-	void Build_Rotation_Matrix(float Matrix[4][4]);
+	void Trackball(double Old_X_Coord, double Old_Y_Coord, double New_X_Coord, double New_Y_Coord);
+	void Build(Vector Axis, double Phi);
+	void Build_Rotation_Matrix(double Matrix[4][4]);
 	Quaternion operator * (const Quaternion &quaternion) const;
-	float operator | (const Quaternion &quaternion);
+	double operator | (const Quaternion &quaternion);
 	Quaternion operator + (const Quaternion &quaternion);
 
 	// Inspectors
-	float operator [] (int Index) const;
+	double operator [] (int Index) const;
 
 	// Mutators
-	float &operator [] (int Index);
-	void Set_Radius(float Radius);
+	double &operator [] (int Index);
+	void Set_Radius(double Radius);
 
 	// Member Variables
-	static float M_Radius;
+	static double M_Radius;
 
 protected:
 	// Member Variables
-	float _phi;
-	//float M_Radius;
+	double _phi;
+	//double M_Radius;
 
 private:
-	float Sphere_Projection(float X_Coord, float Y_Coord);
+	double Sphere_Projection(double X_Coord, double Y_Coord);
 };
 
 #endif // LIAM_QUATERNION

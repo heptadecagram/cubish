@@ -16,11 +16,11 @@
 Cube *Current_Cube;
 Color **Color_List;
 int Cube_List, Arrow_List;
-double Window_Size=300;
+auto Window_Size=300.0;
 
 int Window_ID, Option_Window_ID;
 
-bool View_Spinning=false, Mouse_Dragging=false, New_View=true, Cube_Twisting=false;
+auto View_Spinning=false, Mouse_Dragging=false, New_View=true, Cube_Twisting=false;
 int beginx, beginy;
 
 Vector Start_Vector, End_Vector;
@@ -31,8 +31,8 @@ bool Draw_Section;
 Vector Menu_Color(.7, .7, .7);
 bool Is_Option_Window_Open;
 int Section_List, Slice_List, Option_List;
-float Slice_Angle, Max_Angle;
-float Time_Delay;
+double Slice_Angle, Max_Angle;
+double Time_Delay;
 
 void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6]) {
 	Current_Cube=cube;
@@ -47,12 +47,11 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 
 	glutDisplayFunc(Display);
 
-	int Height, Width, Depth;
-	Height=Current_Cube->Get_Face(1)->Get_Height();
-	Width=Current_Cube->Get_Face(1)->Get_Width();
-	Depth=Current_Cube->Get_Face(2)->Get_Width();
+	auto Height=Current_Cube->Get_Face(1)->Get_Height();
+	auto Width=Current_Cube->Get_Face(1)->Get_Width();
+	auto Depth=Current_Cube->Get_Face(2)->Get_Width();
 
-	double Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
+	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
 	glViewport(0, 0, Window_Size, Window_Size);
 	glMatrixMode(GL_PROJECTION);
@@ -67,12 +66,12 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 
 // If the viewpoint coordinates have been changed, readjust the matrix
 void Rotate_View(void) {
-	float Rotation_Matrix[4][4];
+	double Rotation_Matrix[4][4];
 
 	glPopMatrix();
 	glPushMatrix();
 	New_Quaternion.Build_Rotation_Matrix(Rotation_Matrix);
-	glMultMatrixf(&Rotation_Matrix[0][0]);
+	glMultMatrixd(&Rotation_Matrix[0][0]);
 	New_View=false;
 
 	double X, Y, Z;
@@ -119,9 +118,9 @@ void Display(void) {
 
 		// Draw things, but don't display them
 		glBegin(GL_QUADS);
-			for(int n1=0; n1<20; n1++)
-				for(int n2=0; n2<20; n2++)
-					for(int n3=0; n3<20; n3++) {
+			for(auto n1=0; n1<20; n1++)
+				for(auto n2=0; n2<20; n2++)
+					for(auto n3=0; n3<20; n3++) {
 						glVertex3i(n1, n2, n3);
 						glVertex3i(n1, n2+1, n3);
 						glVertex3i(n1+1, n2+1, n3+1);
@@ -136,7 +135,7 @@ void Display(void) {
 			Current_Render_Time=End_Milli.millitm-Begin_Milli.millitm;
 		else // End!=Begin
 			Current_Render_Time=Begin_Milli.millitm-End_Milli.millitm;
-		static float Average_Render_Time=0;
+		static auto Average_Render_Time=0.0;
 
 		Average_Render_Time=(First_View*Average_Render_Time + Current_Render_Time)/First_View;
 		++First_View;
@@ -296,11 +295,11 @@ void Set_Spin(int Value) {
 // Animation for a solved cube.  Pulsates the background color.
 void Pulsate_Background_Color(void) {
 	glutSetWindow(Window_ID);
-	static float Red=.6, Green=.6, Blue=.6;
-	static bool Increasing=true;
+	static auto Red=.6, Green=.6, Blue=.6;
+	static auto Increasing=true;
 
 	// Time-dependent
-	static const float Increment=Time_Delay/3000;
+	static const auto Increment=Time_Delay/3000;
 
 	if(Increasing)
 		Red+=Increment, Green+=Increment, Blue+=Increment;
@@ -380,10 +379,10 @@ void Motion(int X_Coord, int Y_Coord) {
 	else if(Mouse_Dragging) {
 		// Perform a trackball projection from two-space to a
 		// quaternion
-		Old_Quaternion.Trackball( (float(2*beginx) - Window_Size)/Window_Size,
-				(Window_Size - float(2*beginy) )/Window_Size,
-				(float(2*X_Coord) - Window_Size)/Window_Size,
-				(Window_Size - float(2*Y_Coord) )/Window_Size);
+		Old_Quaternion.Trackball( (double(2*beginx) - Window_Size)/Window_Size,
+				(Window_Size - double(2*beginy) )/Window_Size,
+				(double(2*X_Coord) - Window_Size)/Window_Size,
+				(Window_Size - double(2*Y_Coord) )/Window_Size);
 		View_Spinning=true;
 		beginx=X_Coord;
 		beginy=Y_Coord;
@@ -399,7 +398,7 @@ void Motion(int X_Coord, int Y_Coord) {
 
 // The window is square.  Keep it that way.
 void Resize(int X_Size, int Y_Size) {
-	int New_Size=X_Size<Y_Size?X_Size:Y_Size;
+	auto New_Size=X_Size<Y_Size?X_Size:Y_Size;
 	glutReshapeWindow(New_Size, New_Size);
 	glViewport(0, 0, New_Size, New_Size);
 	Window_Size=New_Size;
@@ -418,14 +417,14 @@ void Keyboard(unsigned char Key, int X_Coord, int Y_Coord) {
 }
 
 int Make_Arrow_GL_List(void) {
-	static int List_ID=glGenLists(1);
+	static auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
 
 	Current_Cube->View_Side(Start_Vector[1]);
-	glTranslatef(Start_Vector[2]-.5, Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-Start_Vector[3]+.5, 0);
+	glTranslated(Start_Vector[2]-.5, Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-Start_Vector[3]+.5, 0);
 
-	float Angle=0;
+	auto Angle=0.0;
 	switch(Arrow_Direction) {
 	case Up:
 		Angle=-90;
@@ -450,7 +449,7 @@ int Make_Arrow_GL_List(void) {
 	glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
-	glTranslatef(.5-Start_Vector[2], Start_Vector[3]-Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-.5, 0);
+	glTranslated(.5-Start_Vector[2], Start_Vector[3]-Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-.5, 0);
 	Current_Cube->Undo_View_Side(Start_Vector[1]);
 
 	glEndList();
@@ -459,15 +458,15 @@ int Make_Arrow_GL_List(void) {
 }
 
 int Get_Cube_Section(Cube *cube, int Side, int Depth) {
-	int List_ID=glGenLists(1);
+	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
-	for(int n1=1; n1<=6; n1++) {
+	for(auto n1=1; n1<=6; n1++) {
 
 		Current_Cube->View_Side(n1);
 
-		for(int n2=1; n2<=cube->Get_Face(n1)->Get_Height(); n2++) {
-			for(int n3=1; n3<=cube->Get_Face(n1)->Get_Width(); n3++) {
+		for(auto n2=1; n2<=cube->Get_Face(n1)->Get_Height(); n2++) {
+			for(auto n3=1; n3<=cube->Get_Face(n1)->Get_Width(); n3++) {
 				cube->Get_Face(n1)->Get_Tile(n3, cube->Get_Face(n1)->Get_Height()-n2+1)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
 					glVertex3i(n3-1, n2-1, 0);
@@ -496,14 +495,13 @@ int Get_Cube_Section(Cube *cube, int Side, int Depth) {
 }
 
 Vector Find_Cube_Point(Vector Begin, Vector End) {
-	Vector Change=End-Begin;
-	double Half_Width, Half_Height, Half_Depth;
-	float X_Temp, Y_Temp, Z_Temp;
-	Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
-	Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
-	Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
+	auto Change=End-Begin;
+	double X_Temp, Y_Temp, Z_Temp;
+	auto Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
+	auto Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
+	auto Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
 
-	for(int n=0; n<=6; n++) {
+	for(auto n=0; n<=6; n++) {
 		if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
 		switch(n) {
 		case 1:
@@ -577,12 +575,11 @@ Vector Find_Cube_Point(Vector Begin, Vector End) {
 }
 
 Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
-	Vector Change=End-Begin;
-	double Half_Width, Half_Height, Half_Depth;
-	float X_Temp, Y_Temp, Z_Temp;
-	Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
-	Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
-	Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
+	auto Change=End-Begin;
+	double X_Temp, Y_Temp, Z_Temp;
+	auto Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
+	auto Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
+	auto Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
 
 	switch(int(Initial[1]) ) {
 	case 1:
@@ -736,12 +733,11 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 
 void Cube_Remake_View(void) {
 	glutSetWindow(Window_ID);
-	int Height, Width, Depth;
-	Height=Current_Cube->Get_Face(1)->Get_Height();
-	Width=Current_Cube->Get_Face(1)->Get_Width();
-	Depth=Current_Cube->Get_Face(2)->Get_Width();
+	auto Height=Current_Cube->Get_Face(1)->Get_Height();
+	auto Width=Current_Cube->Get_Face(1)->Get_Width();
+	auto Depth=Current_Cube->Get_Face(2)->Get_Width();
 
-	double Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
+	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
 	Width=Width>Height?Width:Height;
 	Width=Width>Depth?Width:Depth;

@@ -8,7 +8,7 @@
 // Constructors
 Face::Face(void) {
 	M_Tile=new Tile*[9];
-	for(int n=0; n<9; n++) {
+	for(auto n=0; n<9; n++) {
 		M_Tile[n]=new Tile;
 	}
 	M_Height=3;
@@ -17,7 +17,7 @@ Face::Face(void) {
 
 Face::Face(int Width, int Height, Color *color) {
 	M_Tile=new Tile*[Height*Width];
-	for(int n=0; n<Height*Width; n++) {
+	for(auto n=0; n<Height*Width; n++) {
 		M_Tile[n]=new Tile;
 		M_Tile[n]->Set_Color(color);
 	}
@@ -29,8 +29,8 @@ Face::Face(const Face &face) {
 	M_Height=face.Get_Height();
 	M_Width=face.Get_Width();
 	M_Tile=new Tile*[M_Width*M_Height];
-	for(int n=0; n<M_Width; n++)
-		for(int nn=0; nn<M_Height; nn++) {
+	for(auto n=0; n<M_Width; n++)
+		for(auto nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile;
 			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() );
 		}
@@ -71,7 +71,7 @@ bool Face::Is_Solved(void) const {
 	Color Temp(M_Tile[0]->Get_Color()->Get_Red(), M_Tile[0]->Get_Color()->Get_Green(),
 			M_Tile[0]->Get_Color()->Get_Blue() );
 	// Cycle through the face, checking the colors to see if they all match the first
-	for(int n=1; n<M_Width*M_Height; n++)
+	for(auto n=1; n<M_Width*M_Height; n++)
 		if(		M_Tile[n]->Get_Color()->Get_Red()!=Temp.Get_Red() ||
 				M_Tile[n]->Get_Color()->Get_Green()!=Temp.Get_Green() ||
 				M_Tile[n]->Get_Color()->Get_Blue()!=Temp.Get_Blue() )
@@ -83,7 +83,7 @@ bool Face::Is_Solved(void) const {
 // Mutators
 // Flood: Make an entire Face a single Color
 void Face::Flood(Color *color) {
-	for(int n=0; n<M_Height*M_Width; n++)
+	for(auto n=0; n<M_Height*M_Width; n++)
 		M_Tile[n]->Set_Color(color);
 }
 
@@ -99,18 +99,18 @@ void Face::Rotate_CW(void) {
 	Tile **Temp=new Tile*[M_Height*M_Width];
 
 	// Copy the old values
-	for(int n=0; n<M_Height*M_Width; n++)
+	for(auto n=0; n<M_Height*M_Width; n++)
 		Temp[n]=M_Tile[n];
 
 	if(M_Height==M_Width) {
-		for(int n=0; n<M_Height; n++)
-			for(int nn=0; nn<M_Width; nn++)
+		for(auto n=0; n<M_Height; n++)
+			for(auto nn=0; nn<M_Width; nn++)
 				// bijection function that maps the new coordinates
 				M_Tile[(M_Width-1-n)+M_Height*nn]=Temp[n*M_Width+nn];
 	}
 	else { // M_Height!=M_Width
-		for(int n=0; n<M_Height; n++)
-			for(int nn=0; nn<M_Width; nn++)
+		for(auto n=0; n<M_Height; n++)
+			for(auto nn=0; nn<M_Width; nn++)
 				// This function actually rotates 180 degrees
 				M_Tile[M_Width*M_Height-1-nn-n*M_Width]=Temp[n*M_Width+nn];
 	}
@@ -129,16 +129,16 @@ void Face::Spin_CW(void) {
 	Tile **Temp=new Tile*[M_Height*M_Width];
 
 	// Copy the old Face
-	for(int n=0; n<M_Height*M_Width; n++)
+	for(auto n=0; n<M_Height*M_Width; n++)
 		Temp[n]=M_Tile[n];
 
 	// M_Height!=M_Width, so change the two
-	int Temp_Size=M_Height;
+	auto Temp_Size=M_Height;
 	M_Height=M_Width;
 	M_Width=Temp_Size;
 
-	for(int n=0; n<M_Width; n++)
-		for(int nn=0; nn<M_Height; nn++)
+	for(auto n=0; n<M_Width; n++)
+		for(auto nn=0; nn<M_Height; nn++)
 			// Use a bijection to map the coordinates
 			M_Tile[n+nn*M_Width]=Temp[nn+M_Height*(M_Width-1-n)];
 
@@ -171,8 +171,8 @@ Face &Face::operator =(const Face &face) {
 	// Make a new array
 	M_Tile=new Tile*[M_Width*M_Height];
 
-	for(int n=0; n<M_Width; n++)
-		for(int nn=0; nn<M_Height; nn++) {
+	for(auto n=0; n<M_Width; n++)
+		for(auto nn=0; nn<M_Height; nn++) {
 			M_Tile[n+nn*M_Width]=new Tile;
 			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() );
 		}

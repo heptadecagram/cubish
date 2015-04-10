@@ -12,7 +12,7 @@
 int main(int Argument_Count, char** Arguments) {
 
 	// Declare a default cube size
-	int Width=3, Height=3, Depth=3;
+	auto Width=3, Height=3, Depth=3;
 
 	// Create the color list and default colors
 	Color *Side_Colors[6];
@@ -24,7 +24,7 @@ int main(int Argument_Count, char** Arguments) {
 	Side_Colors[5]=new Color(1, 1, 0);
 
 	// Behold the Cube
-	Cube *Alpha=new Cube(Width, Height, Depth, Side_Colors[0], Side_Colors[1], Side_Colors[2],
+	auto Alpha=new Cube(Width, Height, Depth, Side_Colors[0], Side_Colors[1], Side_Colors[2],
 			Side_Colors[3], Side_Colors[4], Side_Colors[5]);
 
 	Initialize_Window(Argument_Count, Arguments, Alpha, Side_Colors);

@@ -14,23 +14,23 @@ class Color {
 public:
 	// Constructors
 	Color(void);
-	Color(float Red, float Green, float Blue);
+	Color(double Red, double Green, double Blue);
 
 	// Facilitators
 	void Change_To(void);
 
 	// Inspectors
-	float Get_Red(void) const;
-	float Get_Green(void) const;
-	float Get_Blue(void) const;
+	double Get_Red(void) const;
+	double Get_Green(void) const;
+	double Get_Blue(void) const;
 
 	// Mutators
-	void Set(float Red, float Green, float Blue);
+	void Set(double Red, double Green, double Blue);
 
 protected:
-	float M_Red;
-	float M_Green;
-	float M_Blue;
+	double M_Red;
+	double M_Green;
+	double M_Blue;
 };
 
 #endif // LIAM_COLOR

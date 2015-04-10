@@ -32,13 +32,13 @@ int Cube::Make_GL_List(void) {
 
 	glNewList(List_ID, GL_COMPILE);
 
-	for(int n1=1; n1<=6; n1++) {
+	for(auto n1=1; n1<=6; n1++) {
 
 		// Orient the viewing volume to face the correct side
 		View_Side(n1);
 
-		for(int n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
-			for(int n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
+		for(auto n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
+			for(auto n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
 				M_Sides[n1-1]->Get_Tile(n3, M_Sides[n1-1]->Get_Height()-n2+1)->Get_Color()->Change_To();
 				// Raise the height of all colored squares to avoid clipping problems
 				glBegin(GL_QUADS);
@@ -98,15 +98,15 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	}
 
 	// Start drawing from the specified Side
-	int Old_Front=Set_Front(Side);
+	auto Old_Front=Set_Front(Side);
 
-	for(int n1=(Depth==1?2:1); n1<=(Depth==M_Sides[1]->Get_Width()?5:6); n1++) {
+	for(auto n1=(Depth==1?2:1); n1<=(Depth==M_Sides[1]->Get_Width()?5:6); n1++) {
 
 		// Rotate/translate the appropriate amount for the side
 		View_Side(n1);
 
-		for(int n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
-			for(int n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
+		for(auto n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
+			for(auto n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
 				// If the current slice is not the removed one, and is also not a front or
 				// back side that would be affected, draw it
 				if(!((n1==2 && n3==M_Sides[n1-1]->Get_Width()-Depth+1) ||
@@ -140,7 +140,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	View_Side(1);
 
 	// Find how far down to go, change to black color
-	glTranslatef(0, 0, -Depth);
+	glTranslated(0, 0, -Depth);
 	glColor3d(0, 0, 0);
 
 	// Draw a black square on top, if it is open
@@ -154,7 +154,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	}
 
 	// Move up a bit
-	glTranslatef(0, 0, 1);
+	glTranslated(0, 0, 1);
 
 	// If we are not at the top, draw another black square to close off
 	// the open side
@@ -168,7 +168,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	}
 
 	// Go back to where we used to be
-	glTranslatef(0, 0, Depth-1);
+	glTranslated(0, 0, Depth-1);
 	Undo_View_Side(1);
 	Set_Front(Old_Front);
 
@@ -230,11 +230,11 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 	}
 
 	// Start drawing from the specified Side
-	int Old_Front=Set_Front(Side);
+	auto Old_Front=Set_Front(Side);
 
 	// Since this slice might not be square, we have to adjust for each side
 	int Temp_Slice_Length, X_Coord, Y_Coord;
-	for(int n=2; n<=5; n++) {
+	for(auto n=2; n<=5; n++) {
 
 		// Get ready to draw on a side
 		View_Side(n);
@@ -244,7 +244,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 		else // n==3 || n==5
 			Temp_Slice_Length=M_Sides[0]->Get_Width();
 
-		for(int nn=1; nn<=Temp_Slice_Length; nn++) {
+		for(auto nn=1; nn<=Temp_Slice_Length; nn++) {
 
 			switch(n) {
 			case 2:
@@ -295,7 +295,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 	View_Side(1);
 
 	// Move to the correct depth
-	glTranslatef(0, 0, -Depth);
+	glTranslated(0, 0, -Depth);
 
 	// Draw black caps
 	glColor3d(0, 0, 0);
@@ -308,8 +308,8 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// If we are at the bottom, draw the appropriate colored squares
 	if(Depth==M_Sides[1]->Get_Width() )
-		for(int n=1; n<=M_Sides[5]->Get_Height(); n++)
-			for(int nn=1; nn<=M_Sides[5]->Get_Width(); nn++) {
+		for(auto n=1; n<=M_Sides[5]->Get_Height(); n++)
+			for(auto nn=1; nn<=M_Sides[5]->Get_Width(); nn++) {
 				// Yay pretty colored squares (z-offset for viewability
 				M_Sides[5]->Get_Tile(nn, n)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
@@ -321,7 +321,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			}
 
 	// Go up a bit and draw the other black cap
-	glTranslatef(0, 0, 1);
+	glTranslated(0, 0, 1);
 	glColor3d(0, 0, 0);
 	glBegin(GL_QUADS);
 		glVertex3i(0, 0, 0);
@@ -332,8 +332,8 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// If we are at the top, draw the appropriate colored squares
 	if(Depth==1)
-		for(int n=1; n<=M_Sides[0]->Get_Height(); n++)
-			for(int nn=1; nn<=M_Sides[0]->Get_Width(); nn++) {
+		for(auto n=1; n<=M_Sides[0]->Get_Height(); n++)
+			for(auto nn=1; nn<=M_Sides[0]->Get_Width(); nn++) {
 				// Change to the right color, draw the square at an offset
 				M_Sides[0]->Get_Tile(nn, M_Sides[0]->Get_Height()-n+1)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
@@ -345,7 +345,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			}
 
 	// Restore the old view
-	glTranslatef(0, 0, Depth-1);
+	glTranslated(0, 0, Depth-1);
 	Undo_View_Side(1);
 	Set_Front(Old_Front);
 
@@ -382,34 +382,33 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 // reverse the changes this function makes!
 void Cube::View_Side(int Side) {
 	// Get some measurements
-	int Width, Height, Depth;
-	Width=M_Sides[0]->Get_Width();
-	Height=M_Sides[0]->Get_Height();
-	Depth=M_Sides[1]->Get_Width();
+	auto Width=M_Sides[0]->Get_Width();
+	auto Height=M_Sides[0]->Get_Height();
+	auto Depth=M_Sides[1]->Get_Width();
 
 	switch(Side) {
 	case 1:
-		glTranslatef(-(float)Width/2, -(float)Height/2, (float)Depth/2);
+		glTranslated(-Width/2.0, -Height/2.0, Depth/2.0);
 		break;
 	case 2:
 		glRotatef(90, 0, -1, 0);
-		glTranslatef(-(float)Depth/2, -(float)Height/2, (float)Width/2);
+		glTranslated(-Depth/2.0, -Height/2.0, Width/2.0);
 		break;
 	case 3:
 		glRotatef(90, -1, 0, 0);
-		glTranslatef(-(float)Width/2, -(float)Depth/2, (float)Height/2);
+		glTranslated(-Width/2.0, -Depth/2.0, Height/2.0);
 		break;
 	case 4:
 		glRotatef(90, 0, 1, 0);
-		glTranslatef(-(float)Depth/2, -(float)Height/2, (float)Width/2);
+		glTranslated(-Depth/2.0, -Height/2.0, Width/2.0);
 		break;
 	case 5:
 		glRotatef(90, 1, 0, 0);
-		glTranslatef(-(float)Width/2, -(float)Depth/2, (float)Height/2);
+		glTranslated(-Width/2.0, -Depth/2.0, Height/2.0);
 		break;
 	case 6:
 		glRotatef(180, 1, 0, 0);
-		glTranslatef(-(float)Width/2, -(float)Height/2, (float)Depth/2);
+		glTranslated(-Width/2.0, -Height/2.0, Depth/2.0);
 		break;
 	default:
 		break;
@@ -419,33 +418,32 @@ void Cube::View_Side(int Side) {
 // This function reverses the effects of View_Side().  See that function for
 // explanation.
 void Cube::Undo_View_Side(int Side) {
-	int Width, Height, Depth;
-	Width=M_Sides[0]->Get_Width();
-	Height=M_Sides[0]->Get_Height();
-	Depth=M_Sides[1]->Get_Width();
+	auto Width=M_Sides[0]->Get_Width();
+	auto Height=M_Sides[0]->Get_Height();
+	auto Depth=M_Sides[1]->Get_Width();
 
 	switch(Side) {
 	case 1:
-		glTranslatef((float)Width/2, (float)Height/2, -(float)Depth/2);
+		glTranslated(Width/2.0, Height/2.0, -Depth/2.0);
 		break;
 	case 2:
-		glTranslatef((float)Depth/2, (float)Height/2, -(float)Width/2);
+		glTranslated(Depth/2.0, Height/2.0, -Width/2.0);
 		glRotatef(-90, 0, -1, 0);
 		break;
 	case 3:
-		glTranslatef((float)Width/2, (float)Depth/2, -(float)Height/2);
+		glTranslated(Width/2.0, Depth/2.0, -Height/2.0);
 		glRotatef(-90, -1, 0, 0);
 		break;
 	case 4:
-		glTranslatef((float)Depth/2, (float)Height/2, -(float)Width/2);
+		glTranslated(Depth/2.0, Height/2.0, -Width/2.0);
 		glRotatef(-90, 0, 1, 0);
 		break;
 	case 5:
-		glTranslatef((float)Width/2, (float)Depth/2, -(float)Height/2);
+		glTranslated(Width/2.0, Depth/2.0, -Height/2.0);
 		glRotatef(-90, 1, 0, 0);
 		break;
 	case 6:
-		glTranslatef((float)Width/2, (float)Height/2, -(float)Depth/2);
+		glTranslated(Width/2.0, Height/2.0, -Depth/2.0);
 		glRotatef(-180, 1, 0, 0);
 		break;
 	default:
@@ -513,9 +511,9 @@ void Cube::Load(Color **Color_List, FILE *File) {
 	char Color_Index=0;
 	// Now, obtain the Color_List information stored in the file and put it on the
 	// Cube.
-	for(int n1=0; n1<6; n1++)
-		for(int n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
-			for(int n3=1; n3<=M_Sides[n1]->Get_Width(); n3++) {
+	for(auto n1=0; n1<6; n1++)
+		for(auto n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
+			for(auto n3=1; n3<=M_Sides[n1]->Get_Width(); n3++) {
 				fscanf(File, "%c", &Color_Index);
 				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[(int)Color_Index]);
 			}
@@ -530,7 +528,7 @@ void Cube::Load(Color **Color_List, FILE *File) {
 void Cube::Randomize(int Twists) {
 	Direction Random_Direction;
 	int Random_Side, Random_Row, Random_Column;
-	for(int n=0; n<Twists; n++) {
+	for(auto n=0; n<Twists; n++) {
 		Random_Side=Random(6);
 		Random_Row=Random(M_Sides[Random_Side-1]->Get_Height() );
 		Random_Column=Random(M_Sides[Random_Side-1]->Get_Width() );
@@ -544,12 +542,12 @@ void Cube::Randomize(int Twists) {
 // rotate in that direction.
 bool Cube::Rotate_CW(int Side, int Offset) {
 	// Reorient the sides of the Cube so we only have to solve this problem once
-	int Old_Front=Set_Front(Side);
+	auto Old_Front=Set_Front(Side);
 
 	// These will be used quite a bit
-	int Width=M_Sides[0]->Get_Width();
-	int Height=M_Sides[0]->Get_Height();
-	int Depth=M_Sides[1]->Get_Width();
+	auto Width=M_Sides[0]->Get_Width();
+	auto Height=M_Sides[0]->Get_Height();
+	auto Depth=M_Sides[1]->Get_Width();
 
 	if(Offset>Depth || Offset<1)
 		throw std::out_of_range("Rotate_CW");
@@ -565,7 +563,7 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 
 	// If the slice that is being turned is square....
 	if(Width==Height)
-		for(int n=0; n<Width; n++) {
+		for(auto n=0; n<Width; n++) {
 			// Here, grab each Tile one at a time from a side on the
 			// slice, and put it onto the next side.
 			Temp_Tile=M_Sides[4]->Get_Tile(n+1, Offset);
@@ -576,14 +574,14 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 		}
 	// This is for a rectangular slice, since a rotation is 180, not 90
 	else { // (Width!=Height)
-		for(int n=0; n<Width; n++) {
+		for(auto n=0; n<Width; n++) {
 			// First, exchange one side
 			Temp_Tile=M_Sides[4]->Get_Tile(n+1, Offset);
 			M_Sides[4]->Set_Tile(n+1, Offset, M_Sides[2]->Get_Tile(Width-n, Depth-Offset+1) );
 			M_Sides[2]->Set_Tile(Width-n, Depth-Offset+1, Temp_Tile);
 		}
 
-		for(int n=0; n<Height; n++) {
+		for(auto n=0; n<Height; n++) {
 			// Exchange the other side
 			Temp_Tile=M_Sides[3]->Get_Tile(Offset, n+1);
 			M_Sides[3]->Set_Tile(Offset, n+1, M_Sides[1]->Get_Tile(Depth-Offset+1, Height-n) );
@@ -621,7 +619,7 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 		return false;
 
 	// Make life easier, pretend we are twisting from side 1
-	int Old_Front=Set_Front(Side);
+	auto Old_Front=Set_Front(Side);
 
 	// Figure out where we are rotating, what direction, and if the Cube changed
 	bool Returner;
@@ -663,7 +661,7 @@ Face *Cube::Get_Face(int Side) const {
 
 // Is the Cube solved?
 bool Cube::Is_Solved(void) const {
-	for(int n=0; n<6; n++)
+	for(auto n=0; n<6; n++)
 		if(!M_Sides[n]->Is_Solved() )
 			return false;
 	return true;

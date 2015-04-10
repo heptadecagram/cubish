@@ -10,7 +10,7 @@ Color::Color(void) {
 	M_Blue=0;
 }
 
-Color::Color(float Red, float Green, float Blue) {
+Color::Color(double Red, double Green, double Blue) {
 	M_Red=Red;
 	M_Green=Green;
 	M_Blue=Blue;
@@ -24,21 +24,21 @@ void Color::Change_To(void) {
 
 
 // Inspectors
-float Color::Get_Red(void) const {
+double Color::Get_Red(void) const {
 	return M_Red;
 }
 
-float Color::Get_Green(void) const {
+double Color::Get_Green(void) const {
 	return M_Green;
 }
 
-float Color::Get_Blue(void) const {
+double Color::Get_Blue(void) const {
 	return M_Blue;
 }
 
 
 // Mutators
-void Color::Set(float Red, float Green, float Blue) {
+void Color::Set(double Red, double Green, double Blue) {
 	M_Red=Red;
 	M_Green=Green;
 	M_Blue=Blue;
