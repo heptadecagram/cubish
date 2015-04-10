@@ -15,9 +15,6 @@ public:
 	Tile(void);
 	Tile(Color *color);
 
-	// Destructor
-	~Tile(void);
-
 	// Facilitators
 
 	// Inspectors
