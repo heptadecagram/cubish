@@ -437,9 +437,9 @@ void Cube::View_Side(int Side) {
 // This function reverses the effects of View_Side().  See that function for
 // explanation.
 void Cube::Undo_View_Side(int Side) {
-	auto Width=M_Sides[0]->Get_Width();
-	auto Height=M_Sides[0]->Get_Height();
-	auto Depth=M_Sides[1]->Get_Width();
+	auto Width  = _sides[0].Get_Width();
+	auto Height = _sides[0].Get_Height();
+	auto Depth  = _sides[1].Get_Width();
 
 	switch(Side) {
 	case 1:
@@ -549,8 +549,8 @@ void Cube::Randomize(int Twists) {
 	int Random_Side, Random_Row, Random_Column;
 	for(auto n=0; n<Twists; n++) {
 		Random_Side=Random(6);
-		Random_Row=Random(M_Sides[Random_Side-1]->Get_Height() );
-		Random_Column=Random(M_Sides[Random_Side-1]->Get_Width() );
+		Random_Row = Random(_sides[Random_Side-1].Get_Height());
+		Random_Column = Random(_sides[Random_Side-1].Get_Width());
 		Random_Direction=Direction(Random(4) );
 		Twist(Random_Side, Random_Column, Random_Row, Random_Direction);
 	}
@@ -564,9 +564,9 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 	auto Old_Front=Set_Front(Side);
 
 	// These will be used quite a bit
-	auto Width=M_Sides[0]->Get_Width();
-	auto Height=M_Sides[0]->Get_Height();
-	auto Depth=M_Sides[1]->Get_Width();
+	auto Width  = _sides[0].Get_Width();
+	auto Height = _sides[0].Get_Height();
+	auto Depth  = _sides[1].Get_Width();
 
 	if(Offset>Depth || Offset<1)
 		throw std::out_of_range("Rotate_CW");
@@ -680,9 +680,11 @@ Face *Cube::Get_Face(int Side) const {
 
 // Is the Cube solved?
 bool Cube::Is_Solved(void) const {
-	for(auto n=0; n<6; n++)
-		if(!M_Sides[n]->Is_Solved() )
+	for(auto n=0; n<6; ++n) {
+		if(!_sides[n].Is_Solved() ) {
 			return false;
+		}
+	}
 	return true;
 }
 
