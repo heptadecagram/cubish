@@ -13,7 +13,7 @@
 #include "Quaternion.h"
 
 // Since OpenGL is written in C, functions and variables must be global in scope
-Cube *Current_Cube;
+Cube Current_Cube;
 Color **Color_List;
 int Cube_List, Arrow_List;
 auto Window_Size=300.0;
@@ -34,9 +34,9 @@ int Section_List, Slice_List, Option_List;
 double Slice_Angle, Max_Angle;
 double Time_Delay;
 
-void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6]) {
+void Initialize_Window(int argc, char **argv, Cube& cube, Color *Color_Array[6]) {
 	Current_Cube=cube;
-	Current_Cube->Randomize();
+	Current_Cube.Randomize();
 	Color_List=Color_Array;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -47,9 +47,9 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 
 	glutDisplayFunc(Display);
 
-	auto Height=Current_Cube->Get_Face(1)->Get_Height();
-	auto Width=Current_Cube->Get_Face(1)->Get_Width();
-	auto Depth=Current_Cube->Get_Face(2)->Get_Width();
+	auto Height= Current_Cube[1].height();
+	auto Width = Current_Cube[1].length();
+	auto Depth = Current_Cube[2].length();
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
@@ -61,7 +61,7 @@ void Initialize_Window(int argc, char **argv, Cube *cube, Color *Color_Array[6])
 	glEnable(GL_DEPTH_TEST);
 	glPushMatrix();
 
-	Cube_List=Current_Cube->Make_GL_List();
+	Cube_List=Current_Cube.Make_GL_List();
 }
 
 // If the viewpoint coordinates have been changed, readjust the matrix
@@ -169,7 +169,7 @@ void Display(void) {
 		glCallList(Cube_List);
 		if(Arrow_Direction)
 			glCallList(Arrow_List);
-		if(Current_Cube->Is_Solved() )
+		if(Current_Cube.Is_Solved() )
 			glutIdleFunc(Pulsate_Background_Color);
 		else {
 			glClearColor(.6, .6, .6, 0);
@@ -251,14 +251,14 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			// If there is an arrow present, change that cube
 			if(Arrow_Direction) {
 				Vector Cube_Place=Get_Twist_Side(Start_Vector, Arrow_Direction);
-				Slice_List=Current_Cube->Make_Slice_GL_List(Cube_Place[1], Cube_Place[2]);
-				Section_List=Current_Cube->Make_Section_GL_List(Cube_Place[1], Cube_Place[2]);
+				Slice_List=Current_Cube.Make_Slice_GL_List(Cube_Place[1], Cube_Place[2]);
+				Section_List=Current_Cube.Make_Section_GL_List(Cube_Place[1], Cube_Place[2]);
 				// Twist() returns true if a rotation happened
-				Draw_Section=Current_Cube->Twist(Start_Vector, Arrow_Direction);
+				Draw_Section=Current_Cube.Twist(Start_Vector, Arrow_Direction);
 				if(Draw_Section) {
 					Start_Vector=Get_Twist_Vector(Cube_Place[1]);
 					// Get ready to animate and redraw
-					Cube_List=Current_Cube->Make_GL_List();
+					Cube_List=Current_Cube.Make_GL_List();
 					Max_Angle=Cube_Place[3];
 					glutIdleFunc(Rotate_Slice);
 					glClearColor(.6, .6, .6, 0);
@@ -421,8 +421,8 @@ int Make_Arrow_GL_List(void) {
 
 	glNewList(List_ID, GL_COMPILE);
 
-	Current_Cube->View_Side(Start_Vector[1]);
-	glTranslated(Start_Vector[2]-.5, Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-Start_Vector[3]+.5, 0);
+	Current_Cube.View_Side(Start_Vector[1]);
+	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]].Get_Height()-Start_Vector[3]+.5, 0);
 
 	auto Angle=0.0;
 	switch(Arrow_Direction) {
@@ -449,25 +449,25 @@ int Make_Arrow_GL_List(void) {
 	glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
-	glTranslated(.5-Start_Vector[2], Start_Vector[3]-Current_Cube->Get_Face(Start_Vector[1])->Get_Height()-.5, 0);
-	Current_Cube->Undo_View_Side(Start_Vector[1]);
+	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].Get_Height()-.5, 0);
+	Current_Cube.Undo_View_Side(Start_Vector[1]);
 
 	glEndList();
 
 	return List_ID;
 }
 
-int Get_Cube_Section(Cube *cube, int Side, int Depth) {
+int Get_Cube_Section(Cube& cube, int Side, int Depth) {
 	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
 	for(auto n1=1; n1<=6; n1++) {
 
-		Current_Cube->View_Side(n1);
+		Current_Cube.View_Side(n1);
 
-		for(auto n2=1; n2<=cube->Get_Face(n1)->Get_Height(); n2++) {
-			for(auto n3=1; n3<=cube->Get_Face(n1)->Get_Width(); n3++) {
-				cube->Get_Face(n1)->Get_Tile(n3, cube->Get_Face(n1)->Get_Height()-n2+1)->Get_Color()->Change_To();
+		for(auto n2=1; n2 <= cube[n1].Get_Height(); n2++) {
+			for(auto n3=1; n3<=cube[n1].Get_Width(); n3++) {
+				cube[n1](n3, cube[n1].Get_Height()-n2+1).Get_Color()->Change_To();
 				glBegin(GL_QUADS);
 					glVertex3i(n3-1, n2-1, 0);
 					glVertex3i(n3-1, n2, 0);
@@ -486,7 +486,7 @@ int Get_Cube_Section(Cube *cube, int Side, int Depth) {
 			}
 		}
 
-		Current_Cube->Undo_View_Side(n1);
+		Current_Cube.Undo_View_Side(n1);
 	}
 
 	glEndList();
@@ -497,9 +497,9 @@ int Get_Cube_Section(Cube *cube, int Side, int Depth) {
 Vector Find_Cube_Point(Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
-	auto Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
-	auto Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
+	auto Half_Width = Current_Cube[1].Get_Width()/2.0;
+	auto Half_Height=Current_Cube[1].Get_Height()/2.0;
+	auto Half_Depth=Current_Cube[2].Get_Width()/2.0;
 
 	for(auto n=0; n<=6; n++) {
 		if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
@@ -577,9 +577,9 @@ Vector Find_Cube_Point(Vector Begin, Vector End) {
 Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width=Current_Cube->Get_Face(1)->Get_Width()/2.0;
-	auto Half_Height=Current_Cube->Get_Face(1)->Get_Height()/2.0;
-	auto Half_Depth=Current_Cube->Get_Face(2)->Get_Width()/2.0;
+	auto Half_Width = Current_Cube[1].Get_Width()/2.0;
+	auto Half_Height= Current_Cube[1].Get_Height()/2.0;
+	auto Half_Depth = Current_Cube[2].Get_Width()/2.0;
 
 	switch(int(Initial[1]) ) {
 	case 1:
@@ -637,7 +637,7 @@ Direction Get_Direction(Vector Begin, Vector End) {
 	if(Begin[2]==End[2] && Begin[3]==End[3])
 		return NONE;
 
-	if(abs(Begin[2]-End[2])<abs(Begin[3]-End[3]) ) {
+	if(std::abs(Begin[2]-End[2]) < std::abs(Begin[3]-End[3]) ) {
 		if(Begin[3]>End[3])
 			return Down;
 		else
@@ -723,7 +723,7 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 		break;
 	}
 
-	if(Current_Cube->Get_Face(Returner[1])->Get_Height()==Current_Cube->Get_Face(Returner[1])->Get_Width() )
+	if(Current_Cube[Returner[1]].height() == Current_Cube[Returner[1]].length())
 		Returner[3]=90;
 	else
 		Returner[3]=180;
@@ -733,9 +733,9 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 
 void Cube_Remake_View(void) {
 	glutSetWindow(Window_ID);
-	auto Height=Current_Cube->Get_Face(1)->Get_Height();
-	auto Width=Current_Cube->Get_Face(1)->Get_Width();
-	auto Depth=Current_Cube->Get_Face(2)->Get_Width();
+	auto Height= Current_Cube[1].height();
+	auto Width = Current_Cube[1].length();
+	auto Depth = Current_Cube[2].length();
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 

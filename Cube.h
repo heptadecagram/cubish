@@ -42,13 +42,12 @@ enum Direction { NONE, Up, Down, Left, Right };
 
 class Cube {
 public:
+	Cube() {};
+
 	// Constructors
 	Cube(int Width, int Height, int Depth,
 		 Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
 		 Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color);
-
-	// Desctructor
-	~Cube(void);
 
 	// Facilitators
 	int Make_GL_List(void);

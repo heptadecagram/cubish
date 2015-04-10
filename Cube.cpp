@@ -9,6 +9,7 @@
 
 #include <GLUT/glut.h>
 
+
 // Constructors
 Cube::Cube(int Width, int Height, int Depth,
 		   Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
@@ -28,10 +29,6 @@ Cube::Cube(int Width, int Height, int Depth,
 	M_Sides[4]=new Face(Width, Depth, Side_5_Color);
 	M_Sides[5]=new Face(Width, Height, Side_6_Color);
 
-}
-
-// Destructor
-Cube::~Cube(void) {
 }
 
 // Facilitators
@@ -556,6 +553,7 @@ void Cube::Randomize(int Twists) {
 	}
 }
 
+#include <iostream>
 // This is the big cube-modifying function.  Given a side and a distance down that
 // side, rotate that slice of Cubeness.  Returns true if it was possible to
 // rotate in that direction.
@@ -577,43 +575,42 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 		return false;
 	}
 
-	// This will be the placeholder for information
-	Tile *Temp_Tile;
 
 	// If the slice that is being turned is square....
-	if(Width==Height)
+	if(Width==Height) {
 		for(auto n=0; n<Width; n++) {
 			// Here, grab each Tile one at a time from a side on the
 			// slice, and put it onto the next side.
-			Temp_Tile=M_Sides[4]->Get_Tile(n+1, Offset);
-			M_Sides[4]->Set_Tile(n+1, Offset, M_Sides[3]->Get_Tile(Offset, Height-n) );
-			M_Sides[3]->Set_Tile(Offset, Height-n, M_Sides[2]->Get_Tile(Width-n, Depth-Offset+1) );
-			M_Sides[2]->Set_Tile(Width-n, Depth-Offset+1, M_Sides[1]->Get_Tile(Depth-Offset+1, n+1) );
-			M_Sides[1]->Set_Tile(Depth-Offset+1, n+1, Temp_Tile);
+			auto Temp_Tile = _sides[4](n+1, Offset);
+			_sides[4](n+1, Offset) = _sides[3](Offset, Height-n);
+			_sides[3](Offset, Height-n) = _sides[2](Width-n, Depth-Offset+1);
+			_sides[2](Width-n, Depth-Offset+1) = _sides[1](Depth-Offset+1, n+1);
+			_sides[1](Depth-Offset+1, n+1) = Temp_Tile;
 		}
+	}
 	// This is for a rectangular slice, since a rotation is 180, not 90
 	else { // (Width!=Height)
 		for(auto n=0; n<Width; n++) {
 			// First, exchange one side
-			Temp_Tile=M_Sides[4]->Get_Tile(n+1, Offset);
-			M_Sides[4]->Set_Tile(n+1, Offset, M_Sides[2]->Get_Tile(Width-n, Depth-Offset+1) );
-			M_Sides[2]->Set_Tile(Width-n, Depth-Offset+1, Temp_Tile);
+			auto Temp_Tile = _sides[4](n+1, Offset);
+			_sides[4](n+1, Offset) = _sides[2](Width-n, Depth-Offset+1);
+			_sides[2](Width-n, Depth-Offset+1) = Temp_Tile;
 		}
 
 		for(auto n=0; n<Height; n++) {
 			// Exchange the other side
-			Temp_Tile=M_Sides[3]->Get_Tile(Offset, n+1);
-			M_Sides[3]->Set_Tile(Offset, n+1, M_Sides[1]->Get_Tile(Depth-Offset+1, Height-n) );
-			M_Sides[1]->Set_Tile(Depth-Offset+1, Height-n, Temp_Tile);
+			auto Temp_Tile = _sides[3](Offset, n+1);
+			_sides[3](Offset, n+1) = _sides[1](Depth-Offset+1, Height-n);
+			_sides[1](Depth-Offset+1, Height-n) = Temp_Tile;
 		}
 	}
 
 	// If the Cube is rotated at either end, the Face on that end must also be
 	// rotated.  Check for this, do it if necessary.
 	if(Offset==1)
-		M_Sides[0]->Rotate_CW();
+		_sides[0].Rotate_CW();
 	if(Offset==Depth)
-		M_Sides[5]->Rotate_CCW();
+		_sides[5].Rotate_CCW();
 
 	// Change back to where we used to be, and let it be known that the Cube
 	// was rotated
@@ -673,6 +670,8 @@ bool Cube::Twist(Vector Position, Direction direction) {
 // Inspectors
 // This function returns the address of a side.  Useful for inspecting and mutating.
 Face *Cube::Get_Face(int Side) const {
+	throw 1;
+
 	if(Side>6 || Side<1)
 		throw std::out_of_range("Get_Face");
 	return M_Sides[Side-1];
@@ -710,7 +709,7 @@ int Cube::Random(int Max) {
 // algorithm.
 int Cube::Set_Front(int Side) {
 	// We need a temporary Face
-	Face *Front_Face=M_Sides[0];
+	auto Front_Face = _sides[0];
 	int Returner;
 
 	// This is the core.  Notice that Spin_*() function must be called on
@@ -722,59 +721,59 @@ int Cube::Set_Front(int Side) {
 		Returner=1;
 		break;
 	case 2:
-		M_Sides[0]=M_Sides[1];
-		M_Sides[5]->Spin_CW();
-		M_Sides[5]->Spin_CW();
-		M_Sides[1]=M_Sides[5];
-		M_Sides[3]->Spin_CW();
-		M_Sides[3]->Spin_CW();
-		M_Sides[5]=M_Sides[3];
-		M_Sides[3]=Front_Face;
-		M_Sides[2]->Spin_CCW();
-		M_Sides[4]->Spin_CW();
+		_sides[0] = _sides[1];
+		_sides[5].Spin_CW();
+		_sides[5].Spin_CW();
+		_sides[1] = _sides[5];
+		_sides[3].Spin_CW();
+		_sides[3].Spin_CW();
+		_sides[5] = _sides[3];
+		_sides[3] = Front_Face;
+		_sides[2].Spin_CCW();
+		_sides[4].Spin_CW();
 		Returner=4;
 		break;
 	case 3:
-		M_Sides[0]=M_Sides[2];
-		M_Sides[2]=M_Sides[5];
-		M_Sides[5]=M_Sides[4];
-		M_Sides[4]=Front_Face;
-		M_Sides[1]->Spin_CW();
-		M_Sides[3]->Spin_CCW();
+		_sides[0] = _sides[2];
+		_sides[2] = _sides[5];
+		_sides[5] = _sides[4];
+		_sides[4] = Front_Face;
+		_sides[1].Spin_CW();
+		_sides[3].Spin_CCW();
 		Returner=5;
 		break;
 	case 4:
-		M_Sides[0]=M_Sides[3];
-		M_Sides[5]->Spin_CW();
-		M_Sides[5]->Spin_CW();
-		M_Sides[3]=M_Sides[5];
-		M_Sides[1]->Spin_CW();
-		M_Sides[1]->Spin_CW();
-		M_Sides[5]=M_Sides[1];
-		M_Sides[1]=Front_Face;
-		M_Sides[2]->Spin_CW();
-		M_Sides[4]->Spin_CCW();
+		_sides[0] = _sides[3];
+		_sides[5].Spin_CW();
+		_sides[5].Spin_CW();
+		_sides[3] = _sides[5];
+		_sides[1].Spin_CW();
+		_sides[1].Spin_CW();
+		_sides[5] = _sides[1];
+		_sides[1] = Front_Face;
+		_sides[2].Spin_CW();
+		_sides[4].Spin_CCW();
 		Returner=2;
 		break;
 	case 5:
-		M_Sides[0]=M_Sides[4];
-		M_Sides[4]=M_Sides[5];
-		M_Sides[5]=M_Sides[2];
-		M_Sides[2]=Front_Face;
-		M_Sides[1]->Spin_CCW();
-		M_Sides[3]->Spin_CW();
+		_sides[0] = _sides[4];
+		_sides[4] = _sides[5];
+		_sides[5] = _sides[2];
+		_sides[2] = Front_Face;
+		_sides[1].Spin_CCW();
+		_sides[3].Spin_CW();
 		Returner=3;
 		break;
 	case 6:
-		M_Sides[0]=M_Sides[5];
-		M_Sides[5]=Front_Face;
-		Front_Face=M_Sides[2];
-		M_Sides[2]=M_Sides[4];
-		M_Sides[4]=Front_Face;
-		M_Sides[1]->Spin_CW();
-		M_Sides[1]->Spin_CW();
-		M_Sides[3]->Spin_CW();
-		M_Sides[3]->Spin_CW();
+		_sides[0] = _sides[5];
+		_sides[5] = Front_Face;
+		Front_Face= _sides[2];
+		_sides[2] = _sides[4];
+		_sides[4] = Front_Face;
+		_sides[1].Spin_CW();
+		_sides[1].Spin_CW();
+		_sides[3].Spin_CW();
+		_sides[3].Spin_CW();
 		Returner=6;
 		break;
 	default:
