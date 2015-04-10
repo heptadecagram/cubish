@@ -70,7 +70,6 @@ public:
 	bool Twist(Vector Position, Direction direction);
 
 	// Inspectors
-	Face *Get_Face(int Side) const;
 	bool Is_Solved(void) const;
 
 private:
@@ -80,7 +79,6 @@ private:
 
 	// Member Variables
 	std::array<Face, 6> _sides;
-	Face *M_Sides[6];
 };
 
 #endif // LIAM_CUBE

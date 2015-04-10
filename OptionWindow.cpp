@@ -14,7 +14,7 @@
 extern int Window_ID, Option_Window_ID;
 extern int Cube_List;
 extern bool Is_Option_Window_Open, Draw_Section;
-extern Cube *Current_Cube;
+extern Cube Current_Cube;
 
 // These values keep tract of subwindows of this window
 bool Is_Color_Window_Open, Is_Dimension_Window_Open;
@@ -103,22 +103,22 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			glutSetWindow(Window_ID);
 			Is_Option_Window_Open=false;
 		}
-		else if(Option_Solved && !Current_Cube->Is_Solved() ) {
+		else if(Option_Solved && !Current_Cube.Is_Solved() ) {
 			for(auto n=1; n<=6; n++)
-				Current_Cube->Get_Face(n)->Flood(Option_Color_List[n-1]);
+				Current_Cube[n].Flood(Option_Color_List[n-1]);
 			Option_Cube_List=Make_Option_Cube_List(Option_Color_List);
 			Option_Line_List=Make_Option_Line_List();
 
 			glutSetWindow(Window_ID);
-			Cube_List=Current_Cube->Make_GL_List();
+			Cube_List=Current_Cube.Make_GL_List();
 			glutPostRedisplay();
 		}
 		else if(Option_Random) {
-			Current_Cube->Randomize();
+			Current_Cube.Randomize();
 
 			Option_Line_List=Make_Option_Line_List();
 			glutSetWindow(Window_ID);
-			Cube_List=Current_Cube->Make_GL_List();
+			Cube_List=Current_Cube.Make_GL_List();
 			glutPostRedisplay();
 		}
 		else if(Option_Color && !Is_Color_Window_Open) {
@@ -152,14 +152,14 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			auto Save_File=fopen("./CubeSave.1", "w");
 			if(Save_File==NULL)
 				throw std::invalid_argument("Could not open savefile for writing");
-			Current_Cube->Save(Option_Color_List, Save_File);
+			Current_Cube.Save(Option_Color_List, Save_File);
 			fclose(Save_File);
 		}
 		else if(Option_Load) {
 			auto Save_File=fopen("./CubeSave.1", "r");
 			if(Save_File==NULL)
 				throw std::invalid_argument("Could not open savefile for reading");
-			Current_Cube->Load(Option_Color_List, Save_File);
+			Current_Cube.Load(Option_Color_List, Save_File);
 			fclose(Save_File);
 
 			Make_All_Option_Lists();
@@ -167,7 +167,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 
 			Cube_Remake_View();
 			glutSetWindow(Window_ID);
-			Cube_List=Current_Cube->Make_GL_List();
+			Cube_List=Current_Cube.Make_GL_List();
 			glutPostRedisplay();
 		}
 	}

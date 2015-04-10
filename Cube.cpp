@@ -21,14 +21,6 @@ Cube::Cube(int Width, int Height, int Depth,
 	_sides[3] = Face(Depth, Height, Side_4_Color);
 	_sides[4] = Face(Width,  Depth, Side_5_Color);
 	_sides[5] = Face(Width, Height, Side_6_Color);
-
-	M_Sides[0]=new Face(Width, Height, Side_1_Color);
-	M_Sides[1]=new Face(Depth, Height, Side_2_Color);
-	M_Sides[2]=new Face(Width, Depth, Side_3_Color);
-	M_Sides[3]=new Face(Depth, Height, Side_4_Color);
-	M_Sides[4]=new Face(Width, Depth, Side_5_Color);
-	M_Sides[5]=new Face(Width, Height, Side_6_Color);
-
 }
 
 // Facilitators
@@ -470,6 +462,8 @@ void Cube::Undo_View_Side(int Side) {
 // This function saves a Cube to an open file pointer.  Pass the appropriate
 // Color information in case of sides with the same color.
 void Cube::Save(Color **Color_List, FILE *File) {
+	throw "Save not implemented";
+	/*
 	// Iterate through the Color_List, turning the RGB values into bytes,
 	// and then put them in the file
 	for(int n=0; n<6; n++) {
@@ -493,11 +487,14 @@ void Cube::Save(Color **Color_List, FILE *File) {
 				for(char n4=0; n4<6; n4++)
 					if(M_Sides[n1]->Get_Tile(n3, n2)->Get_Color()==Color_List[(int)n4])
 						fprintf(File, "%c", n4);
+						*/
 }
 
 // This function loads a Cube from an open file pointer.  It also assigns the
 // appropriate Color_List information.  Warning: No exception handling ability yet.
 void Cube::Load(Color **Color_List, FILE *File) {
+	throw "Load not implemented";
+	/*
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
 		char Red=0, Green=0, Blue=0;
@@ -534,6 +531,7 @@ void Cube::Load(Color **Color_List, FILE *File) {
 				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[(int)Color_Index]);
 			}
 
+			*/
 }
 
 
@@ -668,15 +666,6 @@ bool Cube::Twist(Vector Position, Direction direction) {
 
 
 // Inspectors
-// This function returns the address of a side.  Useful for inspecting and mutating.
-Face *Cube::Get_Face(int Side) const {
-	throw 1;
-
-	if(Side>6 || Side<1)
-		throw std::out_of_range("Get_Face");
-	return M_Sides[Side-1];
-}
-
 // Is the Cube solved?
 bool Cube::Is_Solved(void) const {
 	for(auto n=0; n<6; ++n) {
