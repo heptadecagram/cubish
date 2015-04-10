@@ -35,7 +35,7 @@ Cube::~Cube(void) {
 }
 
 // Facilitators
-int Cube::Make_GL_List(void) {
+int Cube::Make_GL_List() {
 	static int List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
@@ -45,15 +45,17 @@ int Cube::Make_GL_List(void) {
 		// Orient the viewing volume to face the correct side
 		View_Side(n1);
 
-		for(auto n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
-			for(auto n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
-				M_Sides[n1-1]->Get_Tile(n3, M_Sides[n1-1]->Get_Height()-n2+1)->Get_Color()->Change_To();
+		for(auto n2=1; n2 <= _sides[n1-1].height(); n2++) {
+			for(auto n3=1; n3 <= _sides[n1-1].length(); n3++) {
+
+				_sides[n1-1](n3, _sides[n1-1].height() - n2 + 1).Get_Color()->Change_To();
+
 				// Raise the height of all colored squares to avoid clipping problems
 				glBegin(GL_QUADS);
-					glVertex3d(n3-.9, n2-.9, .03);
-					glVertex3d(n3-.9, n2-.1, .03);
-					glVertex3d(n3-.1, n2-.1, .03);
-					glVertex3d(n3-.1, n2-.9, .03);
+					glVertex3d(n3-0.9, n2-0.9, 0.03);
+					glVertex3d(n3-0.9, n2-0.1, 0.03);
+					glVertex3d(n3-0.1, n2-0.1, 0.03);
+					glVertex3d(n3-0.1, n2-0.9, 0.03);
 				glEnd(); // GL_QUADS
 			}
 		}
@@ -61,10 +63,10 @@ int Cube::Make_GL_List(void) {
 		// Create a black background to put the colored squares on
 		glColor3d(0, 0, 0);
 		glBegin(GL_QUADS);
-			glVertex3i(0, 0, 0);
-			glVertex3i(M_Sides[n1-1]->Get_Width(), 0, 0);
-			glVertex3i(M_Sides[n1-1]->Get_Width(), M_Sides[n1-1]->Get_Height(), 0);
-			glVertex3i(0, M_Sides[n1-1]->Get_Height(), 0);
+			glVertex3i(                    0,                     0, 0);
+			glVertex3i(_sides[n1-1].length(),                     0, 0);
+			glVertex3i(_sides[n1-1].length(), _sides[n1-1].height(), 0);
+			glVertex3i(                    0, _sides[n1-1].height(), 0);
 		glEnd(); // GL_QUADS
 
 		// Now, undo the orientation, returning to the original state
@@ -78,7 +80,7 @@ int Cube::Make_GL_List(void) {
 
 // This function creates a OpenGL display list of the cube, minus a single slice
 int Cube::Make_Section_GL_List(int Side, int Depth) {
-	static int List_ID=glGenLists(1);
+	static auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
 
@@ -108,18 +110,18 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	// Start drawing from the specified Side
 	auto Old_Front=Set_Front(Side);
 
-	for(auto n1=(Depth==1?2:1); n1<=(Depth==M_Sides[1]->Get_Width()?5:6); n1++) {
+	for(auto n1=(Depth==1?2:1); n1<= (Depth == _sides[1].length() ? 5 : 6); n1++) {
 
 		// Rotate/translate the appropriate amount for the side
 		View_Side(n1);
 
-		for(auto n2=1; n2<=M_Sides[n1-1]->Get_Height(); n2++) {
-			for(auto n3=1; n3<=M_Sides[n1-1]->Get_Width(); n3++) {
+		for(auto n2=1; n2 <= _sides[n1-1].height(); n2++) {
+			for(auto n3=1; n3 <= _sides[n1-1].length(); n3++) {
 				// If the current slice is not the removed one, and is also not a front or
 				// back side that would be affected, draw it
-				if(!((n1==2 && n3==M_Sides[n1-1]->Get_Width()-Depth+1) ||
-					 (n1==3 && n2==Depth) || (n1==4 && n3==Depth) ||
-					 (n1==5 && n2==M_Sides[n1-1]->Get_Height()-Depth+1) ) ) {
+				if(!((n1==2 && n3 == _sides[n1-1].length() - Depth + 1) ||
+					 (n1==3 && n2 == Depth) || (n1==4 && n3==Depth) ||
+					 (n1==5 && n2 == _sides[n1-1].height() - Depth + 1) ) ) {
 					// Black background squares
 					glColor3d(0, 0, 0);
 					glBegin(GL_QUADS);
@@ -130,7 +132,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 					glEnd(); // GL_QUADS
 
 					// Pretty colored squares are being drawn here
-					M_Sides[n1-1]->Get_Tile(n3, M_Sides[n1-1]->Get_Height()-n2+1)->Get_Color()->Change_To();
+					_sides[n1-1](n3, _sides[n1-1].height()-n2+1).Get_Color()->Change_To();
 					glBegin(GL_QUADS);
 						glVertex3d(n3-.9, n2-.9, .03);
 						glVertex3d(n3-.9, n2-.1, .03);
@@ -152,12 +154,12 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	glColor3d(0, 0, 0);
 
 	// Draw a black square on top, if it is open
-	if(Depth!=M_Sides[1]->Get_Width() ) {
+	if(Depth != _sides[1].length() ) {
 		glBegin(GL_QUADS);
-			glVertex3i(0, 0, 0);
-			glVertex3i(0, M_Sides[0]->Get_Height(), 0);
-			glVertex3i(M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(), 0);
-			glVertex3i(M_Sides[0]->Get_Width(), 0, 0);
+			glVertex3i(                 0,                  0, 0);
+			glVertex3i(                 0, _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(), _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(),                  0, 0);
 		glEnd(); // GL_QUADS
 	}
 
@@ -168,10 +170,10 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	// the open side
 	if(Depth!=1) {
 		glBegin(GL_QUADS);
-			glVertex3i(0, 0, 0);
-			glVertex3i(0, M_Sides[0]->Get_Height(), 0);
-			glVertex3i(M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(), 0);
-			glVertex3i(M_Sides[0]->Get_Width(), 0, 0);
+			glVertex3i(                 0,                  0, 0);
+			glVertex3i(                 0, _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(), _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(),                  0, 0);
 		glEnd(); // GL_QUADS
 	}
 
