@@ -29,10 +29,14 @@ public:
 	// Facilitators
 
 	// Inspectors
+	int height(void) const;
+	int length(void) const;
+
 	int Get_Height(void) const;
 	int Get_Width(void) const;
 	Tile *Get_Tile(int Column, int Row) const;
 	bool Is_Solved(void) const;
+	Tile& operator()(int col, int row) const;
 
 	// Mutators
 	void Flood(Color *color);

@@ -39,7 +39,7 @@ Face::Face(const Face &face) {
 
 // Destructors
 Face::~Face(void) {
-	delete [] M_Tile;
+	//delete [] M_Tile;
 }
 
 
@@ -47,12 +47,20 @@ Face::~Face(void) {
 
 
 // Inspectors
-int Face::Get_Height(void) const {
+int Face::height(void) const {
 	return M_Height;
 }
 
-int Face::Get_Width(void) const {
+int Face::length(void) const {
 	return M_Width;
+}
+
+int Face::Get_Height(void) const {
+	return height();
+}
+
+int Face::Get_Width(void) const {
+	return length();
 }
 
 Tile *Face::Get_Tile(int Column, int Row) const {
@@ -61,6 +69,14 @@ Tile *Face::Get_Tile(int Column, int Row) const {
 	if(Column<1 || Column>M_Width)
 		throw std::out_of_range("Get_Tile");
 	return M_Tile[M_Width*(Row-1)+Column-1];
+}
+
+Tile& Face::operator()(int col, int row) const {
+	if(row < 1 || row > M_Height)
+		throw std::out_of_range("Get_Tile");
+	if(col < 1 || col > M_Width)
+		throw std::out_of_range("Get_Tile");
+	return *M_Tile[M_Width * (row - 1) + col-1];
 }
 
 bool Face::Is_Solved(void) const {
