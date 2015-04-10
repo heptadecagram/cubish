@@ -10,7 +10,7 @@
 extern bool Is_Color_Window_Open;
 extern int Cube_List;
 extern int Window_ID, Option_Window_ID, Color_Window_ID;
-extern Cube *Current_Cube;
+extern Cube Current_Cube;
 
 // This is the address of the old Color
 Color *Window_Color;
@@ -212,7 +212,7 @@ void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 
 		// Redraw the cube
 		glutSetWindow(Window_ID);
-		Cube_List=Current_Cube->Make_GL_List();
+		Cube_List=Current_Cube.Make_GL_List();
 		glutPostRedisplay();
 
 		// Close the window
