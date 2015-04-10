@@ -61,6 +61,8 @@ public:
 	void Save(Color **Color_List, FILE *File);
 	void Load(Color **Color_List, FILE *File);
 
+	Face& operator[](const int Side);
+
 	// Mutators
 	void Randomize(int Twists=100);
 	bool Rotate_CW(int Side, int Offset=1);
@@ -78,6 +80,7 @@ private:
 	int Set_Front(int Side);
 
 	// Member Variables
+	std::array<Face, 6> _sides;
 	Face *M_Sides[6];
 };
 

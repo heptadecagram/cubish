@@ -13,6 +13,14 @@
 Cube::Cube(int Width, int Height, int Depth,
 		   Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
 		   Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color) {
+
+	_sides[0] = Face(Width, Height, Side_1_Color);
+	_sides[1] = Face(Depth, Height, Side_2_Color);
+	_sides[2] = Face(Width,  Depth, Side_3_Color);
+	_sides[3] = Face(Depth, Height, Side_4_Color);
+	_sides[4] = Face(Width,  Depth, Side_5_Color);
+	_sides[5] = Face(Width, Height, Side_6_Color);
+
 	M_Sides[0]=new Face(Width, Height, Side_1_Color);
 	M_Sides[1]=new Face(Depth, Height, Side_2_Color);
 	M_Sides[2]=new Face(Width, Depth, Side_3_Color);
@@ -198,6 +206,10 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	glEndList(); // List_ID
 
 	return List_ID;
+}
+
+Face& Cube::operator[](const int Side) {
+	return _sides[Side-1];
 }
 
 // This function draws a single slice of a Cube.  Surprisingly complex to do.
