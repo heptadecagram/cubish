@@ -253,16 +253,17 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 		// Get ready to draw on a side
 		View_Side(n);
 
-		if(n==2 || n==4)
-			Temp_Slice_Length=M_Sides[0]->Get_Height();
-		else // n==3 || n==5
-			Temp_Slice_Length=M_Sides[0]->Get_Width();
+		if(n==2 || n==4) {
+			Temp_Slice_Length = _sides[0].height();
+		} else { // n==3 || n==5
+			Temp_Slice_Length = _sides[0].length();
+		}
 
 		for(auto nn=1; nn<=Temp_Slice_Length; nn++) {
 
 			switch(n) {
 			case 2:
-				X_Coord=M_Sides[1]->Get_Width()-Depth+1;
+				X_Coord = _sides[1].length() - Depth+1;
 				Y_Coord=nn;
 				break;
 			case 3:
@@ -275,7 +276,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 				break;
 			case 5:
 				X_Coord=nn;
-				Y_Coord=M_Sides[2]->Get_Height()-Depth+1;
+				Y_Coord = _sides[2].height() - Depth+1;
 				break;
 			default:
 				break;
@@ -292,12 +293,12 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			glEnd(); // GL_QUADS
 
 			// Colored squares, raised for visibility
-			M_Sides[n-1]->Get_Tile(X_Coord, M_Sides[n-1]->Get_Height()-Y_Coord+1)->Get_Color()->Change_To();
+			_sides[n-1](X_Coord, _sides[n-1].height() - Y_Coord+1).Get_Color()->Change_To();
 			glBegin(GL_QUADS);
-				glVertex3d(X_Coord-.9, Y_Coord-.9, .03);
-				glVertex3d(X_Coord-.9, Y_Coord-.1, .03);
-				glVertex3d(X_Coord-.1, Y_Coord-.1, .03);
-				glVertex3d(X_Coord-.1, Y_Coord-.9, .03);
+				glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
+				glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
+				glVertex3d(X_Coord-0.1, Y_Coord-0.1, 0.03);
+				glVertex3d(X_Coord-0.1, Y_Coord-0.9, 0.03);
 			glEnd(); // GL_QUADS
 		}
 
@@ -314,49 +315,53 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 	// Draw black caps
 	glColor3d(0, 0, 0);
 	glBegin(GL_QUADS);
-		glVertex3i(0, 0, 0);
-		glVertex3i(0, M_Sides[0]->Get_Height(), 0);
-		glVertex3i(M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(), 0);
-		glVertex3i(M_Sides[0]->Get_Width(), 0, 0);
+		glVertex3i(                 0,                  0, 0);
+		glVertex3i(                 0, _sides[0].height(), 0);
+		glVertex3i(_sides[0].length(), _sides[0].height(), 0);
+		glVertex3i(_sides[0].length(),                  0, 0);
 	glEnd(); // GL_QUADS
 
 	// If we are at the bottom, draw the appropriate colored squares
-	if(Depth==M_Sides[1]->Get_Width() )
-		for(auto n=1; n<=M_Sides[5]->Get_Height(); n++)
-			for(auto nn=1; nn<=M_Sides[5]->Get_Width(); nn++) {
+	if(Depth == _sides[1].length()) {
+		for(auto n=1; n <= _sides[5].height(); ++n) {
+			for(auto nn=1; nn <= _sides[5].length(); ++nn) {
 				// Yay pretty colored squares (z-offset for viewability
-				M_Sides[5]->Get_Tile(nn, n)->Get_Color()->Change_To();
+				_sides[5](nn, n).Get_Color()->Change_To();
 				glBegin(GL_QUADS);
-					glVertex3d(nn-.9, n-.9, -.03);
-					glVertex3d(nn-.9, n-.1, -.03);
-					glVertex3d(nn-.1, n-.1, -.03);
-					glVertex3d(nn-.1, n-.9, -.03);
+					glVertex3d(nn-0.9, n-0.9, -0.03);
+					glVertex3d(nn-0.9, n-0.1, -0.03);
+					glVertex3d(nn-0.1, n-0.1, -0.03);
+					glVertex3d(nn-0.1, n-0.9, -0.03);
 				glEnd(); // GL_QUADS
 			}
+		}
+	}
 
 	// Go up a bit and draw the other black cap
 	glTranslated(0, 0, 1);
 	glColor3d(0, 0, 0);
 	glBegin(GL_QUADS);
-		glVertex3i(0, 0, 0);
-		glVertex3i(0, M_Sides[0]->Get_Height(), 0);
-		glVertex3i(M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(), 0);
-		glVertex3i(M_Sides[0]->Get_Width(), 0, 0);
+		glVertex3i(                 0,                  0, 0);
+		glVertex3i(                 0, _sides[0].height(), 0);
+		glVertex3i(_sides[0].length(), _sides[0].height(), 0);
+		glVertex3i(_sides[0].length(),                  0, 0);
 	glEnd(); // GL_QUADS
 
 	// If we are at the top, draw the appropriate colored squares
-	if(Depth==1)
-		for(auto n=1; n<=M_Sides[0]->Get_Height(); n++)
-			for(auto nn=1; nn<=M_Sides[0]->Get_Width(); nn++) {
+	if(Depth==1) {
+		for(auto n=1; n <= _sides[0].height(); ++n) {
+			for(auto nn=1; nn <= _sides[0].length(); ++nn) {
 				// Change to the right color, draw the square at an offset
-				M_Sides[0]->Get_Tile(nn, M_Sides[0]->Get_Height()-n+1)->Get_Color()->Change_To();
+				_sides[0](nn, _sides[0].height() - n+1).Get_Color()->Change_To();
 				glBegin(GL_QUADS);
-					glVertex3d(nn-.9, n-.9, .03);
-					glVertex3d(nn-.9, n-.1, .03);
-					glVertex3d(nn-.1, n-.1, .03);
-					glVertex3d(nn-.1, n-.9, .03);
+					glVertex3d(nn-0.9, n-0.9, 0.03);
+					glVertex3d(nn-0.9, n-0.1, 0.03);
+					glVertex3d(nn-0.1, n-0.1, 0.03);
+					glVertex3d(nn-0.1, n-0.9, 0.03);
 				glEnd(); // GL_QUADS
 			}
+		}
+	}
 
 	// Restore the old view
 	glTranslated(0, 0, Depth-1);
@@ -396,9 +401,9 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 // reverse the changes this function makes!
 void Cube::View_Side(int Side) {
 	// Get some measurements
-	auto Width=M_Sides[0]->Get_Width();
-	auto Height=M_Sides[0]->Get_Height();
-	auto Depth=M_Sides[1]->Get_Width();
+	auto Width  = _sides[0].Get_Width();
+	auto Height = _sides[0].Get_Height();
+	auto Depth  = _sides[1].Get_Width();
 
 	switch(Side) {
 	case 1:
