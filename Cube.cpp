@@ -2,9 +2,7 @@
 
 #include "Cube.h"
 
-#include <cstdlib>
-#include <ctime>
-#include <cstdio>
+#include <algorithm>
 #include <stdexcept>
 
 #include <GLUT/glut.h>
@@ -668,12 +666,8 @@ bool Cube::Twist(Vector Position, Direction direction) {
 // Inspectors
 // Is the Cube solved?
 bool Cube::Is_Solved(void) const {
-	for(auto n=0; n<6; ++n) {
-		if(!_sides[n].Is_Solved() ) {
-			return false;
-		}
-	}
-	return true;
+	return std::all_of(_sides.begin(), _sides.end(),
+			[](const Face& f){ return f.Is_Solved(); });
 }
 
 // Private Functions
