@@ -185,9 +185,9 @@ void Display(void) {
 void Rotate_Slice(void) {
 	glutSetWindow(Window_ID);
 	if(Arrow_Direction==Down || Arrow_Direction==Left)
-		Slice_Angle+=Time_Delay/15;
+		Slice_Angle += 0.78 * Time_Delay;
 	else
-		Slice_Angle-=Time_Delay/15;
+		Slice_Angle -= 0.78 * Time_Delay;
 	if(Slice_Angle>Max_Angle || Slice_Angle<-Max_Angle) {
 		Draw_Section=false;
 		Arrow_Direction=NONE;
