@@ -34,6 +34,8 @@
 #ifndef LIAM_CUBE
 #define LIAM_CUBE
 
+#include <array>
+
 #include "Face.h"
 #include "Vector.h"
 

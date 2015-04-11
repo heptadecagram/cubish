@@ -36,6 +36,12 @@ double Color::Get_Blue(void) const {
 	return M_Blue;
 }
 
+bool Color::operator==(const Color& other) const {
+	return M_Red == other.M_Red &&
+	M_Green == other.M_Green &&
+	M_Blue == other.M_Blue;
+}
+
 
 // Mutators
 void Color::Set(double Red, double Green, double Blue) {

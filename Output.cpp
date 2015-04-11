@@ -422,7 +422,7 @@ int Make_Arrow_GL_List(void) {
 	glNewList(List_ID, GL_COMPILE);
 
 	Current_Cube.View_Side(Start_Vector[1]);
-	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]].Get_Height()-Start_Vector[3]+.5, 0);
+	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]].height()-Start_Vector[3]+.5, 0);
 
 	auto Angle=0.0;
 	switch(Arrow_Direction) {
@@ -449,7 +449,7 @@ int Make_Arrow_GL_List(void) {
 	glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
-	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].Get_Height()-.5, 0);
+	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].height()-.5, 0);
 	Current_Cube.Undo_View_Side(Start_Vector[1]);
 
 	glEndList();
@@ -465,9 +465,9 @@ int Get_Cube_Section(Cube& cube, int Side, int Depth) {
 
 		Current_Cube.View_Side(n1);
 
-		for(auto n2=1; n2 <= cube[n1].Get_Height(); n2++) {
-			for(auto n3=1; n3<=cube[n1].Get_Width(); n3++) {
-				cube[n1](n3, cube[n1].Get_Height()-n2+1).Get_Color()->Change_To();
+		for(auto n2=1; n2 <= cube[n1].height(); n2++) {
+			for(auto n3=1; n3<=cube[n1].length(); n3++) {
+				cube[n1](n3, cube[n1].height()-n2+1)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
 					glVertex3i(n3-1, n2-1, 0);
 					glVertex3i(n3-1, n2, 0);
@@ -497,9 +497,9 @@ int Get_Cube_Section(Cube& cube, int Side, int Depth) {
 Vector Find_Cube_Point(Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width = Current_Cube[1].Get_Width()/2.0;
-	auto Half_Height=Current_Cube[1].Get_Height()/2.0;
-	auto Half_Depth=Current_Cube[2].Get_Width()/2.0;
+	auto Half_Width = Current_Cube[1].length()/2.0;
+	auto Half_Height=Current_Cube[1].height()/2.0;
+	auto Half_Depth=Current_Cube[2].length()/2.0;
 
 	for(auto n=0; n<=6; n++) {
 		if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
@@ -577,9 +577,9 @@ Vector Find_Cube_Point(Vector Begin, Vector End) {
 Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width = Current_Cube[1].Get_Width()/2.0;
-	auto Half_Height= Current_Cube[1].Get_Height()/2.0;
-	auto Half_Depth = Current_Cube[2].Get_Width()/2.0;
+	auto Half_Width = Current_Cube[1].length()/2.0;
+	auto Half_Height= Current_Cube[1].height()/2.0;
+	auto Half_Depth = Current_Cube[2].length()/2.0;
 
 	switch(int(Initial[1]) ) {
 	case 1:

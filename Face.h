@@ -13,8 +13,13 @@
 #ifndef LIAM_FACE
 #define LIAM_FACE
 
+#include <memory>
+#include <vector>
+
 #include "Color.h"
 #include "Tile.h"
+
+using Tile_p = std::shared_ptr<Tile>;
 
 class Face {
 public:
@@ -23,35 +28,24 @@ public:
 	Face(int Width, int Height, Color *color);
 	Face(const Face &face);
 
-	// Destructor
-	~Face(void);
-
-	// Facilitators
-
 	// Inspectors
 	int height(void) const;
 	int length(void) const;
 
-	int Get_Height(void) const;
-	int Get_Width(void) const;
-	Tile *Get_Tile(int Column, int Row) const;
 	bool Is_Solved(void) const;
-	Tile& operator()(int col, int row) const;
+	Tile_p& operator()(int col, int row);
 
 	// Mutators
 	void Flood(Color *color);
-	void Set_Tile(int Column, int Row, Tile *tile);
 	void Rotate_CW(void);
 	void Rotate_CCW(void);
 	void Spin_CW(void);
 	void Spin_CCW(void);
 
-	Face &operator=(const Face &face);
-
 protected:
 	int M_Height;
 	int M_Width;
-	Tile **M_Tile;
+	std::vector<Tile_p> _tiles;
 };
 
 #endif // LIAM_FACE

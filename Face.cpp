@@ -1,49 +1,32 @@
 
 #include "Face.h"
 
+#include <memory>
 #include <stdexcept>
 
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
 Face::Face(void) {
-	M_Tile=new Tile*[9];
-	for(auto n=0; n<9; n++) {
-		M_Tile[n]=new Tile;
-	}
 	M_Height=3;
 	M_Width=3;
+
+	_tiles.resize(9, std::make_shared<Tile>());
 }
 
 Face::Face(int Width, int Height, Color *color) {
-	M_Tile=new Tile*[Height*Width];
-	for(auto n=0; n<Height*Width; n++) {
-		M_Tile[n]=new Tile;
-		M_Tile[n]->Set_Color(color);
-	}
 	M_Height=Height;
 	M_Width=Width;
+
+	_tiles.resize(Height*Width, std::make_shared<Tile>(color));
 }
 
 Face::Face(const Face &face) {
-	M_Height=face.Get_Height();
-	M_Width=face.Get_Width();
-	M_Tile=new Tile*[M_Width*M_Height];
-	for(auto n=0; n<M_Width; n++)
-		for(auto nn=0; nn<M_Height; nn++) {
-			M_Tile[n+nn*M_Width]=new Tile;
-			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() );
-		}
+	M_Height=face.height();
+	M_Width=face.length();
+
+	std::copy(face._tiles.begin(), face._tiles.end(), std::back_inserter(_tiles));
 }
-
-
-// Destructors
-Face::~Face(void) {
-	//delete [] M_Tile;
-}
-
-
-// Facilitators
 
 
 // Inspectors
@@ -55,52 +38,20 @@ int Face::length(void) const {
 	return M_Width;
 }
 
-int Face::Get_Height(void) const {
-	return height();
-}
-
-int Face::Get_Width(void) const {
-	return length();
-}
-
-Tile *Face::Get_Tile(int Column, int Row) const {
-	if(Row<1 || Row>M_Height)
-		throw std::out_of_range("Get_Tile");
-	if(Column<1 || Column>M_Width)
-		throw std::out_of_range("Get_Tile");
-	return M_Tile[M_Width*(Row-1)+Column-1];
-}
-
-Tile& Face::operator()(int col, int row) const {
-	if(row < 1 || row > M_Height)
-		throw std::out_of_range("Get_Tile");
-	if(col < 1 || col > M_Width)
-		throw std::out_of_range("Get_Tile");
-	return *M_Tile[M_Width * (row - 1) + col-1];
+Tile_p& Face::operator()(int col, int row) {
+	return _tiles[M_Width*--row + --col];
 }
 
 bool Face::Is_Solved(void) const {
-	// If there is only one cube on a face, it is solved
-	if(M_Height*M_Width==1)
-		return true;
-	// Create a temporary color based on the first color on the face
-	Color Temp(M_Tile[0]->Get_Color()->Get_Red(), M_Tile[0]->Get_Color()->Get_Green(),
-			M_Tile[0]->Get_Color()->Get_Blue() );
-	// Cycle through the face, checking the colors to see if they all match the first
-	for(auto n=1; n<M_Width*M_Height; n++)
-		if(		M_Tile[n]->Get_Color()->Get_Red()!=Temp.Get_Red() ||
-				M_Tile[n]->Get_Color()->Get_Green()!=Temp.Get_Green() ||
-				M_Tile[n]->Get_Color()->Get_Blue()!=Temp.Get_Blue() )
-			return false;
-	return true;
+	return std::all_of(_tiles.begin(), _tiles.end(),
+			[this](const Tile_p& t) { return t == _tiles[0]; });
 }
 
 
 // Mutators
 // Flood: Make an entire Face a single Color
 void Face::Flood(Color *color) {
-	for(auto n=0; n<M_Height*M_Width; n++)
-		M_Tile[n]->Set_Color(color);
+	std::fill(_tiles.begin(), _tiles.end(), std::make_shared<Tile>(color));
 }
 
 void Face::Rotate_CCW() {
@@ -111,27 +62,23 @@ void Face::Rotate_CCW() {
 }
 
 void Face::Rotate_CW(void) {
-	// Store the old values in a temporary array
-	Tile **Temp=new Tile*[M_Height*M_Width];
+	auto temp = _tiles;
 
-	// Copy the old values
-	for(auto n=0; n<M_Height*M_Width; n++)
-		Temp[n]=M_Tile[n];
-
-	if(M_Height==M_Width) {
-		for(auto n=0; n<M_Height; n++)
-			for(auto nn=0; nn<M_Width; nn++)
-				// bijection function that maps the new coordinates
-				M_Tile[(M_Width-1-n)+M_Height*nn]=Temp[n*M_Width+nn];
+	if(M_Height == M_Width) {
+		for(auto x = 0; x < M_Width; ++x) {
+			for(auto y = 0; y < M_Height; ++y) {
+				(*this)(x+1, y+1) = temp[y  +  M_Width * (M_Height-1 - x)];
+			}
+		}
 	}
-	else { // M_Height!=M_Width
-		for(auto n=0; n<M_Height; n++)
-			for(auto nn=0; nn<M_Width; nn++)
-				// This function actually rotates 180 degrees
-				M_Tile[M_Width*M_Height-1-nn-n*M_Width]=Temp[n*M_Width+nn];
+	else {
+		for(auto x = 0; x < M_Width; ++x) {
+			for(auto y = 0; y < M_Height; ++y) {
+				(*this)(x+1, y+1) = temp[(M_Width - 1 - x)  +  M_Width*(M_Height - 1 - y)];
+			}
+		}
 	}
-
-	delete [] Temp;
+	return;
 }
 
 void Face::Spin_CW(void) {
@@ -142,23 +89,17 @@ void Face::Spin_CW(void) {
 	}
 
 	// Create a temporary array of Tile to store the old Face
-	Tile **Temp=new Tile*[M_Height*M_Width];
-
-	// Copy the old Face
-	for(auto n=0; n<M_Height*M_Width; n++)
-		Temp[n]=M_Tile[n];
+	auto temp = _tiles;
 
 	// M_Height!=M_Width, so change the two
 	auto Temp_Size=M_Height;
 	M_Height=M_Width;
 	M_Width=Temp_Size;
 
-	for(auto n=0; n<M_Width; n++)
-		for(auto nn=0; nn<M_Height; nn++)
+	for(auto x=0; x<M_Width; ++x)
+		for(auto y=0; y<M_Height; ++y)
 			// Use a bijection to map the coordinates
-			M_Tile[n+nn*M_Width]=Temp[nn+M_Height*(M_Width-1-n)];
-
-	delete [] Temp;
+			_tiles[x + y*M_Width] = temp[y + M_Height*(M_Width-1-x)];
 }
 
 void Face::Spin_CCW(void) {
@@ -170,27 +111,3 @@ void Face::Spin_CCW(void) {
 	}
 }
 
-void Face::Set_Tile(int Column, int Row, Tile *tile) {
-	if(Row<1 || Row>M_Height)
-		throw std::out_of_range("Set_Tile");
-	if(Column<1 || Column>M_Width)
-		throw std::out_of_range("Set_Tile");
-
-	M_Tile[M_Width*(Row-1)+Column-1]=tile;
-}
-
-Face &Face::operator =(const Face &face) {
-	M_Height=face.Get_Height();
-	M_Width=face.Get_Width();
-	// Clear the old array
-	delete [] M_Tile;
-	// Make a new array
-	M_Tile=new Tile*[M_Width*M_Height];
-
-	for(auto n=0; n<M_Width; n++)
-		for(auto nn=0; nn<M_Height; nn++) {
-			M_Tile[n+nn*M_Width]=new Tile;
-			M_Tile[n+nn*M_Width]->Set_Color(face.Get_Tile(n+1, nn+1)->Get_Color() );
-		}
-	return *this;
-}

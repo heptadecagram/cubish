@@ -23,6 +23,7 @@ public:
 	double Get_Red(void) const;
 	double Get_Green(void) const;
 	double Get_Blue(void) const;
+	bool operator==(const Color& other) const;
 
 	// Mutators
 	void Set(double Red, double Green, double Blue);

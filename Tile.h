@@ -19,6 +19,7 @@ public:
 
 	// Inspectors
 	Color *Get_Color(void) const;
+	bool operator==(const Tile& other) const;
 
 	// Mutators
 	void Set_Color(Color *color);

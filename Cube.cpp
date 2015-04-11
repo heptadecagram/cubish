@@ -37,7 +37,7 @@ int Cube::Make_GL_List() {
 		for(auto n2=1; n2 <= _sides[n1-1].height(); n2++) {
 			for(auto n3=1; n3 <= _sides[n1-1].length(); n3++) {
 
-				_sides[n1-1](n3, _sides[n1-1].height() - n2 + 1).Get_Color()->Change_To();
+				_sides[n1-1](n3, _sides[n1-1].height() - n2 + 1)->Get_Color()->Change_To();
 
 				// Raise the height of all colored squares to avoid clipping problems
 				glBegin(GL_QUADS);
@@ -121,7 +121,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 					glEnd(); // GL_QUADS
 
 					// Pretty colored squares are being drawn here
-					_sides[n1-1](n3, _sides[n1-1].height()-n2+1).Get_Color()->Change_To();
+					_sides[n1-1](n3, _sides[n1-1].height()-n2+1)->Get_Color()->Change_To();
 					glBegin(GL_QUADS);
 						glVertex3d(n3-.9, n2-.9, .03);
 						glVertex3d(n3-.9, n2-.1, .03);
@@ -282,7 +282,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			glEnd(); // GL_QUADS
 
 			// Colored squares, raised for visibility
-			_sides[n-1](X_Coord, _sides[n-1].height() - Y_Coord+1).Get_Color()->Change_To();
+			_sides[n-1](X_Coord, _sides[n-1].height() - Y_Coord+1)->Get_Color()->Change_To();
 			glBegin(GL_QUADS);
 				glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
 				glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
@@ -315,7 +315,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 		for(auto n=1; n <= _sides[5].height(); ++n) {
 			for(auto nn=1; nn <= _sides[5].length(); ++nn) {
 				// Yay pretty colored squares (z-offset for viewability
-				_sides[5](nn, n).Get_Color()->Change_To();
+				_sides[5](nn, n)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
 					glVertex3d(nn-0.9, n-0.9, -0.03);
 					glVertex3d(nn-0.9, n-0.1, -0.03);
@@ -341,7 +341,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 		for(auto n=1; n <= _sides[0].height(); ++n) {
 			for(auto nn=1; nn <= _sides[0].length(); ++nn) {
 				// Change to the right color, draw the square at an offset
-				_sides[0](nn, _sides[0].height() - n+1).Get_Color()->Change_To();
+				_sides[0](nn, _sides[0].height() - n+1)->Get_Color()->Change_To();
 				glBegin(GL_QUADS);
 					glVertex3d(nn-0.9, n-0.9, 0.03);
 					glVertex3d(nn-0.9, n-0.1, 0.03);
@@ -390,9 +390,9 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 // reverse the changes this function makes!
 void Cube::View_Side(int Side) {
 	// Get some measurements
-	auto Width  = _sides[0].Get_Width();
-	auto Height = _sides[0].Get_Height();
-	auto Depth  = _sides[1].Get_Width();
+	auto Width  = _sides[0].length();
+	auto Height = _sides[0].height();
+	auto Depth  = _sides[1].length();
 
 	switch(Side) {
 	case 1:
@@ -426,9 +426,9 @@ void Cube::View_Side(int Side) {
 // This function reverses the effects of View_Side().  See that function for
 // explanation.
 void Cube::Undo_View_Side(int Side) {
-	auto Width  = _sides[0].Get_Width();
-	auto Height = _sides[0].Get_Height();
-	auto Depth  = _sides[1].Get_Width();
+	auto Width  = _sides[0].length();
+	auto Height = _sides[0].height();
+	auto Depth  = _sides[1].length();
 
 	switch(Side) {
 	case 1:
@@ -544,8 +544,8 @@ void Cube::Randomize(int Twists) {
 	int Random_Side, Random_Row, Random_Column;
 	for(auto n=0; n<Twists; n++) {
 		Random_Side=Random(6);
-		Random_Row = Random(_sides[Random_Side-1].Get_Height());
-		Random_Column = Random(_sides[Random_Side-1].Get_Width());
+		Random_Row = Random(_sides[Random_Side-1].height());
+		Random_Column = Random(_sides[Random_Side-1].length());
 		Random_Direction=Direction(Random(4) );
 		Twist(Random_Side, Random_Column, Random_Row, Random_Direction);
 	}
@@ -560,9 +560,9 @@ bool Cube::Rotate_CW(int Side, int Offset) {
 	auto Old_Front=Set_Front(Side);
 
 	// These will be used quite a bit
-	auto Width  = _sides[0].Get_Width();
-	auto Height = _sides[0].Get_Height();
-	auto Depth  = _sides[1].Get_Width();
+	auto Width  = _sides[0].length();
+	auto Height = _sides[0].height();
+	auto Depth  = _sides[1].length();
 
 	if(Offset>Depth || Offset<1)
 		throw std::out_of_range("Rotate_CW");
