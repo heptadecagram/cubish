@@ -492,13 +492,13 @@ void Cube::Save(Color **Color_List, std::ofstream& File) {
 void Cube::Load(Color **Color_List, std::ifstream& File) {
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
-		char Red=0, Green=0, Blue=0;
+		unsigned char Red=0, Green=0, Blue=0;
 		File >> Red >> Green >> Blue;
 		Color_List[n]->Set(Red/255.0, Green/255.0, Blue/255.0);
 	}
 
 	// The next three bytes are dimensions
-	char Width=1, Height=1, Depth=1;
+	unsigned char Width=1, Height=1, Depth=1;
 	File >> Width >> Height >> Depth;
 
 	// Make new faces.
@@ -509,7 +509,7 @@ void Cube::Load(Color **Color_List, std::ifstream& File) {
 	_sides[4] = Face(Width,  Depth, Color_List[4]);
 	_sides[5] = Face(Width, Height, Color_List[5]);
 
-	char Color_Index=0;
+	unsigned char Color_Index=0;
 	// Now, obtain the Color_List information stored in the file and put it on the
 	// Cube.
 	for(auto n1=0; n1<6; n1++)
