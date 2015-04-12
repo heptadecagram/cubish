@@ -529,10 +529,10 @@ void Cube::Randomize(int Twists) {
 	Direction Random_Direction;
 	int Random_Side, Random_Row, Random_Column;
 	for(auto n=0; n<Twists; n++) {
-		Random_Side=Random(6);
-		Random_Row = Random(_sides[Random_Side-1].height());
-		Random_Column = Random(_sides[Random_Side-1].length());
-		Random_Direction=Direction(Random(4) );
+		Random_Side = 1 + Random(6);
+		Random_Row = 1 + Random(_sides[Random_Side-1].height());
+		Random_Column = 1 + Random(_sides[Random_Side-1].length());
+		Random_Direction = Direction(1 + Random(4));
 		Twist(Random_Side, Random_Column, Random_Row, Random_Direction);
 	}
 }
@@ -660,7 +660,7 @@ bool Cube::Is_Solved(void) const {
 
 // Private Functions
 // The Cube must have some random method for randomizing itself
-int Cube::Random(int Max) {
+int Cube::Random(int Limit) {
 	static bool Seeded=false;
 
 	// If we haven't called this function before, initialize randomocity
@@ -670,7 +670,7 @@ int Cube::Random(int Max) {
 	}
 
 	// It's not fancy because it doesn't have to be.
-	return rand()%Max+1;
+	return rand() % Limit;
 }
 
 // This lifesaving function modifies the entire Cube so that the Cube now treats
