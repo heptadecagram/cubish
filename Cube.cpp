@@ -615,7 +615,7 @@ bool Cube::Rotate_CCW(int Side, int Offset) {
 // If the Cube changed in some way, true is returned, otherwise, false.
 bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 	// Got to have some place to start and some place to go
-	if(Side < 1 || 6 < Side) {
+	if(direction == Direction::NONE || Side < 1 || 6 < Side) {
 		return false;
 	}
 
@@ -637,6 +637,8 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 		case Direction::Right:
 			Returner=Rotate_CW(3, Row);
 			break;
+		case Direction::NONE:
+			throw "Unreachable";
 	}
 
 	// Leave the Cube the way we found it
