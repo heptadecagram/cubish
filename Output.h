@@ -6,7 +6,7 @@
 #include "Cube.h"
 #include "Vector.h"
 
-void Initialize_Window(int argc, char **argv, Cube& cube, Color *Color_Array[6]);
+void Initialize_Window(int argc, char **argv, Cube& cube, Color_p Color_Array[]);
 
 void Display(void);
 

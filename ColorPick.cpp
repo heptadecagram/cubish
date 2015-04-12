@@ -13,12 +13,12 @@ extern int Window_ID, Option_Window_ID, Color_Window_ID;
 extern Cube Current_Cube;
 
 // This is the address of the old Color
-Color *Window_Color;
+Color_p Window_Color;
 
 int Color_Window_Size;
 bool Color_Off;
 
-void Color_Window(Color *Old_Color) {
+void Color_Window(Color_p Old_Color) {
 	// Store the address of the old Color and make a window
 	Window_Color=Old_Color;
 	Color_Window_ID=glutCreateWindow("Color Picker");

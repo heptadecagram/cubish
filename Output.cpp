@@ -14,7 +14,7 @@
 
 // Since OpenGL is written in C, functions and variables must be global in scope
 Cube Current_Cube;
-Color **Color_List;
+Color_p *Color_List;
 int Cube_List, Arrow_List;
 auto Window_Size=300.0;
 
@@ -34,7 +34,7 @@ int Section_List, Slice_List, Option_List;
 double Slice_Angle, Max_Angle;
 double Time_Delay;
 
-void Initialize_Window(int argc, char **argv, Cube& cube, Color *Color_Array[6]) {
+void Initialize_Window(int argc, char **argv, Cube& cube, Color_p Color_Array[]) {
 	Current_Cube=cube;
 	Current_Cube.Randomize();
 	Color_List=Color_Array;

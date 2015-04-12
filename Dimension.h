@@ -6,9 +6,9 @@
 #ifndef LIAM_DIMENSION
 #define LIAM_DIMENSION
 
-#include "Color.h"
+#include "Tile.h"
 
-void Dimension_Window(int Dimension, Color **Color_List);
+void Dimension_Window(int Dimension, Color_p *Color_List);
 
 void Dimension_Display(void);
 

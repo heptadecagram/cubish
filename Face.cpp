@@ -14,7 +14,7 @@ Face::Face(void) {
 	_tiles.resize(9, std::make_shared<Tile>());
 }
 
-Face::Face(int Width, int Height, Color *color) {
+Face::Face(int Width, int Height, Color_p color) {
 	M_Height=Height;
 	M_Width=Width;
 
@@ -50,7 +50,7 @@ bool Face::Is_Solved(void) const {
 
 // Mutators
 // Flood: Make an entire Face a single Color
-void Face::Flood(Color *color) {
+void Face::Flood(Color_p color) {
 	std::fill(_tiles.begin(), _tiles.end(), std::make_shared<Tile>(color));
 }
 

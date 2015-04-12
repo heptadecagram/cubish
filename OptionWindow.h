@@ -6,9 +6,9 @@
 #ifndef LIAM_OPTIONWINDOW
 #define LIAM_OPTIONWINDOW
 
-#include "Color.h"
+#include "Tile.h"
 
-void New_Window(Color **Color_Array);
+void New_Window(Color_p *Color_Array);
 
 void Option_Display(void);
 
@@ -18,7 +18,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord);
 
 void Option_Reshape(int X_Size, int Y_Size);
 
-int Make_Option_Cube_List(Color **Color_Array);
+int Make_Option_Cube_List(Color_p *Color_Array);
 
 int Make_Option_Exit_List(void);
 

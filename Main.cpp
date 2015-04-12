@@ -15,13 +15,13 @@ int main(int Argument_Count, char** Arguments) {
 	auto Width=3, Height=3, Depth=3;
 
 	// Create the color list and default colors
-	Color *Side_Colors[6];
-	Side_Colors[0]=new Color(1, 0, 1);
-	Side_Colors[1]=new Color(1, 1, 1);
-	Side_Colors[2]=new Color(0, 0, 1);
-	Side_Colors[3]=new Color(1, 0, 0);
-	Side_Colors[4]=new Color(0, 1, 0);
-	Side_Colors[5]=new Color(1, 1, 0);
+	Color_p Side_Colors[6];
+	Side_Colors[0]= std::make_shared<Color>(1, 0, 1);
+	Side_Colors[1]= std::make_shared<Color>(1, 1, 1);
+	Side_Colors[2]= std::make_shared<Color>(0, 0, 1);
+	Side_Colors[3]= std::make_shared<Color>(1, 0, 0);
+	Side_Colors[4]= std::make_shared<Color>(0, 1, 0);
+	Side_Colors[5]= std::make_shared<Color>(1, 1, 0);
 
 	// Behold the Cube
 	auto Alpha=Cube(Width, Height, Depth, Side_Colors[0], Side_Colors[1], Side_Colors[2],

@@ -7,25 +7,29 @@
 #ifndef LIAM_TILE
 #define LIAM_TILE
 
+#include <memory>
+
 #include "Color.h"
+
+using Color_p = std::shared_ptr<Color>;
 
 class Tile {
 public:
 	// Constructors
 	Tile(void);
-	Tile(Color *color);
+	Tile(Color_p color);
 
 	// Facilitators
 
 	// Inspectors
-	Color *Get_Color(void) const;
+	Color_p Get_Color(void) const;
 	bool operator==(const Tile& other) const;
 
 	// Mutators
-	void Set_Color(Color *color);
+	void Set_Color(Color_p color);
 
 protected:
-	Color *M_Color;
+	Color_p M_Color;
 };
 
 #endif // LIAM_TILE

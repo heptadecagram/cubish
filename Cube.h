@@ -49,8 +49,8 @@ public:
 
 	// Constructors
 	Cube(int Width, int Height, int Depth,
-		 Color *Side_1_Color, Color *Side_2_Color, Color *Side_3_Color,
-		 Color *Side_4_Color, Color *Side_5_Color, Color *Side_6_Color);
+		 Color_p Side_1_Color, Color_p Side_2_Color, Color_p Side_3_Color,
+		 Color_p Side_4_Color, Color_p Side_5_Color, Color_p Side_6_Color);
 
 	// Facilitators
 	int Make_GL_List(void);
@@ -60,8 +60,8 @@ public:
 	void View_Side(int Side);
 	void Undo_View_Side(int Side);
 
-	void Save(Color **Color_List, std::ofstream& File);
-	void Load(Color **Color_List, std::ifstream& File);
+	void Save(Color_p *Color_List, std::ofstream& File);
+	void Load(Color_p *Color_List, std::ifstream& File);
 
 	Face& operator[](const int Side);
 

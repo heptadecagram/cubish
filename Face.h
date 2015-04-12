@@ -25,7 +25,7 @@ class Face {
 public:
 	// Constructors
 	Face(void);
-	Face(int Width, int Height, Color *color);
+	Face(int Width, int Height, Color_p color);
 	Face(const Face &face);
 
 	// Inspectors
@@ -36,7 +36,7 @@ public:
 	Tile_p& operator()(int col, int row);
 
 	// Mutators
-	void Flood(Color *color);
+	void Flood(Color_p color);
 	void Rotate_CW(void);
 	void Rotate_CCW(void);
 	void Spin_CW(void);

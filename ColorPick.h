@@ -5,9 +5,9 @@
 #ifndef LIAM_COLORPICK
 #define LIAM_COLORPICK
 
-#include "Color.h"
+#include "Tile.h"
 
-void Color_Window(Color *Old_Color);
+void Color_Window(Color_p Old_Color);
 
 void Color_Display(void);
 
