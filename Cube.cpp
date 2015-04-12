@@ -459,77 +459,65 @@ void Cube::Undo_View_Side(int Side) {
 
 // This function saves a Cube to an open file pointer.  Pass the appropriate
 // Color information in case of sides with the same color.
-void Cube::Save(Color **Color_List, FILE *File) {
-	throw "Save not implemented";
-	/*
+void Cube::Save(Color **Color_List, std::ofstream& File) {
 	// Iterate through the Color_List, turning the RGB values into bytes,
 	// and then put them in the file
 	for(int n=0; n<6; n++) {
-		int Red=255.0*Color_List[n]->Get_Red();
-		int Green=255.0*Color_List[n]->Get_Green();
-		int Blue=255.0*Color_List[n]->Get_Blue();
-		fprintf(File, "%c%c%c", Red, Green, Blue);
+		char Red = static_cast<char>(255.0*Color_List[n]->Get_Red());
+		char Green = static_cast<char>(255.0*Color_List[n]->Get_Green());
+		char Blue = static_cast<char>(255.0*Color_List[n]->Get_Blue());
+		File << Red << Green << Blue;
 	}
 
 	// Put the dimensions of the Cube into the file as bytes
-	fprintf(File, "%c%c%c", M_Sides[0]->Get_Width(), M_Sides[0]->Get_Height(),
-			M_Sides[1]->Get_Width() );
+	File << static_cast<char>(_sides[0].length())
+		<< static_cast<char>(_sides[0].height())
+		<< static_cast<char>(_sides[1].length());
 
 	// These insanely-nested for() loops go through the entire Cube, comparing
 	// the addresses of the Colors on the Cube and Color_List.  Note that addresses
 	// must be compared and not values.  Then print out the byte value of its
 	// Color_List index.
 	for(int n1=0; n1<6; n1++)
-		for(int n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
-			for(int n3=1; n3<=M_Sides[n1]->Get_Width(); n3++)
-				for(char n4=0; n4<6; n4++)
-					if(M_Sides[n1]->Get_Tile(n3, n2)->Get_Color()==Color_List[(int)n4])
-						fprintf(File, "%c", n4);
-						*/
+		for(int n2=1; n2 <= _sides[n1].height(); n2++)
+			for(int n3=1; n3 <= _sides[n1].length(); n3++)
+				for(int n4=0; n4<6; n4++)
+					if(_sides[n1](n3, n2)->Get_Color() == Color_List[n4]) {
+						File << static_cast<char>(n4);
+					}
 }
 
 // This function loads a Cube from an open file pointer.  It also assigns the
 // appropriate Color_List information.  Warning: No exception handling ability yet.
-void Cube::Load(Color **Color_List, FILE *File) {
-	throw "Load not implemented";
-	/*
+void Cube::Load(Color **Color_List, std::ifstream& File) {
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
 		char Red=0, Green=0, Blue=0;
-		fscanf(File, "%c%c%c", &Red, &Green, &Blue);
+		File >> Red >> Green >> Blue;
 		Color_List[n]->Set(Red/255.0, Green/255.0, Blue/255.0);
 	}
 
 	// The next three bytes are dimensions
 	char Width=1, Height=1, Depth=1;
-	fscanf(File, "%c%c%c", &Width, &Height, &Depth);
+	File >> Width >> Height >> Depth;
 
-	// Make new faces.  Memory is already allocated, so just point things
-	// differently.
-	Face Temp_Face_1(Width, Height, Color_List[0]);
-	Face Temp_Face_2(Depth, Height, Color_List[1]);
-	Face Temp_Face_3(Width, Depth, Color_List[2]);
-	Face Temp_Face_4(Depth, Height, Color_List[3]);
-	Face Temp_Face_5(Width, Depth, Color_List[4]);
-	Face Temp_Face_6(Width, Height, Color_List[5]);
-	*M_Sides[0]=Temp_Face_1;
-	*M_Sides[1]=Temp_Face_2;
-	*M_Sides[2]=Temp_Face_3;
-	*M_Sides[3]=Temp_Face_4;
-	*M_Sides[4]=Temp_Face_5;
-	*M_Sides[5]=Temp_Face_6;
+	// Make new faces.
+	_sides[0] = Face(Width, Height, Color_List[0]);
+	_sides[1] = Face(Depth, Height, Color_List[1]);
+	_sides[2] = Face(Width,  Depth, Color_List[2]);
+	_sides[3] = Face(Depth, Height, Color_List[3]);
+	_sides[4] = Face(Width,  Depth, Color_List[4]);
+	_sides[5] = Face(Width, Height, Color_List[5]);
 
 	char Color_Index=0;
 	// Now, obtain the Color_List information stored in the file and put it on the
 	// Cube.
 	for(auto n1=0; n1<6; n1++)
-		for(auto n2=1; n2<=M_Sides[n1]->Get_Height(); n2++)
-			for(auto n3=1; n3<=M_Sides[n1]->Get_Width(); n3++) {
-				fscanf(File, "%c", &Color_Index);
-				M_Sides[n1]->Get_Tile(n3, n2)->Set_Color(Color_List[(int)Color_Index]);
+		for(auto n2=1; n2<=_sides[n1].height(); n2++)
+			for(auto n3=1; n3<=_sides[n1].length(); n3++) {
+				File >> Color_Index;
+				_sides[n1](n3, n2)->Set_Color(Color_List[(int)Color_Index]);
 			}
-
-			*/
 }
 
 

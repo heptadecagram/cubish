@@ -35,6 +35,7 @@
 #define LIAM_CUBE
 
 #include <array>
+#include <fstream>
 
 #include "Face.h"
 #include "Vector.h"
@@ -59,8 +60,8 @@ public:
 	void View_Side(int Side);
 	void Undo_View_Side(int Side);
 
-	void Save(Color **Color_List, FILE *File);
-	void Load(Color **Color_List, FILE *File);
+	void Save(Color **Color_List, std::ofstream& File);
+	void Load(Color **Color_List, std::ifstream& File);
 
 	Face& operator[](const int Side);
 

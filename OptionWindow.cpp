@@ -2,6 +2,7 @@
 #include "OptionWindow.h"
 
 #include <cmath>
+#include <fstream>
 #include <stdexcept>
 
 #include <GLUT/glut.h>
@@ -149,18 +150,16 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Is_Dimension_Window_Open=true;
 		}
 		else if(Option_Save) {
-			auto Save_File=fopen("./CubeSave.1", "w");
-			if(Save_File==NULL)
+			std::ofstream Save_File("./CubeSave.1", std::ofstream::binary);
+			if(!Save_File.is_open())
 				throw std::invalid_argument("Could not open savefile for writing");
 			Current_Cube.Save(Option_Color_List, Save_File);
-			fclose(Save_File);
 		}
 		else if(Option_Load) {
-			auto Save_File=fopen("./CubeSave.1", "r");
-			if(Save_File==NULL)
+			std::ifstream Save_File("./CubeSave.1", std::ofstream::binary);
+			if(!Save_File.is_open())
 				throw std::invalid_argument("Could not open savefile for reading");
 			Current_Cube.Load(Option_Color_List, Save_File);
-			fclose(Save_File);
 
 			Make_All_Option_Lists();
 			glutPostRedisplay();
