@@ -41,7 +41,7 @@
 #include "Vector.h"
 
 // For use in the Twist() functions
-enum Direction { NONE, Up, Down, Left, Right };
+enum class Direction : char { NONE, Up, Down, Left, Right };
 
 class Cube {
 public:

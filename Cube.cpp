@@ -615,8 +615,9 @@ bool Cube::Rotate_CCW(int Side, int Offset) {
 // If the Cube changed in some way, true is returned, otherwise, false.
 bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 	// Got to have some place to start and some place to go
-	if(!Side || direction==NONE)
+	if(Side < 1 || 6 < Side) {
 		return false;
+	}
 
 	// Make life easier, pretend we are twisting from side 1
 	auto Old_Front=Set_Front(Side);
@@ -624,20 +625,18 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 	// Figure out where we are rotating, what direction, and if the Cube changed
 	bool Returner;
 	switch(direction) {
-	case Up:
-		Returner=Rotate_CW(2, Column);
-		break;
-	case Down:
-		Returner=Rotate_CCW(2, Column);
-		break;
-	case Left:
-		Returner=Rotate_CCW(3, Row);
-		break;
-	case Right:
-		Returner=Rotate_CW(3, Row);
-		break;
-	default:
-		throw std::out_of_range("Twist");
+		case Direction::Up:
+			Returner=Rotate_CW(2, Column);
+			break;
+		case Direction::Down:
+			Returner=Rotate_CCW(2, Column);
+			break;
+		case Direction::Left:
+			Returner=Rotate_CCW(3, Row);
+			break;
+		case Direction::Right:
+			Returner=Rotate_CW(3, Row);
+			break;
 	}
 
 	// Leave the Cube the way we found it

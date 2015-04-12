@@ -167,7 +167,7 @@ void Display(void) {
 	else {
 		Slice_Angle=0;
 		glCallList(Cube_List);
-		if(Arrow_Direction)
+		if(Arrow_Direction != Direction::NONE)
 			glCallList(Arrow_List);
 		if(Current_Cube.Is_Solved() )
 			glutIdleFunc(Pulsate_Background_Color);
@@ -184,13 +184,13 @@ void Display(void) {
 
 void Rotate_Slice(void) {
 	glutSetWindow(Window_ID);
-	if(Arrow_Direction==Down || Arrow_Direction==Left)
+	if(Arrow_Direction==Direction::Down || Arrow_Direction==Direction::Left)
 		Slice_Angle += 0.78 * Time_Delay;
 	else
 		Slice_Angle -= 0.78 * Time_Delay;
 	if(Slice_Angle>Max_Angle || Slice_Angle<-Max_Angle) {
 		Draw_Section=false;
-		Arrow_Direction=NONE;
+		Arrow_Direction=Direction::NONE;
 		glutMouseFunc(Mouse);
 	}
 	Display();
@@ -249,7 +249,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		else { // State==GLUT_UP
 			Cube_Twisting=false;
 			// If there is an arrow present, change that cube
-			if(Arrow_Direction) {
+			if(Arrow_Direction != Direction::NONE) {
 				Vector Cube_Place=Get_Twist_Side(Start_Vector, Arrow_Direction);
 				Slice_List=Current_Cube.Make_Slice_GL_List(Cube_Place[1], Cube_Place[2]);
 				Section_List=Current_Cube.Make_Section_GL_List(Cube_Place[1], Cube_Place[2]);
@@ -268,7 +268,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 				else {
 					// Just remove the arrow if the cube did
 					// not change
-					Arrow_Direction=NONE;
+					Arrow_Direction=Direction::NONE;
 					glutPostRedisplay();
 				}
 			}
@@ -426,17 +426,17 @@ int Make_Arrow_GL_List(void) {
 
 	auto Angle=0.0;
 	switch(Arrow_Direction) {
-	case Up:
-		Angle=-90;
-		break;
-	case Down:
-		Angle=90;
-		break;
-	case Right:
-		Angle=180;
-		break;
-	default:
-		break;
+		case Direction::Up:
+			Angle=-90;
+			break;
+		case Direction::Down:
+			Angle=90;
+			break;
+		case Direction::Right:
+			Angle=180;
+			break;
+		default:
+			break;
 	}
 	glRotatef(Angle, 0, 0, 1);
 	glLineWidth(5);
@@ -635,19 +635,19 @@ Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 
 Direction Get_Direction(Vector Begin, Vector End) {
 	if(Begin[2]==End[2] && Begin[3]==End[3])
-		return NONE;
+		return Direction::NONE;
 
 	if(std::abs(Begin[2]-End[2]) < std::abs(Begin[3]-End[3]) ) {
 		if(Begin[3]>End[3])
-			return Down;
+			return Direction::Down;
 		else
-			return Up;
+			return Direction::Up;
 	}
 	else {
 		if(Begin[2]>End[2])
-			return Right;
+			return Direction::Right;
 		else
-			return Left;
+			return Direction::Left;
 	}
 }
 
@@ -682,18 +682,18 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 	Vector Returner;
 
 	switch(direction) {
-	case Up:
-	case Down:
-		Returner[2]=Origin[2];
-		break;
-	case Left:
-	case Right:
-		Returner[2]=Origin[3];
-		Origin[1]=Origin[1]+6;
-		break;
-	default:
-		break;
-		// What should NONE do?
+		case Direction::Up:
+		case Direction::Down:
+			Returner[2]=Origin[2];
+			break;
+		case Direction::Left:
+		case Direction::Right:
+			Returner[2]=Origin[3];
+			Origin[1]=Origin[1]+6;
+			break;
+		default:
+			break;
+			// What should NONE do?
 	}
 
 	switch(int(Origin[1]) ) {
