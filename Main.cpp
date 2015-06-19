@@ -1,6 +1,7 @@
 
 #include <cstdlib>
-#include <GLUT/glut.h>
+
+#include "ui.h"
 
 #include "Color.h"
 #include "Cube.h"

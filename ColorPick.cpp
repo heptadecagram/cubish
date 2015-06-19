@@ -1,7 +1,7 @@
 
 #include "ColorPick.h"
 
-#include <GLUT/glut.h>
+#include "ui.h"
 
 #include "Cube.h"
 #include "OptionWindow.h"

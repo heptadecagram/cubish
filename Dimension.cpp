@@ -1,7 +1,7 @@
 
 #include "Dimension.h"
 
-#include <GLUT/glut.h>
+#include "ui.h"
 
 #include "Cube.h"
 #include "Face.h"

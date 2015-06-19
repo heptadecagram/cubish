@@ -7,7 +7,7 @@
 
 #include <sys/timeb.h>
 
-#include <GLUT/glut.h>
+#include "ui.h"
 
 #include "OptionWindow.h"
 #include "Quaternion.h"

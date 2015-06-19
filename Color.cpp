@@ -1,7 +1,7 @@
 
 #include "Color.h"
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 
 // Constructors
 Color::Color(void) {

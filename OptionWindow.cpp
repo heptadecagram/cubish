@@ -5,7 +5,7 @@
 #include <fstream>
 #include <stdexcept>
 
-#include <GLUT/glut.h>
+#include "ui.h"
 
 #include "Output.h"
 #include "ColorPick.h"

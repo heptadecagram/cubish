@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-#include <GLUT/glut.h>
+#include "ui.h"
 
 
 // Constructors
