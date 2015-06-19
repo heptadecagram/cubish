@@ -1,6 +1,7 @@
 
 #include "Face.h"
 
+#include <algorithm>
 #include <memory>
 #include <stdexcept>
 
