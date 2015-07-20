@@ -8,12 +8,10 @@
 double Quaternion::M_Radius=.8;
 
 // Constructors
-Quaternion::Quaternion(void) : Vector(0, 0, 0), _phi(1) {
-}
+Quaternion::Quaternion(void) : Vector(0, 0, 0), _phi(1) {}
 
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi) :
-	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {
-}
+	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {}
 
 Quaternion &Quaternion::operator = (const Vector &vector) {
 	Vector::operator=(vector);
@@ -45,10 +43,9 @@ void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 	Vector Distance=Old-New;
 	double Theta=Distance.Get_Length()/(2*M_Radius);
 
-	if(Theta>1)
-		Theta=1;
-	if(Theta<-1)
-		Theta=-1;
+	Theta = fmin(Theta, 1);
+	Theta = fmax(Theta, -1);
+
 	double Phi=2*(double)asin(Theta);
 
 	Build(Axis, Phi);
@@ -166,10 +163,14 @@ double Quaternion::Sphere_Projection(double X_Coord, double Y_Coord) {
 	double Returner;
 
 	auto Distance=sqrt(X_Coord*X_Coord + Y_Coord*Y_Coord);
-    if(Distance<M_Radius*.70710678118654752440)
+	// Looks like sqrt(2)/2
+	if(Distance < M_Radius*.70710678118654752440) {
 		Returner=sqrt(M_Radius*M_Radius - Distance*Distance);
-	else
+	}
+	else {
+		// Looks like sqrt(2)
 		Returner=M_Radius*M_Radius/(Distance*1.41421356237309504880*1.41421356237309504880);
+	}
 
 	return Returner;
 }
