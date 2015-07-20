@@ -23,7 +23,6 @@ public:
 
 	// Inspectors
 	double Get_Length(void) const;
-	int Get_Size(void) const;
 	double operator [] (int Index) const;
 
 
