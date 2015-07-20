@@ -119,7 +119,7 @@ void Dimension_Display(void) {
 	glutSwapBuffers();
 }
 
-void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
+void Dimension_Mouse(int, int State, int, int) {
 	// When a user clicks (doesn't matter what button)
 	if(State==GLUT_DOWN) {
 
@@ -186,7 +186,7 @@ void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 }
 
 // Mouse-movement callback function.  Makes the big squares change in number.
-void Dimension_Passive_Motion(int X_Coord, int Y_Coord) {
+void Dimension_Passive_Motion(int X_Coord, int) {
 	// Figure out how many blocks the mouse has traveled in the X-axis
 	auto X_Part=Dimension_Window_Size/10.0;
 	X_Coord-=X_Part/2;

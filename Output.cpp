@@ -405,7 +405,7 @@ void Resize(int X_Size, int Y_Size) {
 }
 
 // Just responds to 'Q' and 'q'.  Otherwise useless.
-void Keyboard(unsigned char Key, int X_Coord, int Y_Coord) {
+void Keyboard(unsigned char Key, int, int) {
 	switch(Key) {
 	case 'q':
 	case 'Q':
@@ -457,7 +457,7 @@ int Make_Arrow_GL_List(void) {
 	return List_ID;
 }
 
-int Get_Cube_Section(Cube& cube, int Side, int Depth) {
+int Get_Cube_Section(Cube& cube, int, int) {
 	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);

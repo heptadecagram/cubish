@@ -137,7 +137,7 @@ void Color_Display(void) {
 }
 
 // The mouse callback
-void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
+void Color_Mouse(int, int State, int X_Coord, int Y_Coord) {
 	// Not checking for different buttons.  Why bother?
 	if(State==GLUT_DOWN) {
 		// Adjust for window coordinates to logical ones
