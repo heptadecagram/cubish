@@ -1,15 +1,20 @@
 
-CXX=c++
+CXXFLAGS+=-g -std=c++1y -Wall -Werror -Wextra -Wstack-usage=1024 -pedantic
 
-CXXFLAGS=-g -std=c++1y -Wall -Werror -pedantic -Wno-deprecated
+OBJS=Cubish.o Color.o ColorPick.o Cube.o Dimension.o Face.o OptionWindow.o Output.o Quaternion.o Tile.o Vector.o
 
-OBJS=Color.o ColorPick.o Cube.o Dimension.o Face.o Main.o OptionWindow.o Output.o Quaternion.o Tile.o Vector.o
+uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 
-LIBS=-framework OpenGL -framework GLUT
+ifeq ($(uname_S), Linux)
+# Linux flags
+LDLIBS+=-lstdc++ -lm -lGL -lGLU -lglut
+else
+# Mac flags
+LDLIBS+=-framework OpenGL -framework GLUT
+endif
 
 Cubish: $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIBS)
 
 
 clean:
-	@rm *.o Cubish
+	-rm *.o Cubish
