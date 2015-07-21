@@ -196,6 +196,7 @@ void Rotate_Slice(void) {
 	Display();
 }
 
+#include <iostream>
 void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	if(Button==GLUT_LEFT_BUTTON) {
 		if(State==GLUT_DOWN) {
@@ -250,16 +251,16 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Cube_Twisting=false;
 			// If there is an arrow present, change that cube
 			if(Arrow_Direction != Direction::NONE) {
-				Vector Cube_Place=Get_Twist_Side(Start_Vector, Arrow_Direction);
-				Slice_List=Current_Cube.Make_Slice_GL_List(Cube_Place[1], Cube_Place[2]);
-				Section_List=Current_Cube.Make_Section_GL_List(Cube_Place[1], Cube_Place[2]);
+				auto Cube_Place = Get_Twist_Side(Start_Vector, Arrow_Direction);
+				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0], Cube_Place[1]);
+				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0], Cube_Place[1]);
 				// Twist() returns true if a rotation happened
 				Draw_Section=Current_Cube.Twist(Start_Vector, Arrow_Direction);
 				if(Draw_Section) {
-					Start_Vector=Get_Twist_Vector(Cube_Place[1]);
+					Start_Vector = Get_Twist_Vector(Cube_Place[0]);
 					// Get ready to animate and redraw
 					Cube_List=Current_Cube.Make_GL_List();
-					Max_Angle=Cube_Place[3];
+					Max_Angle = Cube_Place[2];
 					glutIdleFunc(Rotate_Slice);
 					glClearColor(.6, .6, .6, 0);
 					// No user input while animating!!
@@ -678,17 +679,17 @@ Vector Get_Twist_Vector(int Side) {
 	return Returner;
 }
 
-Vector Get_Twist_Side(Vector Origin, Direction direction) {
-	Vector Returner;
+std::array<double, 3> Get_Twist_Side(Vector Origin, Direction direction) {
+	std::array<double, 3> found;
 
 	switch(direction) {
 		case Direction::Up:
 		case Direction::Down:
-			Returner[2]=Origin[2];
+			found[1]=Origin[2];
 			break;
 		case Direction::Left:
 		case Direction::Right:
-			Returner[2]=Origin[3];
+			found[1]=Origin[3];
 			Origin[1]=Origin[1]+6;
 			break;
 		default:
@@ -696,39 +697,39 @@ Vector Get_Twist_Side(Vector Origin, Direction direction) {
 			// What should NONE do?
 	}
 
-	switch(int(Origin[1]) ) {
-	case 1:
-	case 3:
-	case 5:
-	case 6:
-		Returner[1]=2;
-		break;
-	case 7:
-	case 8:
-	case 10:
-		Returner[1]=3;
-		break;
-	case 2:
-		Returner[1]=6;
-		break;
-	case 9:
-		Returner[1]=6;
-		break;
-	case 4:
-	case 11:
-		Returner[1]=1;
-		break;
-	case 12:
-		Returner[1]=5;
-		break;
+	switch(static_cast<int>(Origin[1])) {
+		case 1:
+		case 3:
+		case 5:
+		case 6:
+			found[0]=2;
+			break;
+		case 7:
+		case 8:
+		case 10:
+			found[0]=3;
+			break;
+		case 2:
+		case 9:
+			found[0]=6;
+			break;
+		case 4:
+		case 11:
+			found[0]=1;
+			break;
+		case 12:
+			found[0]=5;
+			break;
 	}
 
-	if(Current_Cube[Returner[1]].height() == Current_Cube[Returner[1]].length())
-		Returner[3]=90;
-	else
-		Returner[3]=180;
+	if(Current_Cube[found[0]].height() == Current_Cube[found[0]].length()) {
+		found[2]=90;
+	}
+	else {
+		found[2]=180;
+	}
 
-	return Returner;
+	return found;
 }
 
 void Cube_Remake_View(void) {

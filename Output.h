@@ -2,6 +2,8 @@
 #ifndef LIAM_OUTPUT
 #define LIAM_OUTPUT
 
+#include <array>
+
 #include "Color.h"
 #include "Cube.h"
 #include "Vector.h"
@@ -36,7 +38,7 @@ void Close_Window(void);
 
 Vector Get_Twist_Vector(int Side);
 
-Vector Get_Twist_Side(Vector Origin, Direction direction);
+std::array<double, 3> Get_Twist_Side(Vector Origin, Direction direction);
 
 Vector Find_Cube_Point(Vector Begin, Vector End);
 
