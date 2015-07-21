@@ -1,6 +1,7 @@
 
 #include "OptionWindow.h"
 
+#include <array>
 #include <cmath>
 #include <fstream>
 #include <stdexcept>
@@ -312,45 +313,47 @@ int Make_Option_Cube_List(Color_p *Color_Array) {
 
 	glNewList(List_ID, GL_COMPILE);
 
+	auto w = Option_Window_Width/8.0;
+	auto h = Option_Window_Height/5.0;
 	for(auto n=0; n<6; n++) {
-		Vector Location;
-		switch(n+1) {
-		case 1:
-			Location[1]=-Option_Window_Width/8.0;
-			Location[2]=0;
-			break;
-		case 2:
-			Location[1]=-3*Option_Window_Width/8.0;
-			Location[2]=0;
-			break;
-		case 3:
-			Location[1]=-Option_Window_Width/8.0;
-			Location[2]=Option_Window_Height/5.0;
-			break;
-		case 4:
-			Location[1]=Option_Window_Width/8.0;
-			Location[2]=0;
-			break;
-		case 5:
-			Location[1]=-Option_Window_Width/8.0;
-			Location[2]=-Option_Window_Height/5.0;
-			break;
-		case 6:
-			Location[1]=-Option_Window_Width/8.0;
-			Location[2]=-2*Option_Window_Height/5.0;
-			break;
-		default:
-			break;
+		std::array<double, 2> location{0,0};
+		switch(n) {
+			case 0:
+				location[0]=-w;
+				location[1]=0;
+				break;
+			case 1:
+				location[0]=-3*w;
+				location[1]=0;
+				break;
+			case 2:
+				location[0]=-w;
+				location[1]=h;
+				break;
+			case 3:
+				location[0]=w;
+				location[1]=0;
+				break;
+			case 4:
+				location[0]=-w;
+				location[1]=-h;
+				break;
+			case 5:
+				location[0]=-w;
+				location[1]=-2*h;
+				break;
+			default:
+				break;
 		}
-		glTranslated(Location[1], Location[2], 0);
+		glTranslated(location[0], location[1], 0);
 		Color_Array[n]->Change_To();
-		glBegin(GL_QUADS);
+		glBegin(GL_QUADS); {
 			glVertex3d(0, 0, 0);
 			glVertex3d(0, Option_Window_Height/5.0, 0);
 			glVertex3d(Option_Window_Width/4.0, Option_Window_Height/5.0, 0);
 			glVertex3d(Option_Window_Width/4.0, 0, 0);
-		glEnd(); // GL_QUADS
-		glTranslated(-Location[1], -Location[2], 0);
+		} glEnd(); // GL_QUADS
+		glTranslated(-location[0], -location[1], 0);
 
 	}
 
