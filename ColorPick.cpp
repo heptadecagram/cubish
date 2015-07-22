@@ -50,10 +50,10 @@ void Color_Display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Part is a logical unit of the window's size
-	auto Part=Color_Window_Size/33.0;
+	auto Part = Color_Window_Size/33.0;
 
 	// Draw four quadrants in the window
-	for(auto n1=0; n1<4; n1++) {
+	for(auto n1 = 0; n1 < 4; ++n1) {
 		// This switch handles the quadrant translations
 		switch(n1) {
 		case 0:
@@ -94,17 +94,17 @@ void Color_Display(void) {
 						glVertex3d(7*Part/2, 7*Part/2, 0);
 						glVertex3d( -Part/2, 7*Part/2, 0);
 						glVertex3d( -Part/2,  -Part/2, 0);
-					} glEnd(); // GL_LINE_STRIP
+					} glEnd();
 				}
 
 				// Draw the color, based on where we are
 				glColor3d(n1/3.0, n2/3.0, n3/3.0);
-				glBegin(GL_QUADS);
-					glVertex3i(0, 0, 0);
-					glVertex3i(3*Part, 0, 0);
-					glVertex3i(3*Part, 3*Part, 0);
-					glVertex3i(0, 3*Part, 0);
-				glEnd(); // GL_QUADS
+				glBegin(GL_QUADS); {
+					glVertex3s(0, 0, 0);
+					glVertex3s(3*Part, 0, 0);
+					glVertex3s(3*Part, 3*Part, 0);
+					glVertex3s(0, 3*Part, 0);
+				} glEnd();
 
 				// Move back
 				glTranslated(0, -4*n3*Part, 0);

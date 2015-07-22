@@ -1,5 +1,4 @@
 
-
 #include "Cube.h"
 
 #include <algorithm>
@@ -38,23 +37,23 @@ int Cube::Make_GL_List() {
 				_sides[n1-1](n3, _sides[n1-1].height() - n2 + 1)->Get_Color()->Change_To();
 
 				// Raise the height of all colored squares to avoid clipping problems
-				glBegin(GL_QUADS);
+				glBegin(GL_QUADS); {
 					glVertex3d(n3-0.9, n2-0.9, 0.03);
 					glVertex3d(n3-0.9, n2-0.1, 0.03);
 					glVertex3d(n3-0.1, n2-0.1, 0.03);
 					glVertex3d(n3-0.1, n2-0.9, 0.03);
-				glEnd(); // GL_QUADS
+				} glEnd();
 			}
 		}
 
 		// Create a black background to put the colored squares on
 		glColor3d(0, 0, 0);
-		glBegin(GL_QUADS);
-			glVertex3i(                    0,                     0, 0);
-			glVertex3i(_sides[n1-1].length(),                     0, 0);
-			glVertex3i(_sides[n1-1].length(), _sides[n1-1].height(), 0);
-			glVertex3i(                    0, _sides[n1-1].height(), 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex3s(                    0,                     0, 0);
+			glVertex3s(_sides[n1-1].length(),                     0, 0);
+			glVertex3s(_sides[n1-1].length(), _sides[n1-1].height(), 0);
+			glVertex3s(                    0, _sides[n1-1].height(), 0);
+		} glEnd();
 
 		// Now, undo the orientation, returning to the original state
 		Undo_View_Side(n1);
@@ -111,21 +110,21 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 					 (n1==5 && n2 == _sides[n1-1].height() - Depth + 1) ) ) {
 					// Black background squares
 					glColor3d(0, 0, 0);
-					glBegin(GL_QUADS);
-						glVertex3i(n3-1, n2-1, 0);
-						glVertex3i(n3-1, n2, 0);
-						glVertex3i(n3, n2, 0);
-						glVertex3i(n3, n2-1, 0);
-					glEnd(); // GL_QUADS
+					glBegin(GL_QUADS); {
+						glVertex3s(n3-1, n2-1, 0);
+						glVertex3s(n3-1, n2, 0);
+						glVertex3s(n3, n2, 0);
+						glVertex3s(n3, n2-1, 0);
+					} glEnd();
 
 					// Pretty colored squares are being drawn here
 					_sides[n1-1](n3, _sides[n1-1].height()-n2+1)->Get_Color()->Change_To();
-					glBegin(GL_QUADS);
+					glBegin(GL_QUADS); {
 						glVertex3d(n3-.9, n2-.9, .03);
 						glVertex3d(n3-.9, n2-.1, .03);
 						glVertex3d(n3-.1, n2-.1, .03);
 						glVertex3d(n3-.1, n2-.9, .03);
-					glEnd(); // GL_QUADS
+					} glEnd();
 				}
 			}
 		}
@@ -142,12 +141,12 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 
 	// Draw a black square on top, if it is open
 	if(Depth != _sides[1].length() ) {
-		glBegin(GL_QUADS);
-			glVertex3i(                 0,                  0, 0);
-			glVertex3i(                 0, _sides[0].height(), 0);
-			glVertex3i(_sides[0].length(), _sides[0].height(), 0);
-			glVertex3i(_sides[0].length(),                  0, 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex3s(                 0,                  0, 0);
+			glVertex3s(                 0, _sides[0].height(), 0);
+			glVertex3s(_sides[0].length(), _sides[0].height(), 0);
+			glVertex3s(_sides[0].length(),                  0, 0);
+		} glEnd();
 	}
 
 	// Move up a bit
@@ -156,12 +155,12 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	// If we are not at the top, draw another black square to close off
 	// the open side
 	if(Depth!=1) {
-		glBegin(GL_QUADS);
-			glVertex3i(                 0,                  0, 0);
-			glVertex3i(                 0, _sides[0].height(), 0);
-			glVertex3i(_sides[0].length(), _sides[0].height(), 0);
-			glVertex3i(_sides[0].length(),                  0, 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex3s(                 0,                  0, 0);
+			glVertex3s(                 0, _sides[0].height(), 0);
+			glVertex3s(_sides[0].length(), _sides[0].height(), 0);
+			glVertex3s(_sides[0].length(),                  0, 0);
+		} glEnd();
 	}
 
 	// Go back to where we used to be

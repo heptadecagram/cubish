@@ -88,18 +88,18 @@ void Rotate_View(void) {
 	if(Option_List==0)
 		Option_List=glGenLists(1);
 
-	glNewList(Option_List, GL_COMPILE);
-	glColor3d(Menu_Color[1], Menu_Color[2], Menu_Color[3]);
-	glBegin(GL_QUADS);
-		glVertex3d(X, Y, Z);
-		gluUnProject(25, Window_Size-5, .15, Model, Projection, Viewport, &X, &Y, &Z);
-		glVertex3d(X, Y, Z);
-		gluUnProject(25, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z);
-		glVertex3d(X, Y, Z);
-		gluUnProject(5, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z);
-		glVertex3d(X, Y, Z);
-	glEnd(); // GL_QUADS
-	glEndList(); // Option_List
+	glNewList(Option_List, GL_COMPILE); {
+		glColor3d(Menu_Color[1], Menu_Color[2], Menu_Color[3]);
+		glBegin(GL_QUADS); {
+			glVertex3d(X, Y, Z);
+			gluUnProject(25, Window_Size-5, .15, Model, Projection, Viewport, &X, &Y, &Z);
+			glVertex3d(X, Y, Z);
+			gluUnProject(25, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z);
+			glVertex3d(X, Y, Z);
+			gluUnProject(5, Window_Size-25, .15, Model, Projection, Viewport, &X, &Y, &Z);
+			glVertex3d(X, Y, Z);
+		} glEnd();
+	} glEndList(); // Option_List
 }
 
 void Display(void) {
@@ -117,16 +117,16 @@ void Display(void) {
 		ftime(&Begin_Milli);
 
 		// Draw things, but don't display them
-		glBegin(GL_QUADS);
+		glBegin(GL_QUADS); {
 			for(auto n1=0; n1<20; n1++)
 				for(auto n2=0; n2<20; n2++)
 					for(auto n3=0; n3<20; n3++) {
-						glVertex3i(n1, n2, n3);
-						glVertex3i(n1, n2+1, n3);
-						glVertex3i(n1+1, n2+1, n3+1);
-						glVertex3i(n1+1, n2, n3+1);
+						glVertex3s(n1, n2, n3);
+						glVertex3s(n1, n2+1, n3);
+						glVertex3s(n1+1, n2+1, n3+1);
+						glVertex3s(n1+1, n2, n3+1);
 					}
-		glEnd();
+		} glEnd();
 		ftime(&End_Milli);
 		End=time(NULL);
 
@@ -255,7 +255,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0], Cube_Place[1]);
 				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0], Cube_Place[1]);
 				// Twist() returns true if a rotation happened
-				Draw_Section=Current_Cube.Twist(Start_Vector, Arrow_Direction);
+				Draw_Section = Current_Cube.Twist(Start_Vector, Arrow_Direction);
 				if(Draw_Section) {
 					Start_Vector = Get_Twist_Vector(Cube_Place[0]);
 					// Get ready to animate and redraw
@@ -380,10 +380,10 @@ void Motion(int X_Coord, int Y_Coord) {
 	else if(Mouse_Dragging) {
 		// Perform a trackball projection from two-space to a
 		// quaternion
-		Old_Quaternion.Trackball( (double(2*beginx) - Window_Size)/Window_Size,
-				(Window_Size - double(2*beginy) )/Window_Size,
-				(double(2*X_Coord) - Window_Size)/Window_Size,
-				(Window_Size - double(2*Y_Coord) )/Window_Size);
+		Old_Quaternion.Trackball( (static_cast<double>(2*beginx) - Window_Size)/Window_Size,
+				(Window_Size - static_cast<double>(2*beginy) )/Window_Size,
+				(static_cast<double>(2*X_Coord) - Window_Size)/Window_Size,
+				(Window_Size - static_cast<double>(2*Y_Coord) )/Window_Size);
 		View_Spinning=true;
 		beginx=X_Coord;
 		beginy=Y_Coord;
@@ -441,13 +441,13 @@ int Make_Arrow_GL_List(void) {
 	}
 	glRotatef(Angle, 0, 0, 1);
 	glLineWidth(5);
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_LINE_STRIP); {
 		glVertex3d(0, 0, .05);
 		glVertex3d(1, 0, .05);
 		glVertex3d(.75, .25, .05);
 		glVertex3d(1, 0, .05);
 		glVertex3d(.75, -.25, .05);
-	glEnd();
+	} glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
 	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].height()-.5, 0);
@@ -469,21 +469,21 @@ int Get_Cube_Section(Cube& cube, int, int) {
 		for(auto n2=1; n2 <= cube[n1].height(); n2++) {
 			for(auto n3=1; n3<=cube[n1].length(); n3++) {
 				cube[n1](n3, cube[n1].height()-n2+1)->Get_Color()->Change_To();
-				glBegin(GL_QUADS);
-					glVertex3i(n3-1, n2-1, 0);
-					glVertex3i(n3-1, n2, 0);
-					glVertex3i(n3, n2, 0);
-					glVertex3i(n3, n2-1, 0);
-				glEnd(); // GL_QUADS
+				glBegin(GL_QUADS); {
+					glVertex2s(n3-1, n2-1);
+					glVertex2s(n3-1, n2);
+					glVertex2s(n3  , n2);
+					glVertex2s(n3  , n2-1);
+				} glEnd();
 
 				glColor3d(0, 0, 0);
-				glBegin(GL_LINE_STRIP);
-					glVertex3i(n3-1, n2-1, 0);
-					glVertex3i(n3-1, n2, 0);
-					glVertex3i(n3, n2, 0);
-					glVertex3i(n3, n2-1, 0);
-					glVertex3i(n3-1, n2-1, 0);
-				glEnd(); // GL_LINE_STRIP
+				glBegin(GL_LINE_STRIP); {
+					glVertex2s(n3-1, n2-1);
+					glVertex2s(n3-1, n2);
+					glVertex2s(n3  , n2);
+					glVertex2s(n3  , n2-1);
+					glVertex2s(n3-1, n2-1);
+				} glEnd();
 			}
 		}
 
