@@ -515,7 +515,7 @@ void Cube::Load(Color_p *Color_List, std::ifstream& File) {
 		for(auto n2=1; n2<=_sides[n1].height(); n2++)
 			for(auto n3=1; n3<=_sides[n1].length(); n3++) {
 				File >> Color_Index;
-				_sides[n1](n3, n2)->Set_Color(Color_List[(int)Color_Index]);
+				_sides[n1](n3, n2)->Set_Color(Color_List[static_cast<int>(Color_Index)]);
 			}
 }
 

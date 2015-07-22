@@ -46,16 +46,16 @@ void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 	Theta = fmin(Theta, 1);
 	Theta = fmax(Theta, -1);
 
-	double Phi=2*(double)asin(Theta);
+	double Phi = 2*asin(Theta);
 
 	Build(Axis, Phi);
 }
 
 void Quaternion::Build(Vector Axis, double Phi) {
 	Axis.Normalize();
-	*this=Axis;
-	Scale((double)sin(Phi/2) );
-	_phi=(double)cos(Phi/2);
+	*this = Axis;
+	Scale(sin(Phi/2));
+	_phi = cos(Phi/2);
 }
 
 void Quaternion::Build_Rotation_Matrix(double Matrix[4][4]) {
