@@ -383,13 +383,13 @@ int Make_Option_Exit_List(void) {
 			// Draw the box
 			glColor3d(.7, .7, .7);
 			glBegin(GL_QUADS); {
-				glVertex3d(1, 1, 0);
-				glVertex3d(9, 1, 0);
-				glVertex3d(9, 9, 0);
-				glVertex3d(1, 9, 0);
+				glVertex2s(1, 1);
+				glVertex2s(9, 1);
+				glVertex2s(9, 9);
+				glVertex2s(1, 9);
 			} glEnd();
 
-			// Colorize the X if it is being hovered over
+			// Colorize the X if it is mouse-overed
 			if(Option_Exit) {
 				glColor3d(1, 0, 0);
 			}
@@ -400,10 +400,10 @@ int Make_Option_Exit_List(void) {
 			// Draw the X
 			glLineWidth(5);
 			glBegin(GL_LINES); {
-				glVertex3d(1, 1, 0);
-				glVertex3d(9, 9, 0);
-				glVertex3d(9, 1, 0);
-				glVertex3d(1, 9, 0);
+				glVertex2s(1, 1);
+				glVertex2s(9, 9);
+				glVertex2s(9, 1);
+				glVertex2s(1, 9);
 			} glEnd(); // GL_LINES
 
 		}
@@ -420,52 +420,55 @@ int Make_Option_Solved_List(void) {
 
 	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		glTranslated(-20*X_Part, 15*Y_Part, 0);
+		glScaled(X_Part, Y_Part, 0);
 
-	glTranslated(-20*X_Part, 15*Y_Part, 0);
-	glBegin(GL_QUADS);
-		Option_Color_List[0]->Change_To();
-		glVertex3d(X_Part, Y_Part, 0);
-		glVertex3d(7*X_Part, Y_Part, 0);
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
-		glVertex3d(X_Part, 7*Y_Part, 0);
+		// Draw the solved cube
+		glBegin(GL_QUADS); {
+			Option_Color_List[0]->Change_To();
+			glVertex2s(1, 1);
+			glVertex2s(7, 1);
+			glVertex2s(7, 7);
+			glVertex2s(1, 7);
 
-		Option_Color_List[2]->Change_To();
-		glVertex3d(X_Part, 7*Y_Part, 0);
-		glVertex3d(3*X_Part, 9*Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
+			Option_Color_List[2]->Change_To();
+			glVertex2s(1, 7);
+			glVertex2s(3, 9);
+			glVertex2s(9, 9);
+			glVertex2s(7, 7);
 
-		Option_Color_List[3]->Change_To();
-		glVertex3d(7*X_Part, Y_Part, 0);
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(9*X_Part, 3*Y_Part, 0);
-	glEnd(); // GL_QUADS
+			Option_Color_List[3]->Change_To();
+			glVertex2s(7, 1);
+			glVertex2s(7, 7);
+			glVertex2s(9, 9);
+			glVertex2s(9, 3);
+		} glEnd(); // GL_QUADS
 
-	if(Option_Solved) {
-		glLineWidth(2);
-		glColor3d(0, 0, 0);
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(7*X_Part, Y_Part, 0);
-			glVertex3d(X_Part, Y_Part, 0);
-			glVertex3d(X_Part, 7*Y_Part, 0);
-			glVertex3d(7*X_Part, 7*Y_Part, 0);
-			glVertex3d(7*X_Part, Y_Part, 0);
+		// Draw the outline if it is mouse-overed
+		if(Option_Solved) {
+			glLineWidth(2);
+			glColor3d(0, 0, 0);
+			glBegin(GL_LINE_STRIP); {
+				glVertex2s(7, 1);
+				glVertex2s(1, 1);
+				glVertex2s(1, 7);
+				glVertex2s(7, 7);
+				glVertex2s(7, 1);
 
-			glVertex3d(9*X_Part, 3*Y_Part, 0);
-			glVertex3d(9*X_Part, 9*Y_Part, 0);
-			glVertex3d(7*X_Part, 7*Y_Part, 0);
-			glVertex3d(9*X_Part, 9*Y_Part, 0);
+				glVertex2s(9, 3);
+				glVertex2s(9, 9);
+				glVertex2s(7, 7);
+				glVertex2s(9, 9);
 
-			glVertex3d(3*X_Part, 9*Y_Part, 0);
-			glVertex3d(X_Part, 7*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-	}
+				glVertex2s(3, 9);
+				glVertex2s(1, 7);
+			} glEnd(); // GL_LINE_STRIP
+		}
 
-	glTranslated(20*X_Part, -15*Y_Part, 0);
-
-	glEndList(); // List_ID
+		glScaled(1/X_Part, 1/Y_Part, 0);
+		glTranslated(20*X_Part, -15*Y_Part, 0);
+	} glEndList(); // List_ID
 
 	return List_ID;
 }
