@@ -157,7 +157,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Current_Cube.Save(Option_Color_List, Save_File);
 		}
 		else if(Option_Load) {
-			std::ifstream Save_File("./CubeSave.1", std::ofstream::binary);
+			std::ifstream Save_File("./CubeSave.1", std::ifstream::binary);
 			if(!Save_File.is_open())
 				throw std::invalid_argument("Could not open savefile for reading");
 			Current_Cube.Load(Option_Color_List, Save_File);
@@ -178,8 +178,12 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 
 	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
 
-	if((X_Coord>15*X_Part && X_Coord<25*X_Part && Y_Coord>5*Y_Part && Y_Coord<45*Y_Part) ||
-	   (X_Coord>5*X_Part && X_Coord<35*X_Part && Y_Coord>15*Y_Part && Y_Coord<25*Y_Part) ) {
+	if(
+			(15*X_Part < X_Coord && X_Coord < 25*X_Part &&
+				5*Y_Part < Y_Coord && Y_Coord < 45*Y_Part) ||
+			( 5*X_Part < X_Coord && X_Coord < 35*X_Part &&
+			 15*Y_Part < Y_Coord && Y_Coord < 25*Y_Part)
+			) {
 		glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		Option_Color=true;
 		Option_Width=false;
@@ -188,24 +192,27 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		Option_Line_List=Make_Option_Line_List();
 		glutPostRedisplay();
 	}
-	else if(X_Coord>15*X_Part && X_Coord<25*X_Part &&
-			Y_Coord>2*Y_Part && Y_Coord<4*Y_Part) {
+	else if(
+			15*X_Part < X_Coord && X_Coord < 25*X_Part &&
+			 2*Y_Part < Y_Coord && Y_Coord <  4*Y_Part) {
 		glutSetCursor(GLUT_CURSOR_LEFT_RIGHT);
 		Option_Width=true;
 		Option_Color=false;
 		Option_Line_List=Make_Option_Line_List();
 		glutPostRedisplay();
 	}
-	else if(X_Coord>2*X_Part && X_Coord<4*X_Part &&
-			Y_Coord>15*Y_Part && Y_Coord<25*Y_Part) {
+	else if(
+			 2*X_Part < X_Coord && X_Coord <  4*X_Part &&
+			15*Y_Part < Y_Coord && Y_Coord < 25*Y_Part) {
 		glutSetCursor(GLUT_CURSOR_UP_DOWN);
 		Option_Height=true;
 		Option_Color=false;
 		Option_Line_List=Make_Option_Line_List();
 		glutPostRedisplay();
 	}
-	else if(X_Coord>12*X_Part && X_Coord<14*X_Part &&
-			Y_Coord>25*Y_Part && Y_Coord<35*Y_Part) {
+	else if(
+			12*X_Part < X_Coord && X_Coord < 14*X_Part &&
+			25*Y_Part < Y_Coord && Y_Coord < 35*Y_Part) {
 		glutSetCursor(GLUT_CURSOR_UP_DOWN);
 		Option_Depth=true;
 		Option_Color=false;
@@ -222,73 +229,73 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord) {
 		glutPostRedisplay();
 	}
 
-	if(X_Coord>X_Part && X_Coord<9*X_Part &&
-			Option_Window_Height-Y_Coord>Y_Part &&
-			Option_Window_Height-Y_Coord<9*Y_Part) {
+	if(X_Part < X_Coord && X_Coord < 9*X_Part &&
+			Y_Part < Option_Window_Height-Y_Coord && Option_Window_Height-Y_Coord < 9*Y_Part) {
 		Option_Exit=true;
 		Option_Exit_List=Make_Option_Exit_List();
 		glutPostRedisplay();
 	}
-	else
-		if(Option_Exit) {
-			Option_Exit=false;
-			Option_Exit_List=Make_Option_Exit_List();
-			glutPostRedisplay();
-		}
+	else if(Option_Exit) {
+		Option_Exit=false;
+		Option_Exit_List=Make_Option_Exit_List();
+		glutPostRedisplay();
+	}
 
-	if(X_Coord>X_Part && X_Coord<9*X_Part &&
-			Y_Coord>Y_Part && Y_Coord<9*Y_Part) {
+	if(
+			X_Part < X_Coord && X_Coord < 9*X_Part &&
+			Y_Part < Y_Coord && Y_Coord < 9*Y_Part) {
 		Option_Solved=true;
 		Option_Solved_List=Make_Option_Solved_List();
 		glutPostRedisplay();
 	}
-	else
-		if(Option_Solved) {
-			Option_Solved=false;
-			Option_Solved_List=Make_Option_Solved_List();
-			glutPostRedisplay();
-		}
+	else if(Option_Solved) {
+		Option_Solved=false;
+		Option_Solved_List=Make_Option_Solved_List();
+		glutPostRedisplay();
+	}
 
-	if(Option_Window_Width-X_Coord>X_Part && Option_Window_Width-X_Coord<9*X_Part &&
-			Y_Coord>Y_Part && Y_Coord<9*Y_Part) {
+	if(X_Part < Option_Window_Width-X_Coord && Option_Window_Width-X_Coord < 9*X_Part &&
+			Y_Part < Y_Coord && Y_Coord<9*Y_Part) {
 		Option_Random=true;
 		Option_Random_List=Make_Option_Random_List();
 		glutPostRedisplay();
 	}
-	else
-		if(Option_Random) {
-			Option_Random=false;
-			Option_Random_List=Make_Option_Random_List();
-			glutPostRedisplay();
-		}
-	if(X_Coord>30*X_Part && X_Coord<40*X_Part && Y_Coord>30*Y_Part && Y_Coord<40*Y_Part) {
+	else if(Option_Random) {
+		Option_Random=false;
+		Option_Random_List=Make_Option_Random_List();
+		glutPostRedisplay();
+	}
+
+	if(
+			30*X_Part < X_Coord && X_Coord < 40*X_Part &&
+			30*Y_Part < Y_Coord && Y_Coord < 40*Y_Part) {
 		Option_Save=true;
 		Option_Save_List=Make_Option_Save_List();
 		glutPostRedisplay();
 	}
-	else
-		if(Option_Save) {
-			Option_Save=false;
-			Option_Save_List=Make_Option_Save_List();
-			glutPostRedisplay();
-		}
+	else if(Option_Save) {
+		Option_Save=false;
+		Option_Save_List=Make_Option_Save_List();
+		glutPostRedisplay();
+	}
 
-	if(X_Coord>30*X_Part && X_Coord<40*X_Part && Y_Coord>40*Y_Part && Y_Coord<50*Y_Part) {
+	if(
+			30*X_Part < X_Coord && X_Coord < 40*X_Part &&
+			40*Y_Part < Y_Coord && Y_Coord < 50*Y_Part) {
 		Option_Load=true;
 		Option_Load_List=Make_Option_Load_List();
 		glutPostRedisplay();
 	}
-	else
-		if(Option_Load) {
-			Option_Load=false;
-			Option_Load_List=Make_Option_Load_List();
-			glutPostRedisplay();
-		}
+	else if(Option_Load) {
+		Option_Load=false;
+		Option_Load_List=Make_Option_Load_List();
+		glutPostRedisplay();
+	}
 }
 
 // Allowing for users that try to create odd-sized windows
 void Option_Reshape(int X_Size, int Y_Size) {
-	auto New_Size=X_Size*5>Y_Size*4?Y_Size/5.0:X_Size/4.0;
+	auto New_Size = 5*X_Size > 4*Y_Size ? Y_Size/5.0 : X_Size/4.0;
 
 	Option_Window_Height=New_Size*5;
 	Option_Window_Width=New_Size*4;
@@ -299,7 +306,8 @@ void Option_Reshape(int X_Size, int Y_Size) {
 	glPushMatrix();
 	glLoadIdentity();
 
-	gluOrtho2D(-Option_Window_Width/2.0, Option_Window_Width/2.0,
+	gluOrtho2D(
+			-Option_Window_Width/2.0, Option_Window_Width/2.0,
 			-Option_Window_Height/2.0, Option_Window_Height/2.0);
 
 	glViewport(0, 0, Option_Window_Width, Option_Window_Height);
@@ -363,35 +371,46 @@ int Make_Option_Cube_List(Color_p *Color_Array) {
 }
 
 int Make_Option_Exit_List(void) {
-	static int List_ID=glGenLists(1);
+	static int List_ID = glGenLists(1);
 
-	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		glTranslated(-20*X_Part, -25*Y_Part, 0);
+		glScaled(X_Part, Y_Part, 0);
 
-	glTranslated(-20*X_Part, -25*Y_Part, 0);
-	glColor3d(.7, .7, .7);
-	glBegin(GL_QUADS);
-		glVertex3d(X_Part, Y_Part, 0);
-		glVertex3d(9*X_Part, Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(X_Part, 9*Y_Part, 0);
-	glEnd(); // GL_QUADS
+		{
+			// Draw the box
+			glColor3d(.7, .7, .7);
+			glBegin(GL_QUADS); {
+				glVertex3d(1, 1, 0);
+				glVertex3d(9, 1, 0);
+				glVertex3d(9, 9, 0);
+				glVertex3d(1, 9, 0);
+			} glEnd();
 
-	if(Option_Exit)
-		glColor3d(1, 0, 0);
-	else
-		glColor3d(.6, .6, .6);
-	glLineWidth(5);
-	glBegin(GL_LINES);
-		glVertex3d(X_Part, Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(9*X_Part, Y_Part, 0);
-		glVertex3d(X_Part, 9*Y_Part, 0);
-	glEnd(); // GL_LINES
-	glTranslated(20*X_Part, 25*Y_Part, 0);
+			// Colorize the X if it is being hovered over
+			if(Option_Exit) {
+				glColor3d(1, 0, 0);
+			}
+			else {
+				glColor3d(.6, .6, .6);
+			}
 
-	glEndList(); // List_ID
+			// Draw the X
+			glLineWidth(5);
+			glBegin(GL_LINES); {
+				glVertex3d(1, 1, 0);
+				glVertex3d(9, 9, 0);
+				glVertex3d(9, 1, 0);
+				glVertex3d(1, 9, 0);
+			} glEnd(); // GL_LINES
+
+		}
+
+		glScaled(1/X_Part, 1/Y_Part, 0);
+		glTranslated(20*X_Part, 25*Y_Part, 0);
+	} glEndList(); // List_ID
 
 	return List_ID;
 }
