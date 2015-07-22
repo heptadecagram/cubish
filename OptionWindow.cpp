@@ -474,128 +474,129 @@ int Make_Option_Solved_List(void) {
 }
 
 int Make_Option_Random_List(void) {
-	static int List_ID=glGenLists(1);
+	static int List_ID = glGenLists(1);
 
-	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		glTranslated(10*X_Part, 15*Y_Part, 0);
+		glScaled(X_Part, Y_Part, 0);
 
-	glTranslated(10*X_Part, 15*Y_Part, 0);
-	glBegin(GL_QUADS);
-		Option_Color_List[0]->Change_To();
-		glVertex3d(X_Part, Y_Part, 0);
-		glVertex3d(4*X_Part, Y_Part, 0);
-		glVertex3d(4*X_Part, 4*Y_Part, 0);
-		glVertex3d(X_Part, 4*Y_Part, 0);
+		glBegin(GL_QUADS); {
+			Option_Color_List[0]->Change_To();
+			glVertex2s(1, 1);
+			glVertex2s(4, 1);
+			glVertex2s(4, 4);
+			glVertex2s(1, 4);
 
-		Option_Color_List[1]->Change_To();
-		glVertex3d(7*X_Part, Y_Part, 0);
-		glVertex3d(4*X_Part, Y_Part, 0);
-		glVertex3d(4*X_Part, 4*Y_Part, 0);
-		glVertex3d(7*X_Part, 4*Y_Part, 0);
+			Option_Color_List[1]->Change_To();
+			glVertex2s(7, 1);
+			glVertex2s(4, 1);
+			glVertex2s(4, 4);
+			glVertex2s(7, 4);
 
-		Option_Color_List[2]->Change_To();
-		glVertex3d(X_Part, 7*Y_Part, 0);
-		glVertex3d(4*X_Part, 7*Y_Part, 0);
-		glVertex3d(4*X_Part, 4*Y_Part, 0);
-		glVertex3d(X_Part, 4*Y_Part, 0);
+			Option_Color_List[2]->Change_To();
+			glVertex2s(1, 7);
+			glVertex2s(4, 7);
+			glVertex2s(4, 4);
+			glVertex2s(1, 4);
 
-		Option_Color_List[3]->Change_To();
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
-		glVertex3d(4*X_Part, 7*Y_Part, 0);
-		glVertex3d(4*X_Part, 4*Y_Part, 0);
-		glVertex3d(7*X_Part, 4*Y_Part, 0);
+			Option_Color_List[3]->Change_To();
+			glVertex2s(7, 7);
+			glVertex2s(4, 7);
+			glVertex2s(4, 4);
+			glVertex2s(7, 4);
 
-		Option_Color_List[4]->Change_To();
-		glVertex3d(X_Part, 7*Y_Part, 0);
-		glVertex3d(2*X_Part, 8*Y_Part, 0);
-		glVertex3d(5*X_Part, 8*Y_Part, 0);
-		glVertex3d(4*X_Part, 7*Y_Part, 0);
+			Option_Color_List[4]->Change_To();
+			glVertex2s(1, 7);
+			glVertex2s(2, 8);
+			glVertex2s(5, 8);
+			glVertex2s(4, 7);
 
-		Option_Color_List[5]->Change_To();
-		glVertex3d(2*X_Part, 8*Y_Part, 0);
-		glVertex3d(3*X_Part, 9*Y_Part, 0);
-		glVertex3d(6*X_Part, 9*Y_Part, 0);
-		glVertex3d(5*X_Part, 8*Y_Part, 0);
+			Option_Color_List[5]->Change_To();
+			glVertex2s(2, 8);
+			glVertex2s(3, 9);
+			glVertex2s(6, 9);
+			glVertex2s(5, 8);
 
-		Option_Color_List[0]->Change_To();
-		glVertex3d(4*X_Part, 7*Y_Part, 0);
-		glVertex3d(5*X_Part, 8*Y_Part, 0);
-		glVertex3d(8*X_Part, 8*Y_Part, 0);
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
+			Option_Color_List[0]->Change_To();
+			glVertex2s(4, 7);
+			glVertex2s(5, 8);
+			glVertex2s(8, 8);
+			glVertex2s(7, 7);
 
-		Option_Color_List[1]->Change_To();
-		glVertex3d(5*X_Part, 8*Y_Part, 0);
-		glVertex3d(6*X_Part, 9*Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(8*X_Part, 8*Y_Part, 0);
+			Option_Color_List[1]->Change_To();
+			glVertex2s(5, 8);
+			glVertex2s(6, 9);
+			glVertex2s(9, 9);
+			glVertex2s(8, 8);
 
-		Option_Color_List[2]->Change_To();
-		glVertex3d(7*X_Part, 7*Y_Part, 0);
-		glVertex3d(8*X_Part, 8*Y_Part, 0);
-		glVertex3d(8*X_Part, 5*Y_Part, 0);
-		glVertex3d(7*X_Part, 4*Y_Part, 0);
+			Option_Color_List[2]->Change_To();
+			glVertex2s(7, 7);
+			glVertex2s(8, 8);
+			glVertex2s(8, 5);
+			glVertex2s(7, 4);
 
-		Option_Color_List[3]->Change_To();
-		glVertex3d(8*X_Part, 8*Y_Part, 0);
-		glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glVertex3d(9*X_Part, 6*Y_Part, 0);
-		glVertex3d(8*X_Part, 5*Y_Part, 0);
+			Option_Color_List[3]->Change_To();
+			glVertex2s(8, 8);
+			glVertex2s(9, 9);
+			glVertex2s(9, 6);
+			glVertex2s(8, 5);
 
-		Option_Color_List[4]->Change_To();
-		glVertex3d(7*X_Part, 4*Y_Part, 0);
-		glVertex3d(8*X_Part, 5*Y_Part, 0);
-		glVertex3d(8*X_Part, 2*Y_Part, 0);
-		glVertex3d(7*X_Part, Y_Part, 0);
+			Option_Color_List[4]->Change_To();
+			glVertex2s(7, 4);
+			glVertex2s(8, 5);
+			glVertex2s(8, 2);
+			glVertex2s(7, 1);
 
-		Option_Color_List[5]->Change_To();
-		glVertex3d(8*X_Part, 5*Y_Part, 0);
-		glVertex3d(9*X_Part, 6*Y_Part, 0);
-		glVertex3d(9*X_Part, 3*Y_Part, 0);
-		glVertex3d(8*X_Part, 2*Y_Part, 0);
+			Option_Color_List[5]->Change_To();
+			glVertex2s(8, 5);
+			glVertex2s(9, 6);
+			glVertex2s(9, 3);
+			glVertex2s(8, 2);
 
-	glEnd(); // GL_QUADS
+		} glEnd(); // GL_QUADS
 
-	if(Option_Random) {
-		glLineWidth(2);
-		glColor3d(0, 0, 0);
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(7*X_Part, Y_Part, 0);
-			glVertex3d(7*X_Part, 7*Y_Part, 0);
-			glVertex3d(X_Part, 7*Y_Part, 0);
-			glVertex3d(X_Part, Y_Part, 0);
-			glVertex3d(7*X_Part, Y_Part, 0);
+		if(Option_Random) {
+			glLineWidth(2);
+			glColor3d(0, 0, 0);
+			glBegin(GL_LINE_STRIP); {
+				glVertex2s(7, 1);
+				glVertex2s(7, 7);
+				glVertex2s(1, 7);
+				glVertex2s(1, 1);
+				glVertex2s(7, 1);
 
-			glVertex3d(9*X_Part, 3*Y_Part, 0);
-			glVertex3d(9*X_Part, 9*Y_Part, 0);
-			glVertex3d(7*X_Part, 7*Y_Part, 0);
-			glVertex3d(1*X_Part, 7*Y_Part, 0);
-			glVertex3d(3*X_Part, 9*Y_Part, 0);
-			glVertex3d(9*X_Part, 9*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
+				glVertex2s(9, 3);
+				glVertex2s(9, 9);
+				glVertex2s(7, 7);
+				glVertex2s(1, 7);
+				glVertex2s(3, 9);
+				glVertex2s(9, 9);
+			} glEnd();
 
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(X_Part, 4*Y_Part, 0);
-			glVertex3d(7*X_Part, 4*Y_Part, 0);
-			glVertex3d(9*X_Part, 6*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
+			glBegin(GL_LINE_STRIP); {
+				glVertex2s(1, 4);
+				glVertex2s(7, 4);
+				glVertex2s(9, 6);
+			} glEnd();
 
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(2*X_Part, 8*Y_Part, 0);
-			glVertex3d(8*X_Part, 8*Y_Part, 0);
-			glVertex3d(8*X_Part, 2*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
+			glBegin(GL_LINE_STRIP); {
+				glVertex2s(2, 8);
+				glVertex2s(8, 8);
+				glVertex2s(8, 2);
+			} glEnd();
 
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(4*X_Part, Y_Part, 0);
-			glVertex3d(4*X_Part, 7*Y_Part, 0);
-			glVertex3d(6*X_Part, 9*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-	}
+			glBegin(GL_LINE_STRIP); {
+				glVertex2s(4, 1);
+				glVertex2s(4, 7);
+				glVertex2s(6, 9);
+			} glEnd();
+		}
 
-	glTranslated(-10*X_Part, -15*Y_Part, 0);
-
-	glEndList(); // List_ID
+		glScaled(1/X_Part, 1/Y_Part, 0);
+		glTranslated(-10*X_Part, -15*Y_Part, 0);
+	} glEndList();
 
 	return List_ID;
 }
