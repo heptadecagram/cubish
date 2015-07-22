@@ -360,9 +360,9 @@ int Make_Option_Cube_List(Color_p *Color_Array) {
 			glVertex3d(0, Option_Window_Height/5.0, 0);
 			glVertex3d(Option_Window_Width/4.0, Option_Window_Height/5.0, 0);
 			glVertex3d(Option_Window_Width/4.0, 0, 0);
-		} glEnd(); // GL_QUADS
-		glTranslated(-location[0], -location[1], 0);
+		} glEnd();
 
+		glTranslated(-location[0], -location[1], 0);
 	}
 
 	glEndList();
@@ -404,13 +404,13 @@ int Make_Option_Exit_List(void) {
 				glVertex2s(9, 9);
 				glVertex2s(9, 1);
 				glVertex2s(1, 9);
-			} glEnd(); // GL_LINES
+			} glEnd();
 
 		}
 
 		glScaled(1/X_Part, 1/Y_Part, 0);
 		glTranslated(20*X_Part, 25*Y_Part, 0);
-	} glEndList(); // List_ID
+	} glEndList();
 
 	return List_ID;
 }
@@ -443,7 +443,7 @@ int Make_Option_Solved_List(void) {
 			glVertex2s(7, 7);
 			glVertex2s(9, 9);
 			glVertex2s(9, 3);
-		} glEnd(); // GL_QUADS
+		} glEnd();
 
 		// Draw the outline if it is mouse-overed
 		if(Option_Solved) {
@@ -463,12 +463,12 @@ int Make_Option_Solved_List(void) {
 
 				glVertex2s(3, 9);
 				glVertex2s(1, 7);
-			} glEnd(); // GL_LINE_STRIP
+			} glEnd();
 		}
 
 		glScaled(1/X_Part, 1/Y_Part, 0);
 		glTranslated(20*X_Part, -15*Y_Part, 0);
-	} glEndList(); // List_ID
+	} glEndList();
 
 	return List_ID;
 }
@@ -555,7 +555,7 @@ int Make_Option_Random_List(void) {
 			glVertex2s(9, 3);
 			glVertex2s(8, 2);
 
-		} glEnd(); // GL_QUADS
+		} glEnd();
 
 		if(Option_Random) {
 			glLineWidth(2);
@@ -602,198 +602,185 @@ int Make_Option_Random_List(void) {
 }
 
 int Make_Option_Line_List(void) {
-	static int List_ID=glGenLists(1);
+	static int List_ID = glGenLists(1);
 
-	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		glScaled(X_Part, Y_Part, 0);
 
-	glLineWidth(3);
-	if(Option_Width)
-		glColor3d(1, 0, 0);
-	else
-		glColor3d(0, 0, 0);
+		glLineWidth(3);
+		if(Option_Width) {
+			glColor3d(1, 0, 0);
+		}
+		else {
+			glColor3d(0, 0, 0);
+		}
 
-	glBegin(GL_LINE_STRIP);
-		glVertex3d(-4*X_Part, 23*Y_Part, 0);
-		glVertex3d(-5*X_Part, 22*Y_Part, 0);
-		glVertex3d(-4*X_Part, 21*Y_Part, 0);
-		glVertex3d(-5*X_Part, 22*Y_Part, 0);
-		glVertex3d(5*X_Part, 22*Y_Part, 0);
-		glVertex3d(4*X_Part, 23*Y_Part, 0);
-		glVertex3d(5*X_Part, 22*Y_Part, 0);
-		glVertex3d(4*X_Part, 21*Y_Part, 0);
-	glEnd(); // GL_LINE_STRIP
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s(-4, 23);
+			glVertex2s(-5, 22);
+			glVertex2s(-4, 21);
+			glVertex2s(-5, 22);
+			glVertex2s( 5, 22);
+			glVertex2s( 4, 23);
+			glVertex2s( 5, 22);
+			glVertex2s( 4, 21);
+		} glEnd();
 
-	if(Option_Height)
-		glColor3d(1, 0, 0);
-	else
-		glColor3d(0, 0, 0);
-	glBegin(GL_LINE_STRIP);
-		glVertex3d(-18*X_Part, 9*Y_Part, 0);
-		glVertex3d(-17*X_Part, 10*Y_Part, 0);
-		glVertex3d(-16*X_Part, 9*Y_Part, 0);
-		glVertex3d(-17*X_Part, 10*Y_Part, 0);
-		glVertex3d(-17*X_Part, 0, 0);
-		glVertex3d(-18*X_Part, 1*Y_Part, 0);
-		glVertex3d(-17*X_Part, 0, 0);
-		glVertex3d(-16*X_Part, 1*Y_Part, 0);
-	glEnd(); // GL_LINE_STRIP
+		if(Option_Height) {
+			glColor3d(1, 0, 0);
+		}
+		else {
+			glColor3d(0, 0, 0);
+		}
 
-	if(Option_Depth)
-		glColor3d(1, 0, 0);
-	else
-		glColor3d(0, 0, 0);
-	glBegin(GL_LINE_STRIP);
-		glVertex3d(-8*X_Part, -1*Y_Part, 0);
-		glVertex3d(-7*X_Part, 0, 0);
-		glVertex3d(-6*X_Part, -1*Y_Part, 0);
-		glVertex3d(-7*X_Part, 0, 0);
-		glVertex3d(-7*X_Part, -10*Y_Part, 0);
-		glVertex3d(-8*X_Part, -9*Y_Part, 0);
-		glVertex3d(-7*X_Part, -10*Y_Part, 0);
-		glVertex3d(-6*X_Part, -9*Y_Part, 0);
-	glEnd(); // GL_LINE_STRIP
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s(-18,  9);
+			glVertex2s(-17, 10);
+			glVertex2s(-16,  9);
+			glVertex2s(-17, 10);
+			glVertex2s(-17,  0);
+			glVertex2s(-18,  1);
+			glVertex2s(-17,  0);
+			glVertex2s(-16,  1);
+		} glEnd();
 
-	glEndList(); // List_ID
+		if(Option_Depth) {
+			glColor3d(1, 0, 0);
+		}
+		else {
+			glColor3d(0, 0, 0);
+		}
+
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s(-8, -1);
+			glVertex2s(-7,  0);
+			glVertex2s(-6, -1);
+			glVertex2s(-7,  0);
+			glVertex2s(-7, -10);
+			glVertex2s(-8, -9);
+			glVertex2s(-7, -10);
+			glVertex2s(-6, -9);
+		} glEnd();
+
+		glScaled(1/X_Part, 1/Y_Part, 0);
+	} glEndList();
 
 	return List_ID;
 }
 
-int Make_Option_Load_List(void) {
-	static int List_ID=glGenLists(1);
-
-	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
-
-	glNewList(List_ID, GL_COMPILE);
-
-	glTranslated(10*X_Part, -25*Y_Part, 0);
-
+void disk_image(bool outline) {
 	glColor3d(0, 0, 1);
-	glBegin(GL_QUADS);
-		glVertex3d(3*X_Part, 2*Y_Part, 0);
-		glVertex3d(3*X_Part, 8*Y_Part, 0);
-		glVertex3d(9*X_Part, 8*Y_Part, 0);
-		glVertex3d(9*X_Part, 2*Y_Part, 0);
-	glEnd(); // GL_QUADS
+	glBegin(GL_QUADS); {
+		glVertex2s(3, 2);
+		glVertex2s(3, 8);
+		glVertex2s(9, 8);
+		glVertex2s(9, 2);
+	} glEnd();
 
+	// The little circle of the disk
 	glColor3d(.7, .7, .7);
-	glBegin(GL_POLYGON);
-		for(auto f1=5.0; f1<=7; f1+=.1)
-			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-		for(auto f2=5.0; f2<=7; f2+=.1)
-			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
-	glEnd(); // GL_POLYGON
+	glBegin(GL_POLYGON); {
+		for(auto f1 = 5.0; f1 <= 7; f1 += .1)
+			glVertex2d(f1, (5 + sqrt(1 - (f1-6)*(f1-6) ) ));
+		for(auto f2 = 7.0; f2 >= 5; f2 -= .1)
+			glVertex2d(f2, (5 - sqrt(1 - (f2-6)*(f2-6) ) ));
+	} glEnd();
 
-	glBegin(GL_TRIANGLES);
-		glVertex3d(6*X_Part, 2*Y_Part, 0);
-		glVertex3d(6*X_Part, 5*Y_Part, 0);
-		glVertex3d(8*X_Part, 2*Y_Part, 0);
-	glEnd(); // GL_TRIANGLES
+	glBegin(GL_TRIANGLES); {
+		glVertex2s(6, 2);
+		glVertex2s(6, 5);
+		glVertex2s(8, 2);
+	} glEnd();
 
-	if(Option_Load) {
+	if(outline) {
 		glLineWidth(2);
 		glColor3d(0, 0, 0);
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(3*X_Part, 2*Y_Part, 0);
-			glVertex3d(3*X_Part, 8*Y_Part, 0);
-			glVertex3d(9*X_Part, 8*Y_Part, 0);
-			glVertex3d(9*X_Part, 2*Y_Part, 0);
-			glVertex3d(3*X_Part, 2*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-		glBegin(GL_LINE_STRIP);
-			for(auto f1=5.0; f1<=7; f1+=.1)
-				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-			for(auto f2=7.0; f2>=5; f2-=.1)
-				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-
-		glColor3d(1, 0, 0);
-		glBegin(GL_QUADS);
-			glVertex3d(3*X_Part, 4*Y_Part, 0);
-			glVertex3d(3*X_Part, 6*Y_Part, 0);
-			glVertex3d(5*X_Part, 6*Y_Part, 0);
-			glVertex3d(5*X_Part, 4*Y_Part, 0);
-		glEnd(); // GL_QUADS
-		glBegin(GL_TRIANGLES);
-			glVertex3d(0, 5*Y_Part, 0);
-			glVertex3d(3*X_Part, 7*Y_Part, 0);
-			glVertex3d(3*X_Part, 3*Y_Part, 0);
-		glEnd(); // GL_TRIANGLES
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s(3, 2);
+			glVertex2s(3, 8);
+			glVertex2s(9, 8);
+			glVertex2s(9, 2);
+			glVertex2s(3, 2);
+		} glEnd();
+		// The little circle of the disk
+		glBegin(GL_LINE_STRIP); {
+			for(auto f1 = 5.0; f1 <= 7; f1 += .1)
+				glVertex2d(f1, (5 + sqrt(1 - (f1-6)*(f1-6) ) ));
+			for(auto f2 = 7.0; f2 >= 5; f2 -= .1)
+				glVertex2d(f2, (5 - sqrt(1 - (f2-6)*(f2-6) ) ));
+		} glEnd();
 	}
+}
 
-	glTranslated(-10*X_Part, 25*Y_Part, 0);
 
-	glEndList(); // List_ID
+int Make_Option_Load_List(void) {
+	static int List_ID = glGenLists(1);
+
+	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
+
+	glNewList(List_ID, GL_COMPILE); {
+		glTranslated(10*X_Part, -25*Y_Part, 0);
+		glScaled(X_Part, Y_Part, 0);
+
+		disk_image(Option_Load);
+
+		if(Option_Load) {
+			glLineWidth(2);
+
+			glColor3d(1, 0, 0);
+			glBegin(GL_QUADS); {
+				glVertex2s(3, 4);
+				glVertex2s(3, 6);
+				glVertex2s(5, 6);
+				glVertex2s(5, 4);
+			} glEnd();
+			glBegin(GL_TRIANGLES); {
+				glVertex2s(0, 5);
+				glVertex2s(3, 7);
+				glVertex2s(3, 3);
+			} glEnd();
+		}
+
+		glScaled(1/X_Part, 1/Y_Part, 0);
+		glTranslated(-10*X_Part, 25*Y_Part, 0);
+	} glEndList();
 
 	return List_ID;
 }
 
 int Make_Option_Save_List(void) {
-	static int List_ID=glGenLists(1);
+	static int List_ID = glGenLists(1);
 
-	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
+	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		glTranslated(10*X_Part, -15*Y_Part, 0);
+		glScaled(X_Part, Y_Part, 0);
 
-	glTranslated(10*X_Part, -15*Y_Part, 0);
+		disk_image(Option_Save);
 
-	glColor3d(0, 0, 1);
-	glBegin(GL_QUADS);
-		glVertex3d(3*X_Part, 2*Y_Part, 0);
-		glVertex3d(3*X_Part, 8*Y_Part, 0);
-		glVertex3d(9*X_Part, 8*Y_Part, 0);
-		glVertex3d(9*X_Part, 2*Y_Part, 0);
-	glEnd(); // GL_QUADS
+		if(Option_Save) {
+			glLineWidth(2);
 
-	glColor3d(.7, .7, .7);
-	glBegin(GL_POLYGON);
-		for(auto f1=5.0; f1<=7; f1+=.1)
-			glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-		for(auto f2=5.0; f2<=7; f2+=.1)
-			glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
-	glEnd(); // GL_POLYGON
+			glColor3d(1, 0, 0);
+			glBegin(GL_QUADS); {
+				glVertex2s(0, 6);
+				glVertex2s(2, 6);
+				glVertex2s(2, 4);
+				glVertex2s(0, 4);
+			} glEnd();
+			glBegin(GL_TRIANGLES); {
+				glVertex2s(2, 7);
+				glVertex2s(5, 5);
+				glVertex2s(2, 3);
+			} glEnd();
+		}
 
-	glBegin(GL_TRIANGLES);
-		glVertex3d(6*X_Part, 2*Y_Part, 0);
-		glVertex3d(6*X_Part, 5*Y_Part, 0);
-		glVertex3d(8*X_Part, 2*Y_Part, 0);
-	glEnd(); // GL_TRIANGLES
-
-	if(Option_Save) {
-		glLineWidth(2);
-		glColor3d(0, 0, 0);
-		glBegin(GL_LINE_STRIP);
-			glVertex3d(3*X_Part, 2*Y_Part, 0);
-			glVertex3d(3*X_Part, 8*Y_Part, 0);
-			glVertex3d(9*X_Part, 8*Y_Part, 0);
-			glVertex3d(9*X_Part, 2*Y_Part, 0);
-			glVertex3d(3*X_Part, 2*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-		glBegin(GL_LINE_STRIP);
-			for(auto f1=5.0; f1<=7; f1+=.1)
-				glVertex3d(f1*X_Part, (5+sqrt(1-(f1-6)*(f1-6) ) )*Y_Part, 0);
-			for(auto f2=7.0; f2>=5; f2-=.1)
-				glVertex3d(f2*X_Part, (5-sqrt(1-(f2-6)*(f2-6) ) )*Y_Part, 0);
-		glEnd(); // GL_LINE_STRIP
-
-		glColor3d(1, 0, 0);
-		glBegin(GL_QUADS);
-			glVertex3d(0, 6*Y_Part, 0);
-			glVertex3d(2*X_Part, 6*Y_Part, 0);
-			glVertex3d(2*X_Part, 4*Y_Part, 0);
-			glVertex3d(0, 4*Y_Part, 0);
-		glEnd(); // GL_QUADS
-		glBegin(GL_TRIANGLES);
-			glVertex3d(2*X_Part, 7*Y_Part, 0);
-			glVertex3d(5*X_Part, 5*Y_Part, 0);
-			glVertex3d(2*X_Part, 3*Y_Part, 0);
-		glEnd(); // GL_TRIANGLES
-	}
-
-	glTranslated(-10*X_Part, 15*Y_Part, 0);
-
-	glEndList(); // List_ID
+		glScaled(1/X_Part, 1/Y_Part, 0);
+		glTranslated(-10*X_Part, 15*Y_Part, 0);
+	} glEndList();
 
 	return List_ID;
 }
