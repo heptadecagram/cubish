@@ -83,18 +83,18 @@ void Color_Display(void) {
 				// If this is the old color, draw a white box
 				// around it to let the user know which one it
 				// is
-				if(int(Window_Color->Get_Red()*3)==n1 &&
-						int(Window_Color->Get_Green()*3)==n2 &&
-						int(Window_Color->Get_Blue()*3)==n3) {
+				if(static_cast<int>(Window_Color->Get_Red()*3)==n1 &&
+						static_cast<int>(Window_Color->Get_Green()*3)==n2 &&
+						static_cast<int>(Window_Color->Get_Blue()*3)==n3) {
 					glColor3d(.8, .8, .8);
 					glLineWidth(2);
-					glBegin(GL_LINE_STRIP);
-						glVertex3d(-Part/2, -Part/2, 0);
-						glVertex3d(7*Part/2, -Part/2, 0);
+					glBegin(GL_LINE_STRIP); {
+						glVertex3d( -Part/2,  -Part/2, 0);
+						glVertex3d(7*Part/2,  -Part/2, 0);
 						glVertex3d(7*Part/2, 7*Part/2, 0);
-						glVertex3d(-Part/2, 7*Part/2, 0);
-						glVertex3d(-Part/2, -Part/2, 0);
-					glEnd(); // GL_LINE_STRIP
+						glVertex3d( -Part/2, 7*Part/2, 0);
+						glVertex3d( -Part/2,  -Part/2, 0);
+					} glEnd(); // GL_LINE_STRIP
 				}
 
 				// Draw the color, based on where we are
