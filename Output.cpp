@@ -1,6 +1,7 @@
 
 #include "Output.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -380,7 +381,8 @@ void Motion(int X_Coord, int Y_Coord) {
 	else if(Mouse_Dragging) {
 		// Perform a trackball projection from two-space to a
 		// quaternion
-		Old_Quaternion.Trackball( (static_cast<double>(2*beginx) - Window_Size)/Window_Size,
+		Old_Quaternion.Trackball(
+				(static_cast<double>(2*beginx) - Window_Size)/Window_Size,
 				(Window_Size - static_cast<double>(2*beginy) )/Window_Size,
 				(static_cast<double>(2*X_Coord) - Window_Size)/Window_Size,
 				(Window_Size - static_cast<double>(2*Y_Coord) )/Window_Size);
@@ -740,9 +742,7 @@ void Cube_Remake_View(void) {
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
-	Width=Width>Height?Width:Height;
-	Width=Width>Depth?Width:Depth;
-	Quaternion::M_Radius=Width/4.0;
+	Quaternion::M_Radius = std::max({Width, Height, Depth})/4.0;
 
 	glPopMatrix();
 	glLoadIdentity();
