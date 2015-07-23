@@ -84,36 +84,46 @@ void Dimension_Display(void) {
 	// Draw a skeletal length of the old size
 	glLineWidth(2);
 	glColor3d(1, 1, 1);
-	glBegin(GL_LINES);
-		glVertex3d(5*Part, 4*Part, 0);
-		glVertex3d(5*Part, 2*Part, 0);
-	glEnd(); // GL_LINES
-	for(auto n=1; n<=Old_Length; n++) {
-		glBegin(GL_LINE_STRIP);
-			glVertex3d((5+10*(n-1) )*Part, 2*Part, 0);
-			glVertex3d((5+10*n)*Part, 2*Part, 0);
-			glVertex3d((5+10*n)*Part, 4*Part, 0);
-		glEnd(); // GL_LINE_STRIP
+
+	glScaled(Part, Part, 0);
+	glBegin(GL_LINES); {
+		glVertex2s(5, 4);
+		glVertex2s(5, 2);
+	} glEnd();
+
+	glTranslated(5, 0, 0);
+	for(auto n = 0; n < Old_Length; ++n) {
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s( 0, 2);
+			glVertex2s(10, 2);
+			glVertex2s(10, 4);
+		} glEnd();
+		glTranslated(10, 0, 0);
 	}
+	glTranslated(-5 - 10*Old_Length, 0, 0);
 
 	// Draw squares showing the current possible length
-	for(auto nn=0; nn<Current_Length; nn++) {
+	glTranslated(5, 0, 0);
+	for(auto n = 0; n < Current_Length; ++n) {
 		glColor3d(.3, .3, .3);
-		glBegin(GL_QUADS);
-			glVertex3d((5+10*nn)*Part, 5*Part, 0);
-			glVertex3d((15+10*nn)*Part, 5*Part, 0);
-			glVertex3d((15+10*nn)*Part, 15*Part, 0);
-			glVertex3d((5+10*nn)*Part, 15*Part, 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex2s( 0,  5);
+			glVertex2s(10,  5);
+			glVertex2s(10, 15);
+			glVertex2s( 0, 15);
+		} glEnd();
 		glColor3d(0, 0, 0);
-		glBegin(GL_LINE_STRIP);
-			glVertex3d((5+10*nn)*Part, 5*Part, 0);
-			glVertex3d((15+10*nn)*Part, 5*Part, 0);
-			glVertex3d((15+10*nn)*Part, 15*Part, 0);
-			glVertex3d((5+10*nn)*Part, 15*Part, 0);
-			glVertex3d((5+10*nn)*Part, 5*Part, 0);
-		glEnd(); // GL_LINE_STRIP
+		glBegin(GL_LINE_STRIP); {
+			glVertex2s( 0,  5);
+			glVertex2s(10,  5);
+			glVertex2s(10, 15);
+			glVertex2s( 0, 15);
+			glVertex2s( 0,  5);
+		} glEnd();
+		glTranslated(10, 0, 0);
 	}
+	glTranslated(-5 - 10*Current_Length, 0, 0);
+	glScaled(1/Part, 1/Part, 0);
 
 	// Draw everything
 	glutSwapBuffers();
@@ -169,12 +179,6 @@ void Dimension_Mouse(int, int State, int, int) {
 				Current_Cube.Randomize();
 		}
 
-		/*
-		glutSetWindow(Option_Window_ID);
-		Make_All_Option_Lists();
-		glutPostRedisplay();
-		*/
-
 		// Redraw the Cube in its window
 		glutSetWindow(Window_ID);
 		Cube_List=Current_Cube.Make_GL_List();
@@ -194,11 +198,13 @@ void Dimension_Passive_Motion(int X_Coord, int) {
 	// Define a minimum length
 	Current_Length=1;
 	// Don't go further than 9 total blocks
-	for(auto n=1; n<9; n++)
+	for(auto n=1; n<9; n++) {
 		// If one hasn't traveled past the X-coordinate, prepare to
 		// draw another block
-		if(X_Coord>n*X_Part)
+		if(X_Coord>n*X_Part) {
 			Current_Length++;
+		}
+	}
 
 	// Redraw the window
 	glutPostRedisplay();
