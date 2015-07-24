@@ -4,7 +4,7 @@
 #include "ui.h"
 
 // Constructors
-Color::Color(void) {
+Color::Color() {
 	M_Red=0;
 	M_Green=0;
 	M_Blue=0;
@@ -18,21 +18,21 @@ Color::Color(double Red, double Green, double Blue) {
 
 
 // Facilitators
-void Color::Change_To(void) {
+void Color::Change_To() {
 	glColor3d(M_Red, M_Green, M_Blue);
 }
 
 
 // Inspectors
-double Color::Get_Red(void) const {
+double Color::Get_Red() const {
 	return M_Red;
 }
 
-double Color::Get_Green(void) const {
+double Color::Get_Green() const {
 	return M_Green;
 }
 
-double Color::Get_Blue(void) const {
+double Color::Get_Blue() const {
 	return M_Blue;
 }
 

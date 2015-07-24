@@ -74,7 +74,7 @@ void Dimension_Window(int Dimension, Color_p *Color_List) {
 }
 
 // Display callback for GLUT
-void Dimension_Display(void) {
+void Dimension_Display() {
 	// Clear old things
 	glClear(GL_COLOR_BUFFER_BIT);
 

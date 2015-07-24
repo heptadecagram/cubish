@@ -9,7 +9,7 @@
 
 void Color_Window(Color_p Old_Color);
 
-void Color_Display(void);
+void Color_Display();
 
 void Color_Mouse(int Button, int State, int X_Coord, int Y_Coord);
 

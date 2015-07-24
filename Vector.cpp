@@ -4,7 +4,7 @@
 #include <cmath>
 
 // Constructors
-Vector::Vector(void) : _self({{ 0.0, 0.0, 0.0 }}) {
+Vector::Vector() : _self({{ 0.0, 0.0, 0.0 }}) {
 }
 
 Vector::Vector(double X_Component, double Y_Component, double Z_Component) :
@@ -46,7 +46,7 @@ double Vector::operator | (const Vector &vector) const {
 
 
 // Inspectors
-double Vector::Get_Length(void) const {
+double Vector::Get_Length() const {
 	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]);
 }
 
@@ -58,12 +58,12 @@ double Vector::operator [] (int Index) const {
 
 
 // Mutators
-void Vector::Zero(void) {
+void Vector::Zero() {
 	_self.fill(0);
 }
 
 // Have some way to normalize a vector.  It's nice to have.
-void Vector::Normalize(void) {
+void Vector::Normalize() {
 	Scale(1/Get_Length() );
 }
 

@@ -66,7 +66,7 @@ void Initialize_Window(int argc, char **argv, Cube& cube, Color_p Color_Array[])
 }
 
 // If the viewpoint coordinates have been changed, readjust the matrix
-void Rotate_View(void) {
+void Rotate_View() {
 	double Rotation_Matrix[4][4];
 
 	glPopMatrix();
@@ -103,7 +103,7 @@ void Rotate_View(void) {
 	} glEndList(); // Option_List
 }
 
-void Display(void) {
+void Display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if(New_View)
 		Rotate_View();
@@ -183,7 +183,7 @@ void Display(void) {
 	glutSwapBuffers();
 }
 
-void Rotate_Slice(void) {
+void Rotate_Slice() {
 	glutSetWindow(Window_ID);
 	if(Arrow_Direction==Direction::Down || Arrow_Direction==Direction::Left)
 		Slice_Angle += 0.78 * Time_Delay;
@@ -280,7 +280,7 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 
 // Standard idle function for moving the viewpoint.  Adds the quaternions
 // together to create a single quaternion rotation.
-void Animate_Rotation(void) {
+void Animate_Rotation() {
 	if(View_Spinning) {
 		New_Quaternion=Old_Quaternion+New_Quaternion;
 		New_View=true;
@@ -295,7 +295,7 @@ void Set_Spin(int Value) {
 }
 
 // Animation for a solved cube.  Pulsates the background color.
-void Pulsate_Background_Color(void) {
+void Pulsate_Background_Color() {
 	glutSetWindow(Window_ID);
 	static auto Red=.6, Green=.6, Blue=.6;
 	static auto Increasing=true;
@@ -419,7 +419,7 @@ void Keyboard(unsigned char Key, int, int) {
 	}
 }
 
-int Make_Arrow_GL_List(void) {
+int Make_Arrow_GL_List() {
 	static auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
@@ -734,7 +734,7 @@ std::array<double, 3> Get_Twist_Side(Vector Origin, Direction direction) {
 	return found;
 }
 
-void Cube_Remake_View(void) {
+void Cube_Remake_View() {
 	glutSetWindow(Window_ID);
 	auto Height= Current_Cube[1].height();
 	auto Width = Current_Cube[1].length();

@@ -10,7 +10,7 @@
 
 void Dimension_Window(int Dimension, Color_p *Color_List);
 
-void Dimension_Display(void);
+void Dimension_Display();
 
 void Dimension_Mouse(int Button, int State, int X_Coord, int Y_Coord);
 

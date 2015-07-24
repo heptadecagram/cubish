@@ -24,23 +24,23 @@ using Tile_p = std::shared_ptr<Tile>;
 class Face {
 public:
 	// Constructors
-	Face(void);
+	Face();
 	Face(int Width, int Height, Color_p color);
 	Face(const Face &face);
 
 	// Inspectors
-	int height(void) const;
-	int length(void) const;
+	int height() const;
+	int length() const;
 
-	bool Is_Solved(void) const;
+	bool Is_Solved() const;
 	Tile_p& operator()(int col, int row);
 
 	// Mutators
 	void Flood(Color_p color);
-	void Rotate_CW(void);
-	void Rotate_CCW(void);
-	void Spin_CW(void);
-	void Spin_CCW(void);
+	void Rotate_CW();
+	void Rotate_CCW();
+	void Spin_CW();
+	void Spin_CCW();
 
 protected:
 	int M_Height;

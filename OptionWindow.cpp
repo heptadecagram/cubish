@@ -70,7 +70,7 @@ void New_Window(Color_p *Color_Array) {
 }
 
 // The display callback for GLUT
-void Option_Display(void) {
+void Option_Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Call every single list
@@ -370,7 +370,7 @@ int Make_Option_Cube_List(Color_p *Color_Array) {
 	return List_ID;
 }
 
-int Make_Option_Exit_List(void) {
+int Make_Option_Exit_List() {
 	static int List_ID = glGenLists(1);
 
 	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
@@ -415,7 +415,7 @@ int Make_Option_Exit_List(void) {
 	return List_ID;
 }
 
-int Make_Option_Solved_List(void) {
+int Make_Option_Solved_List() {
 	static int List_ID=glGenLists(1);
 
 	auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
@@ -473,7 +473,7 @@ int Make_Option_Solved_List(void) {
 	return List_ID;
 }
 
-int Make_Option_Random_List(void) {
+int Make_Option_Random_List() {
 	static int List_ID = glGenLists(1);
 
 	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
@@ -601,7 +601,7 @@ int Make_Option_Random_List(void) {
 	return List_ID;
 }
 
-int Make_Option_Line_List(void) {
+int Make_Option_Line_List() {
 	static int List_ID = glGenLists(1);
 
 	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
@@ -715,7 +715,7 @@ void disk_image(bool outline) {
 }
 
 
-int Make_Option_Load_List(void) {
+int Make_Option_Load_List() {
 	static int List_ID = glGenLists(1);
 
 	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
@@ -750,7 +750,7 @@ int Make_Option_Load_List(void) {
 	return List_ID;
 }
 
-int Make_Option_Save_List(void) {
+int Make_Option_Save_List() {
 	static int List_ID = glGenLists(1);
 
 	auto X_Part = Option_Window_Width/40.0, Y_Part = Option_Window_Height/50.0;
@@ -785,7 +785,7 @@ int Make_Option_Save_List(void) {
 	return List_ID;
 }
 
-void Make_All_Option_Lists(void) {
+void Make_All_Option_Lists() {
 	Option_Cube_List=Make_Option_Cube_List(Option_Color_List);
 	Option_Exit_List=Make_Option_Exit_List();
 	Option_Solved_List=Make_Option_Solved_List();

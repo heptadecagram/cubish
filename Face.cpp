@@ -8,7 +8,7 @@
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
-Face::Face(void) {
+Face::Face() {
 	M_Height=3;
 	M_Width=3;
 
@@ -31,11 +31,11 @@ Face::Face(const Face &face) {
 
 
 // Inspectors
-int Face::height(void) const {
+int Face::height() const {
 	return M_Height;
 }
 
-int Face::length(void) const {
+int Face::length() const {
 	return M_Width;
 }
 
@@ -43,7 +43,7 @@ Tile_p& Face::operator()(int col, int row) {
 	return _tiles[M_Width*--row + --col];
 }
 
-bool Face::Is_Solved(void) const {
+bool Face::Is_Solved() const {
 	return std::all_of(_tiles.begin(), _tiles.end(),
 			[this](const Tile_p& t) { return t == _tiles[0]; });
 }
@@ -62,7 +62,7 @@ void Face::Rotate_CCW() {
 	Rotate_CW();
 }
 
-void Face::Rotate_CW(void) {
+void Face::Rotate_CW() {
 	auto temp = _tiles;
 
 	if(M_Height == M_Width) {
@@ -82,7 +82,7 @@ void Face::Rotate_CW(void) {
 	return;
 }
 
-void Face::Spin_CW(void) {
+void Face::Spin_CW() {
 	// For squares, just use the Rotate_CW() method
 	if(M_Height==M_Width) {
 		Rotate_CW();
@@ -103,7 +103,7 @@ void Face::Spin_CW(void) {
 			_tiles[x + y*M_Width] = temp[y + M_Height*(M_Width-1-x)];
 }
 
-void Face::Spin_CCW(void) {
+void Face::Spin_CCW() {
 	if(M_Height==M_Width)
 		Rotate_CCW();
 	else {

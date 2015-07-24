@@ -8,7 +8,7 @@
 double Quaternion::M_Radius=.8;
 
 // Constructors
-Quaternion::Quaternion(void) : Vector(0, 0, 0), _phi(1) {}
+Quaternion::Quaternion() : Vector(0, 0, 0), _phi(1) {}
 
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi) :
 	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {}
@@ -19,7 +19,7 @@ Quaternion &Quaternion::operator = (const Vector &vector) {
 }
 
 // Facilitators
-void Quaternion::Normalize(void) {
+void Quaternion::Normalize() {
 	double Scalar=_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2] + _phi*_phi;
 	if(Scalar==0)
 		Scalar=1.0;

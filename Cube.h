@@ -53,7 +53,7 @@ public:
 		 Color_p Side_4_Color, Color_p Side_5_Color, Color_p Side_6_Color);
 
 	// Facilitators
-	int Make_GL_List(void);
+	int Make_GL_List();
 	int Make_Section_GL_List(int Side, int Depth);
 	int Make_Slice_GL_List(int Side, int Depth);
 
@@ -73,7 +73,7 @@ public:
 	bool Twist(Vector Position, Direction direction);
 
 	// Inspectors
-	bool Is_Solved(void) const;
+	bool Is_Solved() const;
 
 private:
 	// Private Functions

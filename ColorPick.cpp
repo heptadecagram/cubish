@@ -46,7 +46,7 @@ void Color_Window(Color_p Old_Color) {
 }
 
 // The display callback function.  Draws squares of color.
-void Color_Display(void) {
+void Color_Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Part is a logical unit of the window's size

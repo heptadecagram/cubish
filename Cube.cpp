@@ -653,7 +653,7 @@ bool Cube::Twist(Vector Position, Direction direction) {
 
 // Inspectors
 // Is the Cube solved?
-bool Cube::Is_Solved(void) const {
+bool Cube::Is_Solved() const {
 	return std::all_of(_sides.begin(), _sides.end(),
 			[](const Face& f){ return f.Is_Solved(); });
 }

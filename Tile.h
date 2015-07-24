@@ -16,13 +16,13 @@ using Color_p = std::shared_ptr<Color>;
 class Tile {
 public:
 	// Constructors
-	Tile(void);
+	Tile();
 	Tile(Color_p color);
 
 	// Facilitators
 
 	// Inspectors
-	Color_p Get_Color(void) const;
+	Color_p Get_Color() const;
 	bool operator==(const Tile& other) const;
 
 	// Mutators

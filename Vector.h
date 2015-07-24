@@ -11,7 +11,7 @@
 class Vector {
 public:
 	// Constructors
-	Vector(void);
+	Vector();
 	Vector(double X_Component, double Y_Component, double Z_Component);
 
 	// Facilitators
@@ -22,16 +22,16 @@ public:
 
 
 	// Inspectors
-	double Get_Length(void) const;
+	double Get_Length() const;
 	double operator [] (int Index) const;
 
 
 	// Mutators
-	void Zero(void);
-	void Normalize(void);
+	void Zero();
+	void Normalize();
 	void Scale(double Scalar);
 	double &operator [] (int Index);
-	void operator - (void);
+	void operator - ();
 
 protected:
 	std::array<double, 3> _self;

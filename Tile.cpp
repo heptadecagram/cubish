@@ -2,7 +2,7 @@
 #include "Tile.h"
 
 // Constructors
-Tile::Tile(void) {
+Tile::Tile() {
 }
 
 Tile::Tile(Color_p color) {
@@ -10,7 +10,7 @@ Tile::Tile(Color_p color) {
 }
 
 // Inspectors
-Color_p Tile::Get_Color(void) const {
+Color_p Tile::Get_Color() const {
 	return M_Color;
 }
 
