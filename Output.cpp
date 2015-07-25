@@ -743,7 +743,7 @@ void Cube_Remake_View() {
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
-	Quaternion::M_Radius = std::max({Width, Height, Depth})/4.0;
+	Quaternion::RADIUS = std::max({Width, Height, Depth})/4.0;
 
 	glPopMatrix();
 	glLoadIdentity();

@@ -36,13 +36,12 @@ public:
 	double &operator [] (int Index);
 	void Set_Radius(double Radius);
 
-	// Member Variables
-	static double M_Radius;
+	// Class Variables
+	static double RADIUS;
 
 protected:
 	// Member Variables
 	double _phi;
-	//double M_Radius;
 
 private:
 	double Sphere_Projection(double X_Coord, double Y_Coord);

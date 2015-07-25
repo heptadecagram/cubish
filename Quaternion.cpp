@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 // This static variable keeps track of how far away from a viewed object we are
-double Quaternion::M_Radius=.8;
+double Quaternion::RADIUS=.8;
 
 // Constructors
 Quaternion::Quaternion() : Vector(0, 0, 0), _phi(1) {}
@@ -41,7 +41,7 @@ void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 	Vector Axis=New*Old;
 
 	Vector Distance=Old-New;
-	double Theta=Distance.Get_Length()/(2*M_Radius);
+	double Theta=Distance.Get_Length()/(2*RADIUS);
 
 	Theta = fmin(Theta, 1);
 	Theta = fmax(Theta, -1);
@@ -155,7 +155,7 @@ double &Quaternion::operator [] (int Index) {
 }
 
 void Quaternion::Set_Radius(double Radius) {
-	M_Radius=Radius;
+	RADIUS=Radius;
 }
 
 // private functions
@@ -164,12 +164,12 @@ double Quaternion::Sphere_Projection(double X_Coord, double Y_Coord) {
 
 	auto Distance=sqrt(X_Coord*X_Coord + Y_Coord*Y_Coord);
 	// Looks like sqrt(2)/2
-	if(Distance < M_Radius*.70710678118654752440) {
-		Returner=sqrt(M_Radius*M_Radius - Distance*Distance);
+	if(Distance < RADIUS*.70710678118654752440) {
+		Returner=sqrt(RADIUS*RADIUS - Distance*Distance);
 	}
 	else {
 		// Looks like sqrt(2)
-		Returner=M_Radius*M_Radius/(Distance*1.41421356237309504880*1.41421356237309504880);
+		Returner=RADIUS*RADIUS/(Distance*1.41421356237309504880*1.41421356237309504880);
 	}
 
 	return Returner;
