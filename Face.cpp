@@ -2,19 +2,11 @@
 #include "Face.h"
 
 #include <algorithm>
-#include <memory>
 #include <stdexcept>
 
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
-Face::Face() {
-	M_Height=3;
-	M_Width=3;
-
-	_tiles.resize(9, std::make_shared<Tile>());
-}
-
 Face::Face(int Width, int Height, Color_p color) {
 	M_Height=Height;
 	M_Width=Width;

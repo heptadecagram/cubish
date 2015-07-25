@@ -24,7 +24,7 @@ using Tile_p = std::shared_ptr<Tile>;
 class Face {
 public:
 	// Constructors
-	Face();
+	Face() : Face(3, 3, NULL) {};
 	Face(int Width, int Height, Color_p color);
 	Face(const Face &face);
 
