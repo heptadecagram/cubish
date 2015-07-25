@@ -424,7 +424,7 @@ int Make_Arrow_GL_List() {
 
 	glNewList(List_ID, GL_COMPILE);
 
-	Current_Cube.View_Side(Start_Vector[1]);
+	Current_Cube.View_Side(Start_Vector[1]-1);
 	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]].height()-Start_Vector[3]+.5, 0);
 
 	auto Angle=0.0;
@@ -444,16 +444,16 @@ int Make_Arrow_GL_List() {
 	glRotatef(Angle, 0, 0, 1);
 	glLineWidth(5);
 	glBegin(GL_LINE_STRIP); {
-		glVertex3d(0, 0, .05);
-		glVertex3d(1, 0, .05);
-		glVertex3d(.75, .25, .05);
-		glVertex3d(1, 0, .05);
-		glVertex3d(.75, -.25, .05);
+		glVertex3d(0   , 0   , .05);
+		glVertex3d(1   , 0   , .05);
+		glVertex3d( .75,  .25, .05);
+		glVertex3d(1   , 0   , .05);
+		glVertex3d( .75, -.25, .05);
 	} glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
 	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].height()-.5, 0);
-	Current_Cube.Undo_View_Side(Start_Vector[1]);
+	Current_Cube.Undo_View_Side(Start_Vector[1]-1);
 
 	glEndList();
 
@@ -464,27 +464,27 @@ int Get_Cube_Section(Cube& cube, int, int) {
 	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
-	for(auto n1=1; n1<=6; n1++) {
+	for(auto n1 = 0; n1 < 6; ++n1) {
 
 		Current_Cube.View_Side(n1);
 
-		for(auto n2=1; n2 <= cube[n1].height(); n2++) {
-			for(auto n3=1; n3<=cube[n1].length(); n3++) {
-				cube[n1](n3, cube[n1].height()-n2+1)->Get_Color()->Change_To();
+		for(auto n2 = 0; n2 < cube[n1].height(); ++n2) {
+			for(auto n3 = 0; n3 < cube[n1].length(); ++n3) {
+				cube[n1](n3+1, cube[n1].height() - n2)->Get_Color()->Change_To();
 				glBegin(GL_QUADS); {
-					glVertex2s(n3-1, n2-1);
-					glVertex2s(n3-1, n2);
 					glVertex2s(n3  , n2);
-					glVertex2s(n3  , n2-1);
+					glVertex2s(n3  , n2+1);
+					glVertex2s(n3+1, n2+1);
+					glVertex2s(n3+1, n2);
 				} glEnd();
 
 				glColor3d(0, 0, 0);
 				glBegin(GL_LINE_STRIP); {
-					glVertex2s(n3-1, n2-1);
-					glVertex2s(n3-1, n2);
 					glVertex2s(n3  , n2);
-					glVertex2s(n3  , n2-1);
-					glVertex2s(n3-1, n2-1);
+					glVertex2s(n3  , n2+1);
+					glVertex2s(n3+1, n2+1);
+					glVertex2s(n3+1, n2);
+					glVertex2s(n3  , n2);
 				} glEnd();
 			}
 		}

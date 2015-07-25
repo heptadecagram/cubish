@@ -26,22 +26,22 @@ int Cube::Make_GL_List() {
 
 	glNewList(List_ID, GL_COMPILE);
 
-	for(auto n1=1; n1<=6; n1++) {
+	for(auto n1 = 0; n1 < 6; ++n1) {
 
 		// Orient the viewing volume to face the correct side
 		View_Side(n1);
 
-		for(auto n2=1; n2 <= _sides[n1-1].height(); n2++) {
-			for(auto n3=1; n3 <= _sides[n1-1].length(); n3++) {
+		for(auto n2 = 0; n2 < _sides[n1].height(); ++n2) {
+			for(auto n3 = 0; n3 < _sides[n1].length(); ++n3) {
 
-				_sides[n1-1](n3, _sides[n1-1].height() - n2 + 1)->Get_Color()->Change_To();
+				_sides[n1](n3+1, _sides[n1].height() - n2)->Get_Color()->Change_To();
 
 				// Raise the height of all colored squares to avoid clipping problems
 				glBegin(GL_QUADS); {
-					glVertex3d(n3-0.9, n2-0.9, 0.03);
-					glVertex3d(n3-0.9, n2-0.1, 0.03);
-					glVertex3d(n3-0.1, n2-0.1, 0.03);
-					glVertex3d(n3-0.1, n2-0.9, 0.03);
+					glVertex3d(n3 + 0.1, n2 + 0.1, 0.03);
+					glVertex3d(n3 + 0.1, n2 + 0.9, 0.03);
+					glVertex3d(n3 + 0.9, n2 + 0.9, 0.03);
+					glVertex3d(n3 + 0.9, n2 + 0.1, 0.03);
 				} glEnd();
 			}
 		}
@@ -50,9 +50,9 @@ int Cube::Make_GL_List() {
 		glColor3d(0, 0, 0);
 		glBegin(GL_QUADS); {
 			glVertex3s(                    0,                     0, 0);
-			glVertex3s(_sides[n1-1].length(),                     0, 0);
-			glVertex3s(_sides[n1-1].length(), _sides[n1-1].height(), 0);
-			glVertex3s(                    0, _sides[n1-1].height(), 0);
+			glVertex3s(_sides[n1].length(),                     0, 0);
+			glVertex3s(_sides[n1].length(), _sides[n1].height(), 0);
+			glVertex3s(                    0, _sides[n1].height(), 0);
 		} glEnd();
 
 		// Now, undo the orientation, returning to the original state
@@ -96,34 +96,34 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	// Start drawing from the specified Side
 	auto Old_Front=Set_Front(Side);
 
-	for(auto n1=(Depth==1?2:1); n1<= (Depth == _sides[1].length() ? 5 : 6); n1++) {
+	for(auto n1 = (Depth==1?1:0); n1 < (Depth == _sides[1].length() ? 5 : 6); ++n1) {
 
 		// Rotate/translate the appropriate amount for the side
 		View_Side(n1);
 
-		for(auto n2=1; n2 <= _sides[n1-1].height(); n2++) {
-			for(auto n3=1; n3 <= _sides[n1-1].length(); n3++) {
+		for(auto n2 = 0; n2 < _sides[n1].height(); ++n2) {
+			for(auto n3 = 0; n3 < _sides[n1].length(); ++n3) {
 				// If the current slice is not the removed one, and is also not a front or
 				// back side that would be affected, draw it
-				if(!((n1==2 && n3 == _sides[n1-1].length() - Depth + 1) ||
-					 (n1==3 && n2 == Depth) || (n1==4 && n3==Depth) ||
-					 (n1==5 && n2 == _sides[n1-1].height() - Depth + 1) ) ) {
+				if(!((n1==1 && n3 == _sides[n1].length() - Depth) ||
+					 (n1==2 && n2+1 == Depth) || (n1==3 && n3+1==Depth) ||
+					 (n1==4 && n2 == _sides[n1].height() - Depth) ) ) {
 					// Black background squares
 					glColor3d(0, 0, 0);
 					glBegin(GL_QUADS); {
-						glVertex3s(n3-1, n2-1, 0);
-						glVertex3s(n3-1, n2, 0);
-						glVertex3s(n3, n2, 0);
-						glVertex3s(n3, n2-1, 0);
+						glVertex2s(n3  , n2);
+						glVertex2s(n3  , n2+1);
+						glVertex2s(n3+1, n2+1);
+						glVertex2s(n3+1, n2);
 					} glEnd();
 
 					// Pretty colored squares are being drawn here
-					_sides[n1-1](n3, _sides[n1-1].height()-n2+1)->Get_Color()->Change_To();
+					_sides[n1](n3+1, _sides[n1].height() - n2)->Get_Color()->Change_To();
 					glBegin(GL_QUADS); {
-						glVertex3d(n3-.9, n2-.9, .03);
-						glVertex3d(n3-.9, n2-.1, .03);
-						glVertex3d(n3-.1, n2-.1, .03);
-						glVertex3d(n3-.1, n2-.9, .03);
+						glVertex3d(n3 + 0.1, n2 + 0.1, .03);
+						glVertex3d(n3 + 0.1, n2 + 0.9, .03);
+						glVertex3d(n3 + 0.9, n2 + 0.9, .03);
+						glVertex3d(n3 + 0.9, n2 + 0.1, .03);
 					} glEnd();
 				}
 			}
@@ -133,7 +133,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 	}
 
 	// Since Set_Front() was called, this isn't the real front of the Cube
-	View_Side(1);
+	View_Side(0);
 
 	// Find how far down to go, change to black color
 	glTranslated(0, 0, -Depth);
@@ -165,7 +165,7 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 
 	// Go back to where we used to be
 	glTranslated(0, 0, Depth-1);
-	Undo_View_Side(1);
+	Undo_View_Side(0);
 	Set_Front(Old_Front);
 
 	// See beginning of this function
@@ -234,34 +234,34 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// Since this slice might not be square, we have to adjust for each side
 	int Temp_Slice_Length, X_Coord, Y_Coord;
-	for(auto n=2; n<=5; n++) {
+	for(auto n = 1; n < 5; ++n) {
 
 		// Get ready to draw on a side
 		View_Side(n);
 
-		if(n==2 || n==4) {
+		if(n==1 || n==3) {
 			Temp_Slice_Length = _sides[0].height();
-		} else { // n==3 || n==5
+		} else { // n==2 || n==4
 			Temp_Slice_Length = _sides[0].length();
 		}
 
-		for(auto nn=1; nn<=Temp_Slice_Length; nn++) {
+		for(auto nn = 1; nn <= Temp_Slice_Length; ++nn) {
 
 			switch(n) {
-			case 2:
+			case 1:
 				X_Coord = _sides[1].length() - Depth+1;
-				Y_Coord=nn;
+				Y_Coord = nn;
+				break;
+			case 2:
+				X_Coord = nn;
+				Y_Coord = Depth;
 				break;
 			case 3:
-				X_Coord=nn;
-				Y_Coord=Depth;
+				X_Coord = Depth;
+				Y_Coord = Temp_Slice_Length-nn+1;
 				break;
 			case 4:
-				X_Coord=Depth;
-				Y_Coord=Temp_Slice_Length-nn+1;
-				break;
-			case 5:
-				X_Coord=nn;
+				X_Coord = nn;
 				Y_Coord = _sides[2].height() - Depth+1;
 				break;
 			default:
@@ -271,15 +271,14 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			// Black background squares
 			glColor3d(0, 0, 0);
 			glBegin(GL_QUADS);
-				glVertex3i(X_Coord-1, Y_Coord-1, 0);
-				glVertex3i(X_Coord-1, Y_Coord, 0);
-				glVertex3i(X_Coord, Y_Coord, 0);
-				glVertex3i(X_Coord, Y_Coord-1, 0);
-				glVertex3i(X_Coord-1, Y_Coord-1, 0);
+				glVertex2s(X_Coord-1, Y_Coord-1);
+				glVertex2s(X_Coord-1, Y_Coord);
+				glVertex2s(X_Coord  , Y_Coord);
+				glVertex2s(X_Coord  , Y_Coord-1);
 			glEnd(); // GL_QUADS
 
 			// Colored squares, raised for visibility
-			_sides[n-1](X_Coord, _sides[n-1].height() - Y_Coord+1)->Get_Color()->Change_To();
+			_sides[n](X_Coord, _sides[n].height() - Y_Coord+1)->Get_Color()->Change_To();
 			glBegin(GL_QUADS);
 				glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
 				glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
@@ -293,7 +292,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 	}
 
 	// Set_Front() was called, this is not the real side
-	View_Side(1);
+	View_Side(0);
 
 	// Move to the correct depth
 	glTranslated(0, 0, -Depth);
@@ -351,7 +350,7 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// Restore the old view
 	glTranslated(0, 0, Depth-1);
-	Undo_View_Side(1);
+	Undo_View_Side(0);
 	Set_Front(Old_Front);
 
 	// See the beginning of this function for this explanation
@@ -392,26 +391,26 @@ void Cube::View_Side(int Side) {
 	auto Depth  = _sides[1].length();
 
 	switch(Side) {
-	case 1:
+	case 0:
 		glTranslated(-Width/2.0, -Height/2.0, Depth/2.0);
 		break;
-	case 2:
+	case 1:
 		glRotatef(90, 0, -1, 0);
 		glTranslated(-Depth/2.0, -Height/2.0, Width/2.0);
 		break;
-	case 3:
+	case 2:
 		glRotatef(90, -1, 0, 0);
 		glTranslated(-Width/2.0, -Depth/2.0, Height/2.0);
 		break;
-	case 4:
+	case 3:
 		glRotatef(90, 0, 1, 0);
 		glTranslated(-Depth/2.0, -Height/2.0, Width/2.0);
 		break;
-	case 5:
+	case 4:
 		glRotatef(90, 1, 0, 0);
 		glTranslated(-Width/2.0, -Depth/2.0, Height/2.0);
 		break;
-	case 6:
+	case 5:
 		glRotatef(180, 1, 0, 0);
 		glTranslated(-Width/2.0, -Height/2.0, Depth/2.0);
 		break;
@@ -428,26 +427,26 @@ void Cube::Undo_View_Side(int Side) {
 	auto Depth  = _sides[1].length();
 
 	switch(Side) {
-	case 1:
+	case 0:
 		glTranslated(Width/2.0, Height/2.0, -Depth/2.0);
 		break;
-	case 2:
+	case 1:
 		glTranslated(Depth/2.0, Height/2.0, -Width/2.0);
 		glRotatef(-90, 0, -1, 0);
 		break;
-	case 3:
+	case 2:
 		glTranslated(Width/2.0, Depth/2.0, -Height/2.0);
 		glRotatef(-90, -1, 0, 0);
 		break;
-	case 4:
+	case 3:
 		glTranslated(Depth/2.0, Height/2.0, -Width/2.0);
 		glRotatef(-90, 0, 1, 0);
 		break;
-	case 5:
+	case 4:
 		glTranslated(Width/2.0, Depth/2.0, -Height/2.0);
 		glRotatef(-90, 1, 0, 0);
 		break;
-	case 6:
+	case 5:
 		glTranslated(Width/2.0, Height/2.0, -Depth/2.0);
 		glRotatef(-180, 1, 0, 0);
 		break;
