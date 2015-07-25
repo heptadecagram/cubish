@@ -6,19 +6,19 @@ Tile::Tile() {
 }
 
 Tile::Tile(Color_p color) {
-	M_Color=color;
+	_color=color;
 }
 
 // Inspectors
 Color_p Tile::Get_Color() const {
-	return M_Color;
+	return _color;
 }
 
 bool Tile::operator==(const Tile& other) const {
-	return M_Color == other.M_Color;
+	return _color == other._color;
 }
 
 // Mutators
 void Tile::Set_Color(Color_p color) {
-	M_Color=color;
+	_color=color;
 }

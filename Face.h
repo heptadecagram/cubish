@@ -43,8 +43,8 @@ public:
 	void Spin_CCW();
 
 protected:
-	int M_Height;
-	int M_Width;
+	int _height;
+	int _width;
 	std::vector<Tile_p> _tiles;
 };
 

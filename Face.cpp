@@ -8,15 +8,15 @@
 
 // Constructors
 Face::Face(int Width, int Height, Color_p color) {
-	M_Height=Height;
-	M_Width=Width;
+	_height=Height;
+	_width=Width;
 
 	_tiles.resize(Height*Width, std::make_shared<Tile>(color));
 }
 
 Face::Face(const Face &face) {
-	M_Height=face.height();
-	M_Width=face.length();
+	_height=face.height();
+	_width=face.length();
 
 	std::copy(face._tiles.begin(), face._tiles.end(), std::back_inserter(_tiles));
 }
@@ -24,15 +24,15 @@ Face::Face(const Face &face) {
 
 // Inspectors
 int Face::height() const {
-	return M_Height;
+	return _height;
 }
 
 int Face::length() const {
-	return M_Width;
+	return _width;
 }
 
 Tile_p& Face::operator()(int col, int row) {
-	return _tiles[M_Width*--row + --col];
+	return _tiles[_width*--row + --col];
 }
 
 bool Face::Is_Solved() const {
@@ -57,17 +57,17 @@ void Face::Rotate_CCW() {
 void Face::Rotate_CW() {
 	auto temp = _tiles;
 
-	if(M_Height == M_Width) {
-		for(auto x = 0; x < M_Width; ++x) {
-			for(auto y = 0; y < M_Height; ++y) {
-				(*this)(x+1, y+1) = temp[y  +  M_Width * (M_Height-1 - x)];
+	if(_height == _width) {
+		for(auto x = 0; x < _width; ++x) {
+			for(auto y = 0; y < _height; ++y) {
+				(*this)(x+1, y+1) = temp[y  +  _width * (_height-1 - x)];
 			}
 		}
 	}
 	else {
-		for(auto x = 0; x < M_Width; ++x) {
-			for(auto y = 0; y < M_Height; ++y) {
-				(*this)(x+1, y+1) = temp[(M_Width - 1 - x)  +  M_Width*(M_Height - 1 - y)];
+		for(auto x = 0; x < _width; ++x) {
+			for(auto y = 0; y < _height; ++y) {
+				(*this)(x+1, y+1) = temp[(_width - 1 - x)  +  _width*(_height - 1 - y)];
 			}
 		}
 	}
@@ -76,7 +76,7 @@ void Face::Rotate_CW() {
 
 void Face::Spin_CW() {
 	// For squares, just use the Rotate_CW() method
-	if(M_Height==M_Width) {
+	if(_height==_width) {
 		Rotate_CW();
 		return;
 	}
@@ -84,19 +84,19 @@ void Face::Spin_CW() {
 	// Create a temporary array of Tile to store the old Face
 	auto temp = _tiles;
 
-	// M_Height!=M_Width, so change the two
-	auto Temp_Size=M_Height;
-	M_Height=M_Width;
-	M_Width=Temp_Size;
+	// _height!=_width, so change the two
+	auto Temp_Size=_height;
+	_height=_width;
+	_width=Temp_Size;
 
-	for(auto x=0; x<M_Width; ++x)
-		for(auto y=0; y<M_Height; ++y)
+	for(auto x=0; x<_width; ++x)
+		for(auto y=0; y<_height; ++y)
 			// Use a bijection to map the coordinates
-			_tiles[x + y*M_Width] = temp[y + M_Height*(M_Width-1-x)];
+			_tiles[x + y*_width] = temp[y + _height*(_width-1-x)];
 }
 
 void Face::Spin_CCW() {
-	if(M_Height==M_Width)
+	if(_height==_width)
 		Rotate_CCW();
 	else {
 		Rotate_CW();

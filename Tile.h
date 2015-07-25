@@ -29,7 +29,7 @@ public:
 	void Set_Color(Color_p color);
 
 protected:
-	Color_p M_Color;
+	Color_p _color;
 };
 
 #endif // LIAM_TILE

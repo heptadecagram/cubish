@@ -29,9 +29,9 @@ public:
 	void Set(double Red, double Green, double Blue);
 
 protected:
-	double M_Red;
-	double M_Green;
-	double M_Blue;
+	double _red;
+	double _green;
+	double _blue;
 };
 
 #endif // LIAM_COLOR
