@@ -10,7 +10,8 @@ ifeq ($(uname_S), Linux)
 LDLIBS+=-lstdc++ -lm -lGL -lGLU -lglut
 else
 # Mac flags
-LDLIBS+=-framework OpenGL -framework GLUT
+CXXFLAGS+=-Wno-deprecated -Wno-unknown-warning-option
+LDLIBS+=-framework OpenGL -framework GLUT -lstdc++
 endif
 
 Cubish: $(OBJS)

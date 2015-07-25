@@ -324,7 +324,7 @@ int Make_Option_Cube_List(Color_p *Color_Array) {
 	auto w = Option_Window_Width/8.0;
 	auto h = Option_Window_Height/5.0;
 	for(auto n=0; n<6; n++) {
-		std::array<double, 2> location{0,0};
+		std::array<double, 2> location{{0,0}};
 		switch(n) {
 			case 0:
 				location[0]=-w;
