@@ -3,8 +3,8 @@
 // can be added or subtracted ( + or - ), normalized, scaled, negated, and
 // produce cross products ( * ) or dot products ( | ).
 
-#ifndef LIAM_VECTOR
-#define LIAM_VECTOR
+#ifndef CUBISH_VECTOR
+#define CUBISH_VECTOR
 
 #include <array>
 
@@ -37,5 +37,5 @@ protected:
 	std::array<double, 3> _self;
 };
 
-#endif // LIAM_VECTOR
+#endif // CUBISH_VECTOR
 

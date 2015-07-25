@@ -4,8 +4,8 @@
 // optimizations.  The address of the Color the Tile uses may be obtained with
 // Get_Color() and set with Set_Color().
 
-#ifndef LIAM_TILE
-#define LIAM_TILE
+#ifndef CUBISH_TILE
+#define CUBISH_TILE
 
 #include <memory>
 
@@ -32,4 +32,4 @@ protected:
 	Color_p _color;
 };
 
-#endif // LIAM_TILE
+#endif // CUBISH_TILE

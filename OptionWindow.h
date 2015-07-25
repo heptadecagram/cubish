@@ -3,8 +3,8 @@
 // Cube.  There are methods for changing color and size, randomizing and
 // solving, and saving and loading.
 
-#ifndef LIAM_OPTIONWINDOW
-#define LIAM_OPTIONWINDOW
+#ifndef CUBISH_OPTIONWINDOW
+#define CUBISH_OPTIONWINDOW
 
 #include "Tile.h"
 
@@ -34,4 +34,4 @@ int Make_Option_Save_List();
 
 void Make_All_Option_Lists();
 
-#endif // LIAM_OPTIONWINDOW
+#endif // CUBISH_OPTIONWINDOW

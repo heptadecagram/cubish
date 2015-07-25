@@ -3,8 +3,8 @@
 // and allows for changes in size to the cube.  Dimension_Window() will create
 // the window.  All other functions are standard GLUT callback functions.
 
-#ifndef LIAM_DIMENSION
-#define LIAM_DIMENSION
+#ifndef CUBISH_DIMENSION
+#define CUBISH_DIMENSION
 
 #include "Tile.h"
 
@@ -18,4 +18,4 @@ void Dimension_Reshape(int X_Size, int Y_Size);
 
 void Dimension_Passive_Motion(int X_Coord, int Y_Coord);
 
-#endif // LIAM_DIMENSION
+#endif // CUBISH_DIMENSION

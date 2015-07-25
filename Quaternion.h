@@ -8,8 +8,8 @@
 //
 // The main purpose of this class is to create viewing volume matrices.
 
-#ifndef LIAM_QUATERNION
-#define LIAM_QUATERNION
+#ifndef CUBISH_QUATERNION
+#define CUBISH_QUATERNION
 
 #include "Vector.h"
 
@@ -48,4 +48,4 @@ private:
 	double Sphere_Projection(double X_Coord, double Y_Coord);
 };
 
-#endif // LIAM_QUATERNION
+#endif // CUBISH_QUATERNION

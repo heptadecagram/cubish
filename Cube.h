@@ -31,8 +31,8 @@
 // The Make_*() functions generate OpenGL list identifiers for use in glCallList().
 // A Cube can be randomized using the Random() function.
 
-#ifndef LIAM_CUBE
-#define LIAM_CUBE
+#ifndef CUBISH_CUBE
+#define CUBISH_CUBE
 
 #include <array>
 #include <fstream>
@@ -84,4 +84,4 @@ private:
 	std::array<Face, 6> _sides;
 };
 
-#endif // LIAM_CUBE
+#endif // CUBISH_CUBE

@@ -10,8 +10,8 @@
 // specified.  Note that a Face is initialized with a single Color that specifies the
 // Color for each Tile on the Face.  The default size is 3x3.
 
-#ifndef LIAM_FACE
-#define LIAM_FACE
+#ifndef CUBISH_FACE
+#define CUBISH_FACE
 
 #include <memory>
 #include <vector>
@@ -48,4 +48,4 @@ protected:
 	std::vector<Tile_p> _tiles;
 };
 
-#endif // LIAM_FACE
+#endif // CUBISH_FACE

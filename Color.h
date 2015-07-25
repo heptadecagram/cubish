@@ -7,8 +7,8 @@
 // function glColor3d() with the current values of that color, which causes the current
 // drawing color to switch to that of the Color calling the function.
 
-#ifndef LIAM_COLOR
-#define LIAM_COLOR
+#ifndef CUBISH_COLOR
+#define CUBISH_COLOR
 
 class Color {
 public:
@@ -34,4 +34,4 @@ protected:
 	double _blue;
 };
 
-#endif // LIAM_COLOR
+#endif // CUBISH_COLOR

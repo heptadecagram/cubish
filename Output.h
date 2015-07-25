@@ -1,6 +1,6 @@
 
-#ifndef LIAM_OUTPUT
-#define LIAM_OUTPUT
+#ifndef CUBISH_OUTPUT
+#define CUBISH_OUTPUT
 
 #include <array>
 
@@ -48,4 +48,4 @@ Direction Get_Direction(Vector Begin, Vector End);
 
 void Cube_Remake_View();
 
-#endif // LIAM_OUTPUT
+#endif // CUBISH_OUTPUT
