@@ -412,6 +412,7 @@ void Keyboard(unsigned char Key, int, int) {
 	switch(Key) {
 	case 'q':
 	case 'Q':
+		glutDestroyWindow(Window_ID);
 		exit(EXIT_SUCCESS);
 		break;
 	default:
