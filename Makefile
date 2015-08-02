@@ -14,6 +14,8 @@ CXXFLAGS+=-Wno-deprecated -Wno-unknown-warning-option
 LDLIBS+=-framework OpenGL -framework GLUT -lstdc++
 endif
 
+.PHONY=clean
+
 Cubish: $(OBJS)
 
 
