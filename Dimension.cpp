@@ -140,7 +140,7 @@ void Dimension_Mouse(int, int State, int, int) {
 		// it is randomized
 		if(Old_Length!=Current_Length) {
 			// Save the state of the Cube before messing with it
-			auto Solved=Current_Cube.Is_Solved();
+			auto Solved=Current_Cube.solved();
 			for(auto n=1; n<=6; n++)
 				Current_Cube[n].Flood(Dimension_Color_List[n-1]);
 			auto Width=Current_Cube[1].length();

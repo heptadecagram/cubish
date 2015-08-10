@@ -27,7 +27,7 @@
 // by calling the Rotate_*() functions.  Twist() requires the side and coordinates of
 // that side, as well as a direction to twist in.  By passing the appropriate
 // file pointers, a Cube can be saved or loaded to disk using the Save() and Load()
-// functions.  Is_Solved() calls the Is_Solved() function for each individual Face.
+// functions.  solved() calls the solved() function for each individual Face.
 // The Make_*() functions generate OpenGL list identifiers for use in glCallList().
 // A Cube can be randomized using the Random() function.
 
@@ -73,7 +73,7 @@ public:
 	bool Twist(Vector Position, Direction direction);
 
 	// Inspectors
-	bool Is_Solved() const;
+	bool solved() const;
 
 private:
 	// Private Functions

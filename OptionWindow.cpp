@@ -105,7 +105,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			glutSetWindow(Window_ID);
 			Is_Option_Window_Open=false;
 		}
-		else if(Option_Solved && !Current_Cube.Is_Solved() ) {
+		else if(Option_Solved && !Current_Cube.solved() ) {
 			for(auto n=1; n<=6; n++)
 				Current_Cube[n].Flood(Option_Color_List[n-1]);
 			Option_Cube_List=Make_Option_Cube_List(Option_Color_List);

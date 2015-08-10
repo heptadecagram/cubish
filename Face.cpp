@@ -35,7 +35,7 @@ Tile_p& Face::operator()(int col, int row) {
 	return _tiles[_width*--row + --col];
 }
 
-bool Face::Is_Solved() const {
+bool Face::solved() const {
 	return std::all_of(_tiles.begin(), _tiles.end(),
 			[this](const Tile_p& t) { return t == _tiles[0]; });
 }

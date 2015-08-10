@@ -170,7 +170,7 @@ void Display() {
 		glCallList(Cube_List);
 		if(Arrow_Direction != Direction::NONE)
 			glCallList(Arrow_List);
-		if(Current_Cube.Is_Solved() )
+		if(Current_Cube.solved() )
 			glutIdleFunc(Pulsate_Background_Color);
 		else {
 			glClearColor(.6, .6, .6, 0);
