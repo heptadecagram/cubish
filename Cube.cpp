@@ -72,21 +72,21 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 
 	// Similar to View_Side(), but only does a rotation, not a translation as well
 	switch(Side) {
-	case 1:
+	case 0:
 		break;
-	case 2:
+	case 1:
 		glRotatef(90, 0, -1, 0);
 		break;
-	case 3:
+	case 2:
 		glRotatef(90, -1, 0, 0);
 		break;
-	case 4:
+	case 3:
 		glRotatef(90, 0, 1, 0);
 		break;
-	case 5:
+	case 4:
 		glRotatef(90, 1, 0, 0);
 		break;
-	case 6:
+	case 5:
 		glRotatef(180, 1, 0, 0);
 		break;
 	default:
@@ -170,21 +170,21 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 
 	// See beginning of this function
 	switch(Side) {
-	case 1:
+	case 0:
 		break;
-	case 2:
+	case 1:
 		glRotatef(-90, 0, -1, 0);
 		break;
-	case 3:
+	case 2:
 		glRotatef(-90, -1, 0, 0);
 		break;
-	case 4:
+	case 3:
 		glRotatef(-90, 0, 1, 0);
 		break;
-	case 5:
+	case 4:
 		glRotatef(-90, 1, 0, 0);
 		break;
-	case 6:
+	case 5:
 		glRotatef(-180, 1, 0, 0);
 		break;
 	default:
@@ -208,21 +208,21 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// Similar to View_Side(), but only does a rotation, not a translation as well
 	switch(Side) {
-	case 1:
+	case 0:
 		break;
-	case 2:
+	case 1:
 		glRotatef(90, 0, -1, 0);
 		break;
-	case 3:
+	case 2:
 		glRotatef(90, -1, 0, 0);
 		break;
-	case 4:
+	case 3:
 		glRotatef(90, 0, 1, 0);
 		break;
-	case 5:
+	case 4:
 		glRotatef(90, 1, 0, 0);
 		break;
-	case 6:
+	case 5:
 		glRotatef(180, 1, 0, 0);
 		break;
 	default:
@@ -355,21 +355,21 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 	// See the beginning of this function for this explanation
 	switch(Side) {
-	case 1:
+	case 0:
 		break;
-	case 2:
+	case 1:
 		glRotatef(-90, 0, -1, 0);
 		break;
-	case 3:
+	case 2:
 		glRotatef(-90, -1, 0, 0);
 		break;
-	case 4:
+	case 3:
 		glRotatef(-90, 0, 1, 0);
 		break;
-	case 5:
+	case 4:
 		glRotatef(-90, 1, 0, 0);
 		break;
-	case 6:
+	case 5:
 		glRotatef(-180, 1, 0, 0);
 		break;
 	default:
@@ -527,9 +527,9 @@ void Cube::Randomize(int Twists) {
 	Direction Random_Direction;
 	int Random_Side, Random_Row, Random_Column;
 	for(auto n=0; n<Twists; n++) {
-		Random_Side = 1 + Random(6);
-		Random_Row = 1 + Random(_sides[Random_Side-1].height());
-		Random_Column = 1 + Random(_sides[Random_Side-1].length());
+		Random_Side = Random(6);
+		Random_Row = 1 + Random(_sides[Random_Side].height());
+		Random_Column = 1 + Random(_sides[Random_Side].length());
 		Random_Direction = Direction(1 + Random(4));
 		Twist(Random_Side, Random_Column, Random_Row, Random_Direction);
 	}
@@ -613,7 +613,7 @@ bool Cube::Rotate_CCW(int Side, int Offset) {
 // If the Cube changed in some way, true is returned, otherwise, false.
 bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 	// Got to have some place to start and some place to go
-	if(direction == Direction::NONE || Side < 1 || 6 < Side) {
+	if(direction == Direction::NONE || Side < 0 || 5 < Side) {
 		return false;
 	}
 
@@ -624,16 +624,16 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 	bool Returner;
 	switch(direction) {
 		case Direction::Up:
-			Returner=Rotate_CW(2, Column);
+			Returner=Rotate_CW(1, Column);
 			break;
 		case Direction::Down:
-			Returner=Rotate_CCW(2, Column);
+			Returner=Rotate_CCW(1, Column);
 			break;
 		case Direction::Left:
-			Returner=Rotate_CCW(3, Row);
+			Returner=Rotate_CCW(2, Row);
 			break;
 		case Direction::Right:
-			Returner=Rotate_CW(3, Row);
+			Returner=Rotate_CW(2, Row);
 			break;
 		case Direction::NONE:
 			throw "Unreachable";
@@ -646,7 +646,7 @@ bool Cube::Twist(int Side, int Column, int Row, Direction direction) {
 
 // Just an alias for Twist()
 bool Cube::Twist(Vector Position, Direction direction) {
-	return Twist(Position[1], Position[2], Position[3], direction);
+	return Twist(Position[1]-1, Position[2], Position[3], direction);
 }
 
 
@@ -675,7 +675,7 @@ int Cube::Random(int Limit) {
 // This lifesaving function modifies the entire Cube so that the Cube now treats
 // the passed Side as its new front.  This way, algorithms only have to be
 // written for one side of the Cube.  The function returns the location of where
-// the old side 1 is.  Always remember to set the Cube back to normal after your
+// the old side 0 is.  Always remember to set the Cube back to normal after your
 // algorithm.
 int Cube::Set_Front(int Side) {
 	// We need a temporary Face
@@ -686,11 +686,11 @@ int Cube::Set_Front(int Side) {
 	// some of the Face to preserve the orientation of the Face with regard
 	// to the standard Cube.
 	switch(Side) {
-	case 1:
+	case 0:
 		// It's already facing 1.  Duh.
-		Returner=1;
+		Returner=0;
 		break;
-	case 2:
+	case 1:
 		_sides[0] = _sides[1];
 		_sides[5].Spin_CW();
 		_sides[5].Spin_CW();
@@ -701,18 +701,18 @@ int Cube::Set_Front(int Side) {
 		_sides[3] = Front_Face;
 		_sides[2].Spin_CCW();
 		_sides[4].Spin_CW();
-		Returner=4;
+		Returner=3;
 		break;
-	case 3:
+	case 2:
 		_sides[0] = _sides[2];
 		_sides[2] = _sides[5];
 		_sides[5] = _sides[4];
 		_sides[4] = Front_Face;
 		_sides[1].Spin_CW();
 		_sides[3].Spin_CCW();
-		Returner=5;
+		Returner=4;
 		break;
-	case 4:
+	case 3:
 		_sides[0] = _sides[3];
 		_sides[5].Spin_CW();
 		_sides[5].Spin_CW();
@@ -723,18 +723,18 @@ int Cube::Set_Front(int Side) {
 		_sides[1] = Front_Face;
 		_sides[2].Spin_CW();
 		_sides[4].Spin_CCW();
-		Returner=2;
+		Returner=1;
 		break;
-	case 5:
+	case 4:
 		_sides[0] = _sides[4];
 		_sides[4] = _sides[5];
 		_sides[5] = _sides[2];
 		_sides[2] = Front_Face;
 		_sides[1].Spin_CCW();
 		_sides[3].Spin_CW();
-		Returner=3;
+		Returner=2;
 		break;
-	case 6:
+	case 5:
 		_sides[0] = _sides[5];
 		_sides[5] = Front_Face;
 		Front_Face= _sides[2];
@@ -744,7 +744,7 @@ int Cube::Set_Front(int Side) {
 		_sides[1].Spin_CW();
 		_sides[3].Spin_CW();
 		_sides[3].Spin_CW();
-		Returner=6;
+		Returner=5;
 		break;
 	default:
 		throw std::out_of_range("SetFront");

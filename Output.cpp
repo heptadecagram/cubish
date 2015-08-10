@@ -253,8 +253,8 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			// If there is an arrow present, change that cube
 			if(Arrow_Direction != Direction::NONE) {
 				auto Cube_Place = Get_Twist_Side(Start_Vector, Arrow_Direction);
-				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0], Cube_Place[1]);
-				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0], Cube_Place[1]);
+				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0]-1, Cube_Place[1]);
+				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0]-1, Cube_Place[1]);
 				// Twist() returns true if a rotation happened
 				Draw_Section = Current_Cube.Twist(Start_Vector, Arrow_Direction);
 				if(Draw_Section) {
