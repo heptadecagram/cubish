@@ -22,7 +22,7 @@ public:
 
 
 	// Inspectors
-	double Get_Length() const;
+	double length() const;
 	double operator [] (int Index) const;
 
 

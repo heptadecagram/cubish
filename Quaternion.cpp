@@ -41,7 +41,7 @@ void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 	Vector Axis=New*Old;
 
 	Vector Distance=Old-New;
-	double Theta=Distance.Get_Length()/(2*RADIUS);
+	double Theta=Distance.length()/(2*RADIUS);
 
 	Theta = fmin(Theta, 1);
 	Theta = fmax(Theta, -1);

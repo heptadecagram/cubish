@@ -46,7 +46,7 @@ double Vector::operator | (const Vector &vector) const {
 
 
 // Inspectors
-double Vector::Get_Length() const {
+double Vector::length() const {
 	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]);
 }
 
@@ -64,7 +64,7 @@ void Vector::Zero() {
 
 // Have some way to normalize a vector.  It's nice to have.
 void Vector::Normalize() {
-	Scale(1/Get_Length() );
+	Scale(1/length() );
 }
 
 void Vector::Scale(double Scalar) {
