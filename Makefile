@@ -20,4 +20,4 @@ Cubish: $(OBJS)
 
 
 clean:
-	-rm *.o Cubish
+	-rm -f *.o Cubish
