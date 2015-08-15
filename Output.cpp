@@ -48,9 +48,9 @@ void Initialize_Window(int argc, char **argv, Cube& cube, Color_p Color_Array[])
 
 	glutDisplayFunc(Display);
 
-	auto Height= Current_Cube[1].height();
-	auto Width = Current_Cube[1].length();
-	auto Depth = Current_Cube[2].length();
+	auto Height= Current_Cube[0].height();
+	auto Width = Current_Cube[0].length();
+	auto Depth = Current_Cube[1].length();
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 
@@ -197,7 +197,6 @@ void Rotate_Slice() {
 	Display();
 }
 
-#include <iostream>
 void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	if(Button==GLUT_LEFT_BUTTON) {
 		if(State==GLUT_DOWN) {
@@ -253,8 +252,8 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			// If there is an arrow present, change that cube
 			if(Arrow_Direction != Direction::NONE) {
 				auto Cube_Place = Get_Twist_Side(Start_Vector, Arrow_Direction);
-				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0]-1, Cube_Place[1]);
-				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0]-1, Cube_Place[1]);
+				Slice_List = Current_Cube.Make_Slice_GL_List(Cube_Place[0], Cube_Place[1]);
+				Section_List = Current_Cube.Make_Section_GL_List(Cube_Place[0], Cube_Place[1]);
 				// Twist() returns true if a rotation happened
 				Draw_Section = Current_Cube.Twist(Start_Vector, Arrow_Direction);
 				if(Draw_Section) {
@@ -426,7 +425,7 @@ int Make_Arrow_GL_List() {
 	glNewList(List_ID, GL_COMPILE);
 
 	Current_Cube.View_Side(Start_Vector[1]-1);
-	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]].height()-Start_Vector[3]+.5, 0);
+	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]-1].height()-Start_Vector[3]+.5, 0);
 
 	auto Angle=0.0;
 	switch(Arrow_Direction) {
@@ -453,7 +452,7 @@ int Make_Arrow_GL_List() {
 	} glEnd();
 	glRotatef(-Angle, 0, 0, 1);
 
-	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]].height()-.5, 0);
+	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]-1].height()-.5, 0);
 	Current_Cube.Undo_View_Side(Start_Vector[1]-1);
 
 	glEndList();
@@ -501,9 +500,9 @@ int Get_Cube_Section(Cube& cube, int, int) {
 Vector Find_Cube_Point(Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width = Current_Cube[1].length()/2.0;
-	auto Half_Height=Current_Cube[1].height()/2.0;
-	auto Half_Depth=Current_Cube[2].length()/2.0;
+	auto Half_Width = Current_Cube[0].length()/2.0;
+	auto Half_Height=Current_Cube[0].height()/2.0;
+	auto Half_Depth=Current_Cube[1].length()/2.0;
 
 	for(auto n=0; n<=6; n++) {
 		if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
@@ -581,9 +580,9 @@ Vector Find_Cube_Point(Vector Begin, Vector End) {
 Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 	auto Change=End-Begin;
 	double X_Temp, Y_Temp, Z_Temp;
-	auto Half_Width = Current_Cube[1].length()/2.0;
-	auto Half_Height= Current_Cube[1].height()/2.0;
-	auto Half_Depth = Current_Cube[2].length()/2.0;
+	auto Half_Width = Current_Cube[0].length()/2.0;
+	auto Half_Height= Current_Cube[0].height()/2.0;
+	auto Half_Depth = Current_Cube[1].length()/2.0;
 
 	switch(int(Initial[1]) ) {
 	case 1:
@@ -659,22 +658,22 @@ Vector Get_Twist_Vector(int Side) {
 	Vector Returner;
 
 	switch(Side) {
-	case 1:
+	case 0:
 		Returner[3]=1;
 		break;
-	case 2:
+	case 1:
 		Returner[1]=-1;
 		break;
-	case 3:
+	case 2:
 		Returner[2]=1;
 		break;
-	case 4:
+	case 3:
 		Returner[1]=1;
 		break;
-	case 5:
+	case 4:
 		Returner[2]=-1;
 		break;
-	case 6:
+	case 5:
 		Returner[3]=-1;
 		break;
 	}
@@ -705,23 +704,23 @@ std::array<double, 3> Get_Twist_Side(Vector Origin, Direction direction) {
 		case 3:
 		case 5:
 		case 6:
-			found[0]=2;
+			found[0]=1;
 			break;
 		case 7:
 		case 8:
 		case 10:
-			found[0]=3;
+			found[0]=2;
 			break;
 		case 2:
 		case 9:
-			found[0]=6;
+			found[0]=5;
 			break;
 		case 4:
 		case 11:
-			found[0]=1;
+			found[0]=0;
 			break;
 		case 12:
-			found[0]=5;
+			found[0]=4;
 			break;
 	}
 
@@ -737,9 +736,9 @@ std::array<double, 3> Get_Twist_Side(Vector Origin, Direction direction) {
 
 void Cube_Remake_View() {
 	glutSetWindow(Window_ID);
-	auto Height= Current_Cube[1].height();
-	auto Width = Current_Cube[1].length();
-	auto Depth = Current_Cube[2].length();
+	auto Height= Current_Cube[0].height();
+	auto Width = Current_Cube[0].length();
+	auto Depth = Current_Cube[1].length();
 
 	auto Diagonal=sqrt(Width*Width + Height*Height + Depth*Depth);
 

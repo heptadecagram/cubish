@@ -106,8 +106,8 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 			Is_Option_Window_Open=false;
 		}
 		else if(Option_Solved && !Current_Cube.solved() ) {
-			for(auto n=1; n<=6; n++)
-				Current_Cube[n].Flood(Option_Color_List[n-1]);
+			for(auto n = 0; n < 6; ++n)
+				Current_Cube[n].Flood(Option_Color_List[n]);
 			Option_Cube_List=Make_Option_Cube_List(Option_Color_List);
 			Option_Line_List=Make_Option_Line_List();
 
@@ -146,7 +146,7 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		}
 		else if(!Is_Dimension_Window_Open &&
 				(Option_Width || Option_Height || Option_Depth) ) {
-			auto Dimension=Option_Width?1:Option_Height?2:3;
+			auto Dimension=Option_Width ? 0 : Option_Height ? 1 : 2;
 			Dimension_Window(Dimension, Option_Color_List);
 			Is_Dimension_Window_Open=true;
 		}

@@ -32,16 +32,16 @@ void Dimension_Window(int Dimension, Color_p *Color_List) {
 	// Figure out what dimension is being changed, and get ready to
 	// use it when the Cube is resized
 	switch(Dimension) {
-	case 1:
-		Old_Length=Current_Cube[1].length();
+	case 0:
+		Old_Length=Current_Cube[0].length();
 		Dimension_Side='w';
 		break;
-	case 2:
-		Old_Length=Current_Cube[1].height();
+	case 1:
+		Old_Length=Current_Cube[0].height();
 		Dimension_Side='h';
 		break;
-	case 3:
-		Old_Length=Current_Cube[2].length();
+	case 2:
+		Old_Length=Current_Cube[1].length();
 		Dimension_Side='d';
 		break;
 	default:
@@ -141,11 +141,11 @@ void Dimension_Mouse(int, int State, int, int) {
 		if(Old_Length!=Current_Length) {
 			// Save the state of the Cube before messing with it
 			auto Solved=Current_Cube.solved();
-			for(auto n=1; n<=6; n++)
-				Current_Cube[n].Flood(Dimension_Color_List[n-1]);
-			auto Width=Current_Cube[1].length();
-			auto Height=Current_Cube[1].height();
-			auto Depth=Current_Cube[2].length();
+			for(auto n = 0; n < 6; ++n)
+				Current_Cube[n].Flood(Dimension_Color_List[n]);
+			auto Width=Current_Cube[0].length();
+			auto Height=Current_Cube[0].height();
+			auto Depth=Current_Cube[1].length();
 
 			// This next if-else-else block figures out what sides
 			// should be modified as the result of changing the
@@ -154,22 +154,22 @@ void Dimension_Mouse(int, int State, int, int) {
 			// would actually add more bloat rather than take it
 			// away.
 			if(Dimension_Side=='w') {
-				Current_Cube[1] = Face(Current_Length, Height, Dimension_Color_List[0]);
-				Current_Cube[3] = Face(Current_Length, Depth, Dimension_Color_List[2]);
-				Current_Cube[5] = Face(Current_Length, Depth, Dimension_Color_List[4]);
-				Current_Cube[6] = Face(Current_Length, Height, Dimension_Color_List[5]);
+				Current_Cube[0] = Face(Current_Length, Height, Dimension_Color_List[0]);
+				Current_Cube[2] = Face(Current_Length, Depth, Dimension_Color_List[2]);
+				Current_Cube[4] = Face(Current_Length, Depth, Dimension_Color_List[4]);
+				Current_Cube[5] = Face(Current_Length, Height, Dimension_Color_List[5]);
 			}
 			else if(Dimension_Side=='h') {
-				Current_Cube[1] = Face(Width, Current_Length, Dimension_Color_List[0]);
-				Current_Cube[2] = Face(Depth, Current_Length, Dimension_Color_List[1]);
-				Current_Cube[4] = Face(Depth, Current_Length, Dimension_Color_List[3]);
-				Current_Cube[6] = Face(Width, Current_Length, Dimension_Color_List[5]);
+				Current_Cube[0] = Face(Width, Current_Length, Dimension_Color_List[0]);
+				Current_Cube[1] = Face(Depth, Current_Length, Dimension_Color_List[1]);
+				Current_Cube[3] = Face(Depth, Current_Length, Dimension_Color_List[3]);
+				Current_Cube[5] = Face(Width, Current_Length, Dimension_Color_List[5]);
 			}
 			else if(Dimension_Side=='d') {
-				Current_Cube[2] = Face(Current_Length, Height, Dimension_Color_List[1]);
-				Current_Cube[3] = Face(Width, Current_Length, Dimension_Color_List[2]);
-				Current_Cube[4] = Face(Current_Length, Height, Dimension_Color_List[3]);
-				Current_Cube[5] = Face(Width, Current_Length, Dimension_Color_List[4]);
+				Current_Cube[1] = Face(Current_Length, Height, Dimension_Color_List[1]);
+				Current_Cube[2] = Face(Width, Current_Length, Dimension_Color_List[2]);
+				Current_Cube[3] = Face(Current_Length, Height, Dimension_Color_List[3]);
+				Current_Cube[4] = Face(Width, Current_Length, Dimension_Color_List[4]);
 			}
 
 			Cube_Remake_View();
