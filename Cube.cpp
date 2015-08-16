@@ -48,10 +48,10 @@ int Cube::Make_GL_List() {
 			// Create a black background to put the colored squares on
 			glColor3d(0, 0, 0);
 			glBegin(GL_QUADS); {
-				glVertex3s(                    0,                     0, 0);
-				glVertex3s(_sides[n1].length(),                     0, 0);
-				glVertex3s(_sides[n1].length(), _sides[n1].height(), 0);
-				glVertex3s(                    0, _sides[n1].height(), 0);
+				glVertex2s(                  0,                   0);
+				glVertex2s(_sides[n1].length(),                   0);
+				glVertex2s(_sides[n1].length(), _sides[n1].height());
+				glVertex2s(                  0, _sides[n1].height());
 			} glEnd();
 
 			// Now, undo the orientation, returning to the original state
