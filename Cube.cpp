@@ -244,23 +244,23 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 				Temp_Slice_Length = _sides[0].length();
 			}
 
-			for(auto nn = 1; nn <= Temp_Slice_Length; ++nn) {
+			for(auto nn = 0; nn < Temp_Slice_Length; ++nn) {
 
 				switch(n) {
 					case 1:
 						X_Coord = _sides[1].length() - Depth+1;
-						Y_Coord = nn;
+						Y_Coord = nn+1;
 						break;
 					case 2:
-						X_Coord = nn;
+						X_Coord = nn+1;
 						Y_Coord = Depth;
 						break;
 					case 3:
 						X_Coord = Depth;
-						Y_Coord = Temp_Slice_Length-nn+1;
+						Y_Coord = Temp_Slice_Length-nn;
 						break;
 					case 4:
-						X_Coord = nn;
+						X_Coord = nn+1;
 						Y_Coord = _sides[2].height() - Depth+1;
 						break;
 					default:
@@ -307,16 +307,16 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 		// If we are at the bottom, draw the appropriate colored squares
 		if(Depth == _sides[1].length()) {
-			for(auto n=1; n <= _sides[5].height(); ++n) {
-				for(auto nn=1; nn <= _sides[5].length(); ++nn) {
+			for(auto n = 0; n < _sides[5].height(); ++n) {
+				for(auto nn = 0; nn < _sides[5].length(); ++nn) {
 					// Yay pretty colored squares (z-offset for viewability
-					_sides[5](nn, n)->Get_Color()->Change_To();
-					glBegin(GL_QUADS);
-					glVertex3d(nn-0.9, n-0.9, -0.03);
-					glVertex3d(nn-0.9, n-0.1, -0.03);
-					glVertex3d(nn-0.1, n-0.1, -0.03);
-					glVertex3d(nn-0.1, n-0.9, -0.03);
-					glEnd(); // GL_QUADS
+					_sides[5](nn+1, n+1)->Get_Color()->Change_To();
+					glBegin(GL_QUADS); {
+						glVertex3d(nn+0.1, n+0.1, -0.03);
+						glVertex3d(nn+0.1, n+0.9, -0.03);
+						glVertex3d(nn+0.9, n+0.9, -0.03);
+						glVertex3d(nn+0.9, n+0.1, -0.03);
+					} glEnd();
 				}
 			}
 		}
@@ -333,16 +333,16 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 		// If we are at the top, draw the appropriate colored squares
 		if(Depth==1) {
-			for(auto n=1; n <= _sides[0].height(); ++n) {
-				for(auto nn=1; nn <= _sides[0].length(); ++nn) {
+			for(auto n = 0; n < _sides[0].height(); ++n) {
+				for(auto nn = 0; nn < _sides[0].length(); ++nn) {
 					// Change to the right color, draw the square at an offset
-					_sides[0](nn, _sides[0].height() - n+1)->Get_Color()->Change_To();
-					glBegin(GL_QUADS);
-					glVertex3d(nn-0.9, n-0.9, 0.03);
-					glVertex3d(nn-0.9, n-0.1, 0.03);
-					glVertex3d(nn-0.1, n-0.1, 0.03);
-					glVertex3d(nn-0.1, n-0.9, 0.03);
-					glEnd(); // GL_QUADS
+					_sides[0](nn+1, _sides[0].height() - n)->Get_Color()->Change_To();
+					glBegin(GL_QUADS); {
+						glVertex3d(nn+0.1, n+0.1, 0.03);
+						glVertex3d(nn+0.1, n+0.9, 0.03);
+						glVertex3d(nn+0.9, n+0.9, 0.03);
+						glVertex3d(nn+0.9, n+0.1, 0.03);
+					} glEnd();
 				}
 			}
 		}
@@ -476,10 +476,10 @@ void Cube::Save(Color_p *Color_List, std::ofstream& File) {
 	// must be compared and not values.  Then print out the byte value of its
 	// Color_List index.
 	for(int n1=0; n1<6; n1++)
-		for(int n2=1; n2 <= _sides[n1].height(); n2++)
-			for(int n3=1; n3 <= _sides[n1].length(); n3++)
+		for(int n2=0; n2 < _sides[n1].height(); ++n2)
+			for(int n3=0; n3 < _sides[n1].length(); ++n3)
 				for(int n4=0; n4<6; n4++)
-					if(_sides[n1](n3, n2)->Get_Color() == Color_List[n4]) {
+					if(_sides[n1](n3+1, n2+1)->Get_Color() == Color_List[n4]) {
 						File << static_cast<char>(n4);
 					}
 }
@@ -510,10 +510,10 @@ void Cube::Load(Color_p *Color_List, std::ifstream& File) {
 	// Now, obtain the Color_List information stored in the file and put it on the
 	// Cube.
 	for(auto n1=0; n1<6; n1++)
-		for(auto n2=1; n2<=_sides[n1].height(); n2++)
-			for(auto n3=1; n3<=_sides[n1].length(); n3++) {
+		for(auto n2=0; n2 < _sides[n1].height(); ++n2)
+			for(auto n3=0; n3 < _sides[n1].length(); ++n3) {
 				File >> Color_Index;
-				_sides[n1](n3, n2)->Set_Color(Color_List[static_cast<int>(Color_Index)]);
+				_sides[n1](n3+1, n2+1)->Set_Color(Color_List[static_cast<int>(Color_Index)]);
 			}
 }
 
