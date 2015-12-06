@@ -23,7 +23,7 @@ bool Is_Color_Window_Open, Is_Dimension_Window_Open;
 int Color_Window_ID, Dimension_Window_ID;
 
 // List of colors
-Color_p *Option_Color_List;
+std::array<Color_p, 6> Option_Color_List;
 
 // These keep track of the mouse location
 bool Option_Exit, Option_Random, Option_Solved, Option_Save, Option_Load, Option_Color;
@@ -36,7 +36,7 @@ int Option_Window_Width, Option_Window_Height;
 int Option_Cube_List, Option_Exit_List, Option_Solved_List, Option_Random_List;
 int Option_Line_List, Option_Load_List, Option_Save_List;
 
-void New_Window(Color_p *Color_Array) {
+void New_Window(std::array<Color_p, 6> Color_Array) {
 	// Get numerically set up for the window
 	Option_Color_List=Color_Array;
 	Option_Window_ID=glutCreateWindow("Options");
@@ -316,7 +316,7 @@ void Option_Reshape(int X_Size, int Y_Size) {
 	Make_All_Option_Lists();
 }
 
-int Make_Option_Cube_List(Color_p *Color_Array) {
+int Make_Option_Cube_List(std::array<Color_p, 6> Color_Array) {
 	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);

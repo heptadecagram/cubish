@@ -8,16 +8,14 @@
 
 
 // Constructors
-Cube::Cube(int Width, int Height, int Depth,
-		   Color_p Side_1_Color, Color_p Side_2_Color, Color_p Side_3_Color,
-		   Color_p Side_4_Color, Color_p Side_5_Color, Color_p Side_6_Color) {
+Cube::Cube(int Width, int Height, int Depth, std::array<Color_p, 6> side_colors) {
 
-	_sides[0] = Face(Width, Height, Side_1_Color);
-	_sides[1] = Face(Depth, Height, Side_2_Color);
-	_sides[2] = Face(Width,  Depth, Side_3_Color);
-	_sides[3] = Face(Depth, Height, Side_4_Color);
-	_sides[4] = Face(Width,  Depth, Side_5_Color);
-	_sides[5] = Face(Width, Height, Side_6_Color);
+	_sides[0] = Face(Width, Height, side_colors[0]);
+	_sides[1] = Face(Depth, Height, side_colors[1]);
+	_sides[2] = Face(Width,  Depth, side_colors[2]);
+	_sides[3] = Face(Depth, Height, side_colors[3]);
+	_sides[4] = Face(Width,  Depth, side_colors[4]);
+	_sides[5] = Face(Width, Height, side_colors[5]);
 }
 
 // Facilitators
@@ -456,7 +454,7 @@ void Cube::Undo_View_Side(int Side) {
 
 // This function saves a Cube to an open file pointer.  Pass the appropriate
 // Color information in case of sides with the same color.
-void Cube::Save(Color_p *Color_List, std::ofstream& File) {
+void Cube::Save(std::array<Color_p, 6> Color_List, std::ofstream& File) {
 	// Iterate through the Color_List, turning the RGB values into bytes,
 	// and then put them in the file
 	for(int n=0; n<6; n++) {
@@ -486,7 +484,7 @@ void Cube::Save(Color_p *Color_List, std::ofstream& File) {
 
 // This function loads a Cube from an open file pointer.  It also assigns the
 // appropriate Color_List information.  Warning: No exception handling ability yet.
-void Cube::Load(Color_p *Color_List, std::ifstream& File) {
+void Cube::Load(std::array<Color_p, 6>  Color_List, std::ifstream& File) {
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
 		unsigned char Red=0, Green=0, Blue=0;

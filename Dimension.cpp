@@ -21,13 +21,13 @@ int Old_Length, Current_Length;
 char Dimension_Side;
 
 // A Color_List must be used to resize the Cube
-Color_p *Dimension_Color_List;
+std::array<Color_p, 6> Dimension_Color_List;
 
 // Display list identifier
 int Length_List;
 
 // Window creation function
-void Dimension_Window(int Dimension, Color_p *Color_List) {
+void Dimension_Window(int Dimension, std::array<Color_p, 6> Color_List) {
 	Dimension_Color_List=Color_List;
 	// Figure out what dimension is being changed, and get ready to
 	// use it when the Cube is resized

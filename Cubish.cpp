@@ -1,4 +1,5 @@
 
+#include <array>
 #include <cstdlib>
 
 #include "ui.h"
@@ -16,19 +17,19 @@ int main(int argc, char* argv[]) {
 	auto Width=3, Height=3, Depth=3;
 
 	// Create the color list and default colors
-	Color_p Side_Colors[6];
-	Side_Colors[0]= std::make_shared<Color>(1, 0, 1);
-	Side_Colors[1]= std::make_shared<Color>(1, 1, 1);
-	Side_Colors[2]= std::make_shared<Color>(0, 0, 1);
-	Side_Colors[3]= std::make_shared<Color>(1, 0, 0);
-	Side_Colors[4]= std::make_shared<Color>(0, 1, 0);
-	Side_Colors[5]= std::make_shared<Color>(1, 1, 0);
+	std::array<Color_p, 6> colors{
+		std::make_shared<Color>(1, 0, 1),
+			std::make_shared<Color>(1, 1, 1),
+			std::make_shared<Color>(0, 0, 1),
+			std::make_shared<Color>(1, 0, 0),
+			std::make_shared<Color>(0, 1, 0),
+			std::make_shared<Color>(1, 1, 0)
+	};
 
 	// Behold the Cube
-	auto Alpha=Cube(Width, Height, Depth, Side_Colors[0], Side_Colors[1], Side_Colors[2],
-			Side_Colors[3], Side_Colors[4], Side_Colors[5]);
+	auto Alpha=Cube(Width, Height, Depth, colors);
 
-	Initialize_Window(argc, argv, Alpha, Side_Colors);
+	Initialize_Window(argc, argv, Alpha, colors);
 
 	glutMainLoop();
 

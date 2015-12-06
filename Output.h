@@ -8,7 +8,7 @@
 #include "Cube.h"
 #include "Vector.h"
 
-void Initialize_Window(int argc, char **argv, Cube& cube, Color_p Color_Array[]);
+void Initialize_Window(int argc, char **argv, Cube& cube, std::array<Color_p, 6> colors);
 
 void Display();
 
