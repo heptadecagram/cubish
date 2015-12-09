@@ -1,7 +1,11 @@
 
-CXXFLAGS+=-g -std=c++1y -Wall -Werror -Wextra -Wstack-usage=1024 -pedantic
+CXXFLAGS+=-std=c++1y
+CXXFLAGS+=-Wall -Wextra -Wpedantic -Wstack-usage=256 -Wwrite-strings -Wfloat-equal -Waggregate-return -Winline
+CXXFLAGS+=-Werror
 
-OBJS=Cubish.o Color.o ColorPick.o Cube.o Dimension.o Face.o OptionWindow.o Output.o Quaternion.o Tile.o Vector.o
+TARGET=Cubish
+
+OBJS=$(TARGET).o Color.o ColorPick.o Cube.o Dimension.o Face.o OptionWindow.o Output.o Quaternion.o Tile.o Vector.o
 
 uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 
@@ -14,10 +18,13 @@ CXXFLAGS+=-Wno-deprecated -Wno-unknown-warning-option
 LDLIBS+=-framework OpenGL -framework GLUT -lstdc++
 endif
 
-.PHONY: clean
+.PHONY: clean debug
 
-Cubish: $(OBJS)
+$(TARGET): $(OBJS)
+
+debug: CXXFLAGS+=-g
+debug: $(TARGET)
 
 
 clean:
-	-rm -f *.o Cubish
+	-rm -f $(TARGET) $(OBJS)
