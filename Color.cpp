@@ -3,6 +3,8 @@
 
 #include "ui.h"
 
+#include <cmath>
+
 // Constructors
 Color::Color() {
 	_red=0;
@@ -37,9 +39,9 @@ double Color::Get_Blue() const {
 }
 
 bool Color::operator==(const Color& other) const {
-	return _red == other._red &&
-	_green == other._green &&
-	_blue == other._blue;
+	return fabs(_red - other._red) < 0.01 &&
+	fabs(_green - other._green) < 0.01 &&
+	fabs(_blue - other._blue) < 0.01;
 }
 
 

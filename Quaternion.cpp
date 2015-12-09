@@ -21,18 +21,19 @@ Quaternion &Quaternion::operator = (const Vector &vector) {
 // Facilitators
 void Quaternion::Normalize() {
 	double Scalar=_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2] + _phi*_phi;
-	if(Scalar==0)
+	if(std::abs(Scalar) < 0.01) {
 		Scalar=1.0;
+	}
 	Scale(1/Scalar);
 	_phi/=Scalar;
 }
 
 void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
-						   double New_X_Coord, double New_Y_Coord) {
-	if(Old_X_Coord==New_X_Coord && Old_Y_Coord==New_Y_Coord) {
-        Zero();
-        _phi=1;
-        return;
+		double New_X_Coord, double New_Y_Coord) {
+	if(std::abs(Old_X_Coord - New_X_Coord) < 0.01 && std::abs(Old_Y_Coord - New_Y_Coord) < 0.01) {
+		Zero();
+		_phi=1;
+		return;
 	}
 
 	Vector Old(Old_X_Coord, Old_Y_Coord, Sphere_Projection(Old_X_Coord, Old_Y_Coord) );

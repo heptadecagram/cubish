@@ -333,7 +333,7 @@ void Passive_Motion(int X_Coord, int Y_Coord) {
 		glutPostRedisplay();
 	}
 	// Otherwise, uncolor the option box
-	else if(Menu_Color[1]==1) {
+	else if(fabs(Menu_Color[1] - 1) < 0.01) {
 		// Restore the old cursor
 		glutSetCursor(GLUT_CURSOR_INHERIT);
 
@@ -505,75 +505,87 @@ Vector Find_Cube_Point(Vector Begin, Vector End) {
 	auto Half_Depth=Current_Cube[1].length()/2.0;
 
 	for(auto n=0; n<=6; n++) {
-		if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
-		switch(n) {
-		case 1:
-			if(Begin[3]>Half_Depth && End[3]<Half_Depth) {
-				Z_Temp=Begin[3]-Half_Depth;
-				Y_Temp=-Z_Temp*Change[2]/Change[3] + Begin[2];
-				X_Temp=-Z_Temp*Change[1]/Change[3] + Begin[1];
+		if(fabs(Change[1] - 1) > 0.01 &&
+				fabs(Change[1] - 2) > 0.01 &&
+				fabs(Change[1] - 3) > 0.01 &&
+				fabs(Change[1] - 4) > 0.01 &&
+				fabs(Change[1] - 5) > 0.01 &&
+				fabs(Change[1] - 6) > 0.01) {
+			switch(n) {
+				case 1:
+					if(Begin[3]>Half_Depth && End[3]<Half_Depth) {
+						Z_Temp=Begin[3]-Half_Depth;
+						Y_Temp=-Z_Temp*Change[2]/Change[3] + Begin[2];
+						X_Temp=-Z_Temp*Change[1]/Change[3] + Begin[1];
 
-				if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (X_Temp<Half_Width && X_Temp>-Half_Width) )
-					Change[1]=1, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Half_Height-Y_Temp+1);
-			}
-			break;
-		case 2:
-			if(Begin[1]<-Half_Width && End[1]>-Half_Width) {
-				X_Temp=-Half_Width-Begin[1];
-				Y_Temp=X_Temp*Change[2]/Change[1] + Begin[2];
-				Z_Temp=X_Temp*Change[3]/Change[1] + Begin[3];
+						if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (X_Temp<Half_Width && X_Temp>-Half_Width) )
+							Change[1]=1, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Half_Height-Y_Temp+1);
+					}
+					break;
+				case 2:
+					if(Begin[1]<-Half_Width && End[1]>-Half_Width) {
+						X_Temp=-Half_Width-Begin[1];
+						Y_Temp=X_Temp*Change[2]/Change[1] + Begin[2];
+						Z_Temp=X_Temp*Change[3]/Change[1] + Begin[3];
 
-				if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
-					Change[1]=2, Change[2]=int(Z_Temp+Half_Depth+1), Change[3]=int(Half_Height-Y_Temp+1);
-			}
-			break;
-		case 3:
-			if(Begin[2]>Half_Height && End[2]<Half_Height) {
-				Y_Temp=Begin[2]-Half_Height;
-				X_Temp=-Y_Temp*Change[1]/Change[2] + Begin[1];
-				Z_Temp=-Y_Temp*Change[3]/Change[2] + Begin[3];
+						if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
+							Change[1]=2, Change[2]=int(Z_Temp+Half_Depth+1), Change[3]=int(Half_Height-Y_Temp+1);
+					}
+					break;
+				case 3:
+					if(Begin[2]>Half_Height && End[2]<Half_Height) {
+						Y_Temp=Begin[2]-Half_Height;
+						X_Temp=-Y_Temp*Change[1]/Change[2] + Begin[1];
+						Z_Temp=-Y_Temp*Change[3]/Change[2] + Begin[3];
 
-				if((X_Temp<Half_Width && X_Temp>-Half_Width) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
-					Change[1]=3, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Z_Temp+Half_Depth+1);
-			}
-			break;
-		case 4:
-			if(Begin[1]>Half_Width && End[1]<Half_Width) {
-				X_Temp=Begin[1]-Half_Width;
-				Y_Temp=-X_Temp*Change[2]/Change[1] + Begin[2];
-				Z_Temp=-X_Temp*Change[3]/Change[1] + Begin[3];
+						if((X_Temp<Half_Width && X_Temp>-Half_Width) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
+							Change[1]=3, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Z_Temp+Half_Depth+1);
+					}
+					break;
+				case 4:
+					if(Begin[1]>Half_Width && End[1]<Half_Width) {
+						X_Temp=Begin[1]-Half_Width;
+						Y_Temp=-X_Temp*Change[2]/Change[1] + Begin[2];
+						Z_Temp=-X_Temp*Change[3]/Change[1] + Begin[3];
 
-				if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
-					Change[1]=4, Change[2]=int(Half_Depth-Z_Temp+1), Change[3]=int(Half_Height-Y_Temp+1);
-			}
-			break;
-		case 5:
-			if(Begin[2]<-Half_Height && End[2]>-Half_Height) {
-				Y_Temp=-Half_Height-Begin[2];
-				X_Temp=Y_Temp*Change[1]/Change[2] + Begin[1];
-				Z_Temp=Y_Temp*Change[3]/Change[2] + Begin[3];
+						if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
+							Change[1]=4, Change[2]=int(Half_Depth-Z_Temp+1), Change[3]=int(Half_Height-Y_Temp+1);
+					}
+					break;
+				case 5:
+					if(Begin[2]<-Half_Height && End[2]>-Half_Height) {
+						Y_Temp=-Half_Height-Begin[2];
+						X_Temp=Y_Temp*Change[1]/Change[2] + Begin[1];
+						Z_Temp=Y_Temp*Change[3]/Change[2] + Begin[3];
 
-				if((X_Temp<Half_Width && X_Temp>-Half_Width) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
-					Change[1]=5, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Half_Depth-Z_Temp+1);
-			}
-			break;
-		case 6:
-			if(Begin[3]<-Half_Depth && End[3]>-Half_Depth) {
-				Z_Temp=-Half_Depth-Begin[3];
-				Y_Temp=Z_Temp*Change[2]/Change[3] + Begin[2];
-				X_Temp=Z_Temp*Change[1]/Change[3] + Begin[1];
+						if((X_Temp<Half_Width && X_Temp>-Half_Width) && (Z_Temp<Half_Depth && Z_Temp>-Half_Depth) )
+							Change[1]=5, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Half_Depth-Z_Temp+1);
+					}
+					break;
+				case 6:
+					if(Begin[3]<-Half_Depth && End[3]>-Half_Depth) {
+						Z_Temp=-Half_Depth-Begin[3];
+						Y_Temp=Z_Temp*Change[2]/Change[3] + Begin[2];
+						X_Temp=Z_Temp*Change[1]/Change[3] + Begin[1];
 
-				if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (X_Temp<Half_Width && X_Temp>-Half_Width) )
-					Change[1]=6, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Y_Temp+Half_Height+1);
+						if((Y_Temp<Half_Height && Y_Temp>-Half_Height) && (X_Temp<Half_Width && X_Temp>-Half_Width) )
+							Change[1]=6, Change[2]=int(X_Temp+Half_Width+1), Change[3]=int(Y_Temp+Half_Height+1);
+					}
+					break;
+				default:
+					break;
 			}
-			break;
-		default:
-			break;
 		}
 	}
 
-	if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
+	if(fabs(Change[1] - 1) > 0.01 &&
+			fabs(Change[1] - 2) > 0.01 &&
+			fabs(Change[1] - 3) > 0.01 &&
+			fabs(Change[1] - 4) > 0.01 &&
+			fabs(Change[1] - 5) > 0.01 &&
+			fabs(Change[1] - 6) > 0.01) {
 		Change.Zero();
+	}
 	return Change;
 }
 
@@ -631,13 +643,19 @@ Vector Find_Direction(Vector Initial, Vector Begin, Vector End) {
 		break;
 	}
 
-	if(Change[1]!=1 && Change[1]!=2 && Change[1]!=3 && Change[1]!=4 && Change[1]!=5 && Change[1]!=6)
+	if(fabs(Change[1] - 1) > 0.01 &&
+			fabs(Change[1] - 2) > 0.01 &&
+			fabs(Change[1] - 3) > 0.01 &&
+			fabs(Change[1] - 4) > 0.01 &&
+			fabs(Change[1] - 5) > 0.01 &&
+			fabs(Change[1] - 6) > 0.01) {
 		Change.Zero();
+	}
 	return Change;
 }
 
 Direction Get_Direction(Vector Begin, Vector End) {
-	if(Begin[2]==End[2] && Begin[3]==End[3])
+	if(std::abs(Begin[2] - End[2]) < 0.01 && std::abs(Begin[3] - End[3]) < 0.01)
 		return Direction::NONE;
 
 	if(std::abs(Begin[2]-End[2]) < std::abs(Begin[3]-End[3]) ) {
