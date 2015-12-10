@@ -1,6 +1,5 @@
 
 #include <array>
-#include <cstdlib>
 
 #include "ui.h"
 
@@ -13,25 +12,23 @@
 // stored in an array.
 int main(int argc, char* argv[]) {
 
-	// Declare a default cube size
-	auto Width=3, Height=3, Depth=3;
-
 	// Create the color list and default colors
 	std::array<Color_p, 6> colors{
-		std::make_shared<Color>(1, 0, 1),
-			std::make_shared<Color>(1, 1, 1),
-			std::make_shared<Color>(0, 0, 1),
-			std::make_shared<Color>(1, 0, 0),
-			std::make_shared<Color>(0, 1, 0),
-			std::make_shared<Color>(1, 1, 0)
+		{
+			std::make_shared<Color>(1, 0, 1),
+				std::make_shared<Color>(1, 1, 1),
+				std::make_shared<Color>(0, 0, 1),
+				std::make_shared<Color>(1, 0, 0),
+				std::make_shared<Color>(0, 1, 0),
+				std::make_shared<Color>(1, 1, 0)
+		}
 	};
 
 	// Behold the Cube
-	auto Alpha=Cube(Width, Height, Depth, colors);
+	// Declare a default cube size of 3x3x3
+	auto Alpha=Cube(3, 3, 3, colors);
 
 	Initialize_Window(argc, argv, Alpha, colors);
 
 	glutMainLoop();
-
-	return EXIT_SUCCESS;
 }

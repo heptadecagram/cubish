@@ -1,5 +1,5 @@
 
-CXXFLAGS+=-std=c++1y
+CXXFLAGS+=-std=c++14
 CXXFLAGS+=-Wall -Wextra -Wpedantic -Wstack-usage=256 -Wwrite-strings -Wfloat-equal -Waggregate-return -Winline
 CXXFLAGS+=-Werror
 
