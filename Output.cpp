@@ -422,40 +422,41 @@ void Keyboard(unsigned char Key, int, int) {
 int Make_Arrow_GL_List() {
 	static auto List_ID=glGenLists(1);
 
-	glNewList(List_ID, GL_COMPILE);
+	glNewList(List_ID, GL_COMPILE); {
+		Current_Cube.View_Side(Start_Vector[1]-1);
+		glTranslated(Start_Vector[2]-.5,
+				Current_Cube[Start_Vector[1]-1].height()-Start_Vector[3]+.5,
+				0.05);
 
-	Current_Cube.View_Side(Start_Vector[1]-1);
-	glTranslated(Start_Vector[2]-.5, Current_Cube[Start_Vector[1]-1].height()-Start_Vector[3]+.5, 0);
+		auto Angle=0.0;
+		switch(Arrow_Direction) {
+			case Direction::Up:
+				Angle=-90;
+				break;
+			case Direction::Down:
+				Angle=90;
+				break;
+			case Direction::Right:
+				Angle=180;
+				break;
+			default:
+				break;
+		}
+		glRotatef(Angle, 0, 0, 1);
+		glLineWidth(5);
+		glBegin(GL_LINE_STRIP); {
+			glVertex2d(0   , 0   );
+			glVertex2d(1   , 0   );
+			glVertex2d( .75,  .25);
+			glVertex2d(1   , 0   );
+			glVertex2d( .75, -.25);
+		} glEnd();
+		glRotatef(-Angle, 0, 0, 1);
 
-	auto Angle=0.0;
-	switch(Arrow_Direction) {
-		case Direction::Up:
-			Angle=-90;
-			break;
-		case Direction::Down:
-			Angle=90;
-			break;
-		case Direction::Right:
-			Angle=180;
-			break;
-		default:
-			break;
-	}
-	glRotatef(Angle, 0, 0, 1);
-	glLineWidth(5);
-	glBegin(GL_LINE_STRIP); {
-		glVertex3d(0   , 0   , .05);
-		glVertex3d(1   , 0   , .05);
-		glVertex3d( .75,  .25, .05);
-		glVertex3d(1   , 0   , .05);
-		glVertex3d( .75, -.25, .05);
-	} glEnd();
-	glRotatef(-Angle, 0, 0, 1);
+		glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]-1].height()-.5, -0.05);
+		Current_Cube.Undo_View_Side(Start_Vector[1]-1);
 
-	glTranslated(.5-Start_Vector[2], Start_Vector[3] - Current_Cube[Start_Vector[1]-1].height()-.5, 0);
-	Current_Cube.Undo_View_Side(Start_Vector[1]-1);
-
-	glEndList();
+	} glEndList();
 
 	return List_ID;
 }

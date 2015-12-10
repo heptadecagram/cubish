@@ -267,21 +267,21 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 				// Black background squares
 				glColor3d(0, 0, 0);
-				glBegin(GL_QUADS);
-				glVertex2s(X_Coord-1, Y_Coord-1);
-				glVertex2s(X_Coord-1, Y_Coord);
-				glVertex2s(X_Coord  , Y_Coord);
-				glVertex2s(X_Coord  , Y_Coord-1);
-				glEnd(); // GL_QUADS
+				glBegin(GL_QUADS); {
+					glVertex2s(X_Coord-1, Y_Coord-1);
+					glVertex2s(X_Coord-1, Y_Coord);
+					glVertex2s(X_Coord  , Y_Coord);
+					glVertex2s(X_Coord  , Y_Coord-1);
+				} glEnd();
 
 				// Colored squares, raised for visibility
 				_sides[n](X_Coord, _sides[n].height() - Y_Coord+1)->Get_Color()->Change_To();
-				glBegin(GL_QUADS);
-				glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
-				glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
-				glVertex3d(X_Coord-0.1, Y_Coord-0.1, 0.03);
-				glVertex3d(X_Coord-0.1, Y_Coord-0.9, 0.03);
-				glEnd(); // GL_QUADS
+				glBegin(GL_QUADS); {
+					glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
+					glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
+					glVertex3d(X_Coord-0.1, Y_Coord-0.1, 0.03);
+					glVertex3d(X_Coord-0.1, Y_Coord-0.9, 0.03);
+				} glEnd();
 			}
 
 			// Return from the recent rotation/translation
@@ -296,12 +296,12 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 
 		// Draw black caps
 		glColor3d(0, 0, 0);
-		glBegin(GL_QUADS);
-		glVertex3i(                 0,                  0, 0);
-		glVertex3i(                 0, _sides[0].height(), 0);
-		glVertex3i(_sides[0].length(), _sides[0].height(), 0);
-		glVertex3i(_sides[0].length(),                  0, 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex2i(                 0,                  0);
+			glVertex2i(                 0, _sides[0].height());
+			glVertex2i(_sides[0].length(), _sides[0].height());
+			glVertex2i(_sides[0].length(),                  0);
+		} glEnd();
 
 		// If we are at the bottom, draw the appropriate colored squares
 		if(Depth == _sides[1].length()) {
@@ -322,12 +322,12 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 		// Go up a bit and draw the other black cap
 		glTranslated(0, 0, 1);
 		glColor3d(0, 0, 0);
-		glBegin(GL_QUADS);
-		glVertex3i(                 0,                  0, 0);
-		glVertex3i(                 0, _sides[0].height(), 0);
-		glVertex3i(_sides[0].length(), _sides[0].height(), 0);
-		glVertex3i(_sides[0].length(),                  0, 0);
-		glEnd(); // GL_QUADS
+		glBegin(GL_QUADS); {
+			glVertex3i(                 0,                  0, 0);
+			glVertex3i(                 0, _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(), _sides[0].height(), 0);
+			glVertex3i(_sides[0].length(),                  0, 0);
+		} glEnd();
 
 		// If we are at the top, draw the appropriate colored squares
 		if(Depth==1) {
