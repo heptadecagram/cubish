@@ -10,6 +10,10 @@
 
 #include "Tile.h"
 
+// Tracks whether the dimension picker window is open
+extern bool Is_Dimension_Window_Open;
+extern int Dimension_Window_ID;
+
 void Dimension_Window(int Dimension, std::array<Color_p, 6> Color_List);
 
 void Dimension_Display();

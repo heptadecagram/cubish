@@ -7,14 +7,11 @@
 #include "Face.h"
 #include "Output.h"
 
-// These are defined in Output.cpp and OptionWindow.cpp
-extern bool Is_Dimension_Window_Open;
-extern int Cube_List;
-extern int Window_ID, Option_Window_ID, Dimension_Window_ID;
-extern Cube Current_Cube;
-
 // This is the width of the window, height is one-fifth this value
 int Dimension_Window_Size;
+
+bool Is_Dimension_Window_Open;
+int Dimension_Window_ID;
 
 // These variables keep track of the length of the changing dimension
 int Old_Length, Current_Length;

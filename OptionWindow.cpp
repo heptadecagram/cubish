@@ -12,15 +12,8 @@
 #include "ColorPick.h"
 #include "Dimension.h"
 
-// Defined in Output.cpp
-extern int Window_ID, Option_Window_ID;
-extern int Cube_List;
-extern bool Is_Option_Window_Open, Draw_Section;
-extern Cube Current_Cube;
-
-// These values keep tract of subwindows of this window
-bool Is_Color_Window_Open, Is_Dimension_Window_Open;
-int Color_Window_ID, Dimension_Window_ID;
+bool Is_Option_Window_Open;
+int Option_Window_ID;
 
 // List of colors
 std::array<Color_p, 6> Option_Color_List;

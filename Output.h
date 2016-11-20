@@ -8,6 +8,10 @@
 #include "Cube.h"
 #include "Vector.h"
 
+extern Cube Current_Cube;
+extern int Window_ID;
+extern int Cube_List;
+
 void Initialize_Window(int argc, char **argv, Cube& cube, std::array<Color_p, 6> colors);
 
 void Display();

@@ -8,6 +8,10 @@
 
 #include "Tile.h"
 
+// Tracks whether the option window is open
+extern bool Is_Option_Window_Open;
+extern int Option_Window_ID;
+
 void New_Window(std::array<Color_p, 6> Color_Array);
 
 void Option_Display();

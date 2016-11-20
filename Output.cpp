@@ -19,7 +19,7 @@ std::array<Color_p, 6> Color_List;
 int Cube_List, Arrow_List;
 auto Window_Size=300.0;
 
-int Window_ID, Option_Window_ID;
+int Window_ID;
 
 auto View_Spinning=false, Mouse_Dragging=false, New_View=true, Cube_Twisting=false;
 int beginx, beginy;
@@ -30,7 +30,6 @@ Direction Arrow_Direction;
 
 bool Draw_Section;
 Vector Menu_Color(.7, .7, .7);
-bool Is_Option_Window_Open;
 int Section_List, Slice_List, Option_List;
 double Slice_Angle, Max_Angle;
 double Time_Delay;

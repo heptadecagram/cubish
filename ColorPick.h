@@ -7,6 +7,10 @@
 
 #include "Tile.h"
 
+// Tracks whether the color picker is open or not
+extern bool Is_Color_Window_Open;
+extern int Color_Window_ID;
+
 void Color_Window(Color_p Old_Color);
 
 void Color_Display();

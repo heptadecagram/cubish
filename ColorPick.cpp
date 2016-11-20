@@ -4,13 +4,11 @@
 #include "ui.h"
 
 #include "Cube.h"
+#include "Output.h"
 #include "OptionWindow.h"
 
-// Defined in Output.cpp or OptionWindow.cpp
-extern bool Is_Color_Window_Open;
-extern int Cube_List;
-extern int Window_ID, Option_Window_ID, Color_Window_ID;
-extern Cube Current_Cube;
+bool Is_Color_Window_Open;
+int Color_Window_ID;
 
 // This is the address of the old Color
 Color_p Window_Color;
