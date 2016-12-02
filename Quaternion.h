@@ -13,10 +13,13 @@
 
 #include "Vector.h"
 
+#include <memory>
+
 class Quaternion: public Vector {
 public:
 	// Constructors
 	Quaternion();
+	Quaternion(double X_Component, double Y_Component, double Z_Component);
 	Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi);
 	Quaternion &operator = (const Vector &vector);
 
@@ -24,7 +27,7 @@ public:
 	void Normalize();
 	void Trackball(double Old_X_Coord, double Old_Y_Coord, double New_X_Coord, double New_Y_Coord);
 	void Build(Vector Axis, double Phi);
-	void Build_Rotation_Matrix(double Matrix[4][4]);
+	std::unique_ptr<double[]> Build_Rotation_Matrix();
 	Quaternion operator * (const Quaternion &quaternion) const;
 	double operator | (const Quaternion &quaternion);
 	Quaternion operator + (const Quaternion &quaternion);

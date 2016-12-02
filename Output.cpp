@@ -66,12 +66,10 @@ void Initialize_Window(int argc, char **argv, Cube& cube, std::array<Color_p, 6>
 
 // If the viewpoint coordinates have been changed, readjust the matrix
 void Rotate_View() {
-	double Rotation_Matrix[4][4];
 
 	glPopMatrix();
 	glPushMatrix();
-	New_Quaternion.Build_Rotation_Matrix(Rotation_Matrix);
-	glMultMatrixd(&Rotation_Matrix[0][0]);
+	glMultMatrixd(New_Quaternion.Build_Rotation_Matrix().get());
 	New_View=false;
 
 	double X, Y, Z;

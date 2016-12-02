@@ -10,6 +10,9 @@ double Quaternion::RADIUS=.8;
 // Constructors
 Quaternion::Quaternion() : Vector(0, 0, 0), _phi(1) {}
 
+Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component) :
+	Vector(X_Component, Y_Component, Z_Component), _phi(1) {}
+
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi) :
 	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {}
 
@@ -59,34 +62,37 @@ void Quaternion::Build(Vector Axis, double Phi) {
 	_phi = cos(Phi/2);
 }
 
-void Quaternion::Build_Rotation_Matrix(double Matrix[4][4]) {
-	Matrix[0][0]=1-2*(_self[1]*_self[1] + _self[2]*_self[2]);
-	Matrix[0][1]=2*(_self[0]*_self[1] - _self[2]*_phi);
-	Matrix[0][2]=2*(_self[2]*_self[0] + _self[1]*_phi);
-	Matrix[0][3]=0;
+std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() {
+	auto Matrix = std::make_unique<double[]>(4 * 4);
+	Matrix[0*4 + 0]=1-2*(_self[1]*_self[1] + _self[2]*_self[2]);
+	Matrix[0*4 + 1]=2*(_self[0]*_self[1] - _self[2]*_phi);
+	Matrix[0*4 + 2]=2*(_self[2]*_self[0] + _self[1]*_phi);
+	Matrix[0*4 + 3]=0;
 
-	Matrix[1][0]=2*(_self[0]*_self[1] + _self[2]*_phi);
-	Matrix[1][1]=1-2*(_self[2]*_self[2] + _self[0]*_self[0]);
-	Matrix[1][2]=2*(_self[1]*_self[2] - _self[0]*_phi);
-	Matrix[1][3]=0;
+	Matrix[1*4 + 0]=2*(_self[0]*_self[1] + _self[2]*_phi);
+	Matrix[1*4 + 1]=1-2*(_self[2]*_self[2] + _self[0]*_self[0]);
+	Matrix[1*4 + 2]=2*(_self[1]*_self[2] - _self[0]*_phi);
+	Matrix[1*4 + 3]=0;
 
-	Matrix[2][0]=2*(_self[2]*_self[0] - _self[1]*_phi);
-	Matrix[2][1]=2*(_self[1]*_self[2] + _self[0]*_phi);
-	Matrix[2][2]=1-2*(_self[1]*_self[1] + _self[0]*_self[0]);
-	Matrix[2][3]=0;
+	Matrix[2*4 + 0]=2*(_self[2]*_self[0] - _self[1]*_phi);
+	Matrix[2*4 + 1]=2*(_self[1]*_self[2] + _self[0]*_phi);
+	Matrix[2*4 + 2]=1-2*(_self[1]*_self[1] + _self[0]*_self[0]);
+	Matrix[2*4 + 3]=0;
 
-	Matrix[3][0]=0;
-	Matrix[3][1]=0;
-	Matrix[3][2]=0;
-	Matrix[3][3]=1;
+	Matrix[3*4 + 0]=0;
+	Matrix[3*4 + 1]=0;
+	Matrix[3*4 + 2]=0;
+	Matrix[3*4 + 3]=1;
+
+	return Matrix;
 }
 
 Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
-	Quaternion Temp;
-	Temp[1]=_self[1]*quaternion[3] - _self[2]*quaternion[2];
-	Temp[2]=_self[2]*quaternion[1] - _self[0]*quaternion[3];
-	Temp[3]=_self[0]*quaternion[2] - _self[1]*quaternion[1];
-	return Temp;
+	return Quaternion{
+			_self[1]*quaternion[3] - _self[2]*quaternion[2],
+			_self[2]*quaternion[1] - _self[0]*quaternion[3],
+			_self[0]*quaternion[2] - _self[1]*quaternion[1]
+	};
 }
 
 double Quaternion::operator | (const Quaternion &quaternion) {
