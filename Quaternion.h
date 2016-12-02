@@ -27,10 +27,10 @@ public:
 	void Normalize();
 	void Trackball(double Old_X_Coord, double Old_Y_Coord, double New_X_Coord, double New_Y_Coord);
 	void Build(Vector Axis, double Phi);
-	std::unique_ptr<double[]> Build_Rotation_Matrix();
+	std::unique_ptr<double[]> Build_Rotation_Matrix() const;
 	Quaternion operator * (const Quaternion &quaternion) const;
-	double operator | (const Quaternion &quaternion);
-	Quaternion operator + (const Quaternion &quaternion);
+	double operator | (const Quaternion &quaternion) const;
+	Quaternion operator + (const Quaternion &quaternion) const;
 
 	// Inspectors
 	double operator [] (int Index) const;

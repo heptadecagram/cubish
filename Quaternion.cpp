@@ -62,7 +62,7 @@ void Quaternion::Build(Vector Axis, double Phi) {
 	_phi = cos(Phi/2);
 }
 
-std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() {
+std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() const {
 	auto Matrix = std::make_unique<double[]>(4 * 4);
 	Matrix[0*4 + 0]=1-2*(_self[1]*_self[1] + _self[2]*_self[2]);
 	Matrix[0*4 + 1]=2*(_self[0]*_self[1] - _self[2]*_phi);
@@ -95,13 +95,13 @@ Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
 	};
 }
 
-double Quaternion::operator | (const Quaternion &quaternion) {
+double Quaternion::operator | (const Quaternion &quaternion) const {
 	return _self[0]*quaternion[1] + _self[1]*quaternion[2] +
 		_self[2]*quaternion[3];
 }
 
 
-Quaternion Quaternion::operator + (const Quaternion &quaternion) {
+Quaternion Quaternion::operator + (const Quaternion &quaternion) const {
 	Quaternion Temp1, Temp2, Temp3, Returner;
 
 	Temp1=*this;
