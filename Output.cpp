@@ -221,17 +221,17 @@ void Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 	}
 	if(Button==GLUT_RIGHT_BUTTON) {
 		if(State==GLUT_DOWN) {
-			double X, Y, Z;
-			double Model[16], Projection[16];
-			int Viewport[4];
-
 			// Figure out how the view is currently oriented
+			double Projection[16];
 			glGetDoublev(GL_PROJECTION_MATRIX, Projection);
+			double Model[16];
 			glGetDoublev(GL_MODELVIEW_MATRIX, Model);
+			int Viewport[4];
 			glGetIntegerv(GL_VIEWPORT, Viewport);
 
 			// Develop pick rays for finding where in the viewing
 			// colume the user clicked
+			double X, Y, Z;
 			gluUnProject(X_Coord, Viewport[3]-Y_Coord-1, 0, Model, Projection,
 					Viewport, &X, &Y, &Z);
 			Vector Begin(X, Y, Z);

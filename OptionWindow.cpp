@@ -119,22 +119,22 @@ void Option_Mouse(int Button, int State, int X_Coord, int Y_Coord) {
 		else if(Option_Color && !Is_Color_Window_Open) {
 
 			auto X_Part=Option_Window_Width/40.0, Y_Part=Option_Window_Height/50.0;
-			int Side;
+			int Side = 0;
 
 			if(X_Coord<15*X_Part)
-				Side=2;
-			else if(X_Coord>25*X_Part)
-				Side=4;
-			else if(Y_Coord<15*Y_Part)
-				Side=3;
-			else if(Y_Coord>35*Y_Part)
-				Side=6;
-			else if(Y_Coord>25*Y_Part)
-				Side=5;
-			else
 				Side=1;
+			else if(X_Coord>25*X_Part)
+				Side=3;
+			else if(Y_Coord<15*Y_Part)
+				Side=2;
+			else if(Y_Coord>35*Y_Part)
+				Side=5;
+			else if(Y_Coord>25*Y_Part)
+				Side=4;
+			else
+				Side=0;
 
-			Color_Window(Option_Color_List[Side-1]);
+			Color_Window(Option_Color_List[Side]);
 			Is_Color_Window_Open=true;
 		}
 		else if(!Is_Dimension_Window_Open &&
