@@ -1,10 +1,9 @@
-//
+#ifndef CUBISH_VECTOR
+#define CUBISH_VECTOR
+
 // Description: This file implements a standard Vector() class.  Vector objects
 // can be added or subtracted ( + or - ), normalized, scaled, negated, and
 // produce cross products ( * ) or dot products ( | ).
-
-#ifndef CUBISH_VECTOR
-#define CUBISH_VECTOR
 
 #include <array>
 
@@ -37,5 +36,4 @@ protected:
 	std::array<double, 3> self_;
 };
 
-#endif // CUBISH_VECTOR
-
+#endif

@@ -1,4 +1,6 @@
-//
+#ifndef CUBISH_QUATERNION
+#define CUBISH_QUATERNION
+
 // Description: Quaternions are vectors with a rotation angle.  This file declars
 // a class Quaternion of such mathematical constructs.  These objects are very
 // useful for graphical applications.  For more information on using quaternions
@@ -7,9 +9,6 @@
 // _Interactive_Computer_Graphics_.
 //
 // The main purpose of this class is to create viewing volume matrices.
-
-#ifndef CUBISH_QUATERNION
-#define CUBISH_QUATERNION
 
 #include "Vector.h"
 
@@ -50,4 +49,4 @@ private:
 	double Sphere_Projection(double X_Coord, double Y_Coord);
 };
 
-#endif // CUBISH_QUATERNION
+#endif

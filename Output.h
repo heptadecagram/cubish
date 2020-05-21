@@ -1,4 +1,3 @@
-
 #ifndef CUBISH_OUTPUT
 #define CUBISH_OUTPUT
 
@@ -52,4 +51,4 @@ Direction Get_Direction(Vector Begin, Vector End);
 
 void Cube_Remake_View();
 
-#endif // CUBISH_OUTPUT
+#endif

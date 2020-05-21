@@ -1,11 +1,10 @@
-//
+#ifndef CUBISH_TILE
+#define CUBISH_TILE
+
 // This file defines a Tile class which is a wrapper for a pointer to a Color.  A
 // Tile is simply for convenience of the programmer, and does not confer any speed
 // optimizations.  The address of the Color the Tile uses may be obtained with
 // Get_Color() and set with Set_Color().
-
-#ifndef CUBISH_TILE
-#define CUBISH_TILE
 
 #include <memory>
 
@@ -32,4 +31,4 @@ protected:
 	Color_p color_;
 };
 
-#endif // CUBISH_TILE
+#endif

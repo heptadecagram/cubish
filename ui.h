@@ -1,4 +1,3 @@
-
 #ifndef UI_H
 # define UI_H
 
@@ -7,6 +6,5 @@
 # else
 #  include <GL/glut.h>
 # endif
-
 
 #endif

@@ -1,4 +1,6 @@
-//
+#ifndef CUBISH_CUBE
+#define CUBISH_CUBE
+
 // The Cube class is an array of six Face classes, aranged in the following order:
 //
 //     +---+
@@ -30,9 +32,6 @@
 // functions.  solved() calls the solved() function for each individual Face.
 // The Make_*() functions generate OpenGL list identifiers for use in glCallList().
 // A Cube can be randomized using the Random() function.
-
-#ifndef CUBISH_CUBE
-#define CUBISH_CUBE
 
 #include <array>
 #include <fstream>
@@ -82,4 +81,4 @@ private:
 	std::array<Face, 6> sides_;
 };
 
-#endif // CUBISH_CUBE
+#endif

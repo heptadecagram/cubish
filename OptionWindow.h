@@ -1,10 +1,9 @@
-//
+#ifndef CUBISH_OPTIONWINDOW
+#define CUBISH_OPTIONWINDOW
+
 // Description: This file defines a window that provides user options to a
 // Cube.  There are methods for changing color and size, randomizing and
 // solving, and saving and loading.
-
-#ifndef CUBISH_OPTIONWINDOW
-#define CUBISH_OPTIONWINDOW
 
 #include "Tile.h"
 
@@ -38,4 +37,4 @@ int Make_Option_Save_List();
 
 void Make_All_Option_Lists();
 
-#endif // CUBISH_OPTIONWINDOW
+#endif

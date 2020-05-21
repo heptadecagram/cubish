@@ -1,4 +1,6 @@
-//
+#ifndef CUBISH_FACE
+#define CUBISH_FACE
+
 // This file defines a Face class, which is a dynamic array of elements of the Tile class.
 // A Face can be rotated clockwise and counterclockwise using the Rotate_CW() and
 // Rotate_CCW() functions, respectively.  If a Face is not square (equal height and width),
@@ -9,9 +11,6 @@
 // amounts of red, green, and blue.  Flood() will set each Tile on the Face to the Color
 // specified.  Note that a Face is initialized with a single Color that specifies the
 // Color for each Tile on the Face.  The default size is 3x3.
-
-#ifndef CUBISH_FACE
-#define CUBISH_FACE
 
 #include <memory>
 #include <vector>
@@ -48,4 +47,4 @@ protected:
 	std::vector<Tile_p> tiles_;
 };
 
-#endif // CUBISH_FACE
+#endif
