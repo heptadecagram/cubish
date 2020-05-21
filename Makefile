@@ -27,4 +27,4 @@ debug: $(TARGET)
 
 
 clean:
-	-rm -f $(TARGET) $(OBJS)
+	$(RM) $(TARGET) $(OBJS)
