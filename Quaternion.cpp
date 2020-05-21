@@ -8,13 +8,13 @@
 double Quaternion::RADIUS=.8;
 
 // Constructors
-Quaternion::Quaternion() : Vector(0, 0, 0), _phi(1) {}
+Quaternion::Quaternion() : Vector(0, 0, 0), phi_(1) {}
 
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component) :
-	Vector(X_Component, Y_Component, Z_Component), _phi(1) {}
+	Vector(X_Component, Y_Component, Z_Component), phi_(1) {}
 
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi) :
-	Vector(X_Component, Y_Component, Z_Component), _phi(Phi) {}
+	Vector(X_Component, Y_Component, Z_Component), phi_(Phi) {}
 
 Quaternion &Quaternion::operator = (const Vector &vector) {
 	Vector::operator=(vector);
@@ -23,19 +23,19 @@ Quaternion &Quaternion::operator = (const Vector &vector) {
 
 // Facilitators
 void Quaternion::Normalize() {
-	double Scalar=_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2] + _phi*_phi;
+	double Scalar=self_[0]*self_[0] + self_[1]*self_[1] + self_[2]*self_[2] + phi_*phi_;
 	if(std::abs(Scalar) < 0.01) {
 		Scalar=1.0;
 	}
 	Scale(1/Scalar);
-	_phi/=Scalar;
+	phi_/=Scalar;
 }
 
 void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 		double New_X_Coord, double New_Y_Coord) {
 	if(std::abs(Old_X_Coord - New_X_Coord) < 0.01 && std::abs(Old_Y_Coord - New_Y_Coord) < 0.01) {
 		Zero();
-		_phi=1;
+		phi_=1;
 		return;
 	}
 
@@ -59,24 +59,24 @@ void Quaternion::Build(Vector Axis, double Phi) {
 	Axis.Normalize();
 	*this = Axis;
 	Scale(sin(Phi/2));
-	_phi = cos(Phi/2);
+	phi_ = cos(Phi/2);
 }
 
 std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() const {
 	auto Matrix = std::make_unique<double[]>(4 * 4);
-	Matrix[0*4 + 0]=1-2*(_self[1]*_self[1] + _self[2]*_self[2]);
-	Matrix[0*4 + 1]=2*(_self[0]*_self[1] - _self[2]*_phi);
-	Matrix[0*4 + 2]=2*(_self[2]*_self[0] + _self[1]*_phi);
+	Matrix[0*4 + 0]=1-2*(self_[1]*self_[1] + self_[2]*self_[2]);
+	Matrix[0*4 + 1]=2*(self_[0]*self_[1] - self_[2]*phi_);
+	Matrix[0*4 + 2]=2*(self_[2]*self_[0] + self_[1]*phi_);
 	Matrix[0*4 + 3]=0;
 
-	Matrix[1*4 + 0]=2*(_self[0]*_self[1] + _self[2]*_phi);
-	Matrix[1*4 + 1]=1-2*(_self[2]*_self[2] + _self[0]*_self[0]);
-	Matrix[1*4 + 2]=2*(_self[1]*_self[2] - _self[0]*_phi);
+	Matrix[1*4 + 0]=2*(self_[0]*self_[1] + self_[2]*phi_);
+	Matrix[1*4 + 1]=1-2*(self_[2]*self_[2] + self_[0]*self_[0]);
+	Matrix[1*4 + 2]=2*(self_[1]*self_[2] - self_[0]*phi_);
 	Matrix[1*4 + 3]=0;
 
-	Matrix[2*4 + 0]=2*(_self[2]*_self[0] - _self[1]*_phi);
-	Matrix[2*4 + 1]=2*(_self[1]*_self[2] + _self[0]*_phi);
-	Matrix[2*4 + 2]=1-2*(_self[1]*_self[1] + _self[0]*_self[0]);
+	Matrix[2*4 + 0]=2*(self_[2]*self_[0] - self_[1]*phi_);
+	Matrix[2*4 + 1]=2*(self_[1]*self_[2] + self_[0]*phi_);
+	Matrix[2*4 + 2]=1-2*(self_[1]*self_[1] + self_[0]*self_[0]);
 	Matrix[2*4 + 3]=0;
 
 	Matrix[3*4 + 0]=0;
@@ -89,15 +89,15 @@ std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() const {
 
 Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
 	return Quaternion{
-			_self[1]*quaternion[3] - _self[2]*quaternion[2],
-			_self[2]*quaternion[1] - _self[0]*quaternion[3],
-			_self[0]*quaternion[2] - _self[1]*quaternion[1]
+			self_[1]*quaternion[3] - self_[2]*quaternion[2],
+			self_[2]*quaternion[1] - self_[0]*quaternion[3],
+			self_[0]*quaternion[2] - self_[1]*quaternion[1]
 	};
 }
 
 double Quaternion::operator | (const Quaternion &quaternion) const {
-	return _self[0]*quaternion[1] + _self[1]*quaternion[2] +
-		_self[2]*quaternion[3];
+	return self_[0]*quaternion[1] + self_[1]*quaternion[2] +
+		self_[2]*quaternion[3];
 }
 
 
@@ -108,12 +108,12 @@ Quaternion Quaternion::operator + (const Quaternion &quaternion) const {
 	Temp1.Scale(quaternion[4]);
 
 	Temp2=quaternion;
-	Temp2.Scale(_phi);
+	Temp2.Scale(phi_);
 
 	Temp3=quaternion * *this;
 	Returner = (Vector)Temp1 + (Vector)Temp2 + (Vector)Temp3;
 
-	Returner[4]=_phi*quaternion[4] - (*this|quaternion);
+	Returner[4]=phi_*quaternion[4] - (*this|quaternion);
 
 	Returner.Normalize();
 
@@ -125,16 +125,16 @@ Quaternion Quaternion::operator + (const Quaternion &quaternion) const {
 double Quaternion::operator [] (int Index) const {
 	switch(Index) {
 	case 1:
-		return _self[0];
+		return self_[0];
 		break;
 	case 2:
-		return _self[1];
+		return self_[1];
 		break;
 	case 3:
-		return _self[2];
+		return self_[2];
 		break;
 	case 4:
-		return _phi;
+		return phi_;
 		break;
 	default:
 		throw std::out_of_range("Quaternion");
@@ -145,16 +145,16 @@ double Quaternion::operator [] (int Index) const {
 double &Quaternion::operator [] (int Index) {
 	switch(Index) {
 	case 1:
-		return _self[0];
+		return self_[0];
 		break;
 	case 2:
-		return _self[1];
+		return self_[1];
 		break;
 	case 3:
-		return _self[2];
+		return self_[2];
 		break;
 	case 4:
-		return _phi;
+		return phi_;
 		break;
 	default:
 		throw std::out_of_range("&Quaternion");

@@ -44,7 +44,7 @@ public:
 
 protected:
 	// Member Variables
-	double _phi;
+	double phi_;
 
 private:
 	double Sphere_Projection(double X_Coord, double Y_Coord);

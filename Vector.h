@@ -34,7 +34,7 @@ public:
 	void operator - ();
 
 protected:
-	std::array<double, 3> _self;
+	std::array<double, 3> self_;
 };
 
 #endif // CUBISH_VECTOR

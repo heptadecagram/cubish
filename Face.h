@@ -43,9 +43,9 @@ public:
 	void Spin_CCW();
 
 protected:
-	int _height;
-	int _width;
-	std::vector<Tile_p> _tiles;
+	int height_;
+	int width_;
+	std::vector<Tile_p> tiles_;
 };
 
 #endif // CUBISH_FACE

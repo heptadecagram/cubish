@@ -79,7 +79,7 @@ private:
 	int Set_Front(int Side);
 
 	// Member Variables
-	std::array<Face, 6> _sides;
+	std::array<Face, 6> sides_;
 };
 
 #endif // CUBISH_CUBE

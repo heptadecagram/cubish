@@ -4,62 +4,62 @@
 #include <cmath>
 
 // Constructors
-Vector::Vector() : _self({{ 0.0, 0.0, 0.0 }}) {
+Vector::Vector() : self_({{ 0.0, 0.0, 0.0 }}) {
 }
 
 Vector::Vector(double X_Component, double Y_Component, double Z_Component) :
-	_self({{ X_Component, Y_Component, Z_Component }}) {
+	self_({{ X_Component, Y_Component, Z_Component }}) {
 }
 
 // Facilitators
 // Adding two Vector objects
 Vector Vector::operator + (const Vector &vector) const {
 	return Vector(
-			_self[0] + vector[1],
-			_self[1] + vector[2],
-			_self[2] + vector[3]
+			self_[0] + vector[1],
+			self_[1] + vector[2],
+			self_[2] + vector[3]
 			);
 }
 
 // Subtracting two Vector objects
 Vector Vector::operator - (const Vector &vector) const {
 	return Vector(
-			_self[0] - vector[1],
-			_self[1] - vector[2],
-			_self[2] - vector[3]
+			self_[0] - vector[1],
+			self_[1] - vector[2],
+			self_[2] - vector[3]
 			);
 }
 
 // Cross product
 Vector Vector::operator * (const Vector &vector) const {
 	return Vector(
-			_self[1]*vector[3] - _self[2]*vector[2],
-			_self[2]*vector[1] - _self[0]*vector[3],
-			_self[0]*vector[2] - _self[1]*vector[1]
+			self_[1]*vector[3] - self_[2]*vector[2],
+			self_[2]*vector[1] - self_[0]*vector[3],
+			self_[0]*vector[2] - self_[1]*vector[1]
 			);
 }
 
 // Dot product
 double Vector::operator | (const Vector &vector) const {
-	return _self[0]*vector[1] + _self[1]*vector[2] + _self[2]*vector[3];
+	return self_[0]*vector[1] + self_[1]*vector[2] + self_[2]*vector[3];
 }
 
 
 // Inspectors
 double Vector::length() const {
-	return sqrt(_self[0]*_self[0] + _self[1]*_self[1] + _self[2]*_self[2]);
+	return sqrt(self_[0]*self_[0] + self_[1]*self_[1] + self_[2]*self_[2]);
 }
 
 // Without this function, Vector objects are almost useless.  This allows the user
 // to access the object's indicies.
 double Vector::operator [] (int Index) const {
-	return _self[Index - 1];
+	return self_[Index - 1];
 }
 
 
 // Mutators
 void Vector::Zero() {
-	_self.fill(0);
+	self_.fill(0);
 }
 
 // Have some way to normalize a vector.  It's nice to have.
@@ -68,11 +68,11 @@ void Vector::Normalize() {
 }
 
 void Vector::Scale(double Scalar) {
-	_self[0] *= Scalar;
-	_self[1] *= Scalar;
-	_self[2] *= Scalar;
+	self_[0] *= Scalar;
+	self_[1] *= Scalar;
+	self_[2] *= Scalar;
 }
 
 double &Vector::operator [] (int Index) {
-	return _self[Index - 1];
+	return self_[Index - 1];
 }

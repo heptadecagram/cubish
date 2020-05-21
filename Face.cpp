@@ -8,43 +8,43 @@
 
 // Constructors
 Face::Face(int Width, int Height, Color_p color) {
-	_height=Height;
-	_width=Width;
+	height_=Height;
+	width_=Width;
 
-	_tiles.resize(Height*Width, std::make_shared<Tile>(color));
+	tiles_.resize(Height*Width, std::make_shared<Tile>(color));
 }
 
 Face::Face(const Face &face) {
-	_height=face.height();
-	_width=face.length();
+	height_=face.height();
+	width_=face.length();
 
-	std::copy(face._tiles.begin(), face._tiles.end(), std::back_inserter(_tiles));
+	std::copy(face.tiles_.begin(), face.tiles_.end(), std::back_inserter(tiles_));
 }
 
 
 // Inspectors
 int Face::height() const {
-	return _height;
+	return height_;
 }
 
 int Face::length() const {
-	return _width;
+	return width_;
 }
 
 Tile_p& Face::operator()(int col, int row) {
-	return _tiles[_width*--row + --col];
+	return tiles_[width_*--row + --col];
 }
 
 bool Face::solved() const {
-	return std::all_of(_tiles.begin(), _tiles.end(),
-			[this](const Tile_p& t) { return t == _tiles[0]; });
+	return std::all_of(tiles_.begin(), tiles_.end(),
+			[this](const Tile_p& t) { return t == tiles_[0]; });
 }
 
 
 // Mutators
 // Flood: Make an entire Face a single Color
 void Face::Flood(Color_p color) {
-	std::fill(_tiles.begin(), _tiles.end(), std::make_shared<Tile>(color));
+	std::fill(tiles_.begin(), tiles_.end(), std::make_shared<Tile>(color));
 }
 
 void Face::Rotate_CCW() {
@@ -55,19 +55,19 @@ void Face::Rotate_CCW() {
 }
 
 void Face::Rotate_CW() {
-	auto temp = _tiles;
+	auto temp = tiles_;
 
-	if(_height == _width) {
-		for(auto x = 0; x < _width; ++x) {
-			for(auto y = 0; y < _height; ++y) {
-				(*this)(x+1, y+1) = temp[y  +  _width * (_height-1 - x)];
+	if(height_ == width_) {
+		for(auto x = 0; x < width_; ++x) {
+			for(auto y = 0; y < height_; ++y) {
+				(*this)(x+1, y+1) = temp[y  +  width_ * (height_-1 - x)];
 			}
 		}
 	}
 	else {
-		for(auto x = 0; x < _width; ++x) {
-			for(auto y = 0; y < _height; ++y) {
-				(*this)(x+1, y+1) = temp[(_width - 1 - x)  +  _width*(_height - 1 - y)];
+		for(auto x = 0; x < width_; ++x) {
+			for(auto y = 0; y < height_; ++y) {
+				(*this)(x+1, y+1) = temp[(width_ - 1 - x)  +  width_*(height_ - 1 - y)];
 			}
 		}
 	}
@@ -76,27 +76,27 @@ void Face::Rotate_CW() {
 
 void Face::Spin_CW() {
 	// For squares, just use the Rotate_CW() method
-	if(_height==_width) {
+	if(height_==width_) {
 		Rotate_CW();
 		return;
 	}
 
 	// Create a temporary array of Tile to store the old Face
-	auto temp = _tiles;
+	auto temp = tiles_;
 
-	// _height!=_width, so change the two
-	auto Temp_Size=_height;
-	_height=_width;
-	_width=Temp_Size;
+	// height_!=width_, so change the two
+	auto Temp_Size=height_;
+	height_=width_;
+	width_=Temp_Size;
 
-	for(auto x=0; x<_width; ++x)
-		for(auto y=0; y<_height; ++y)
+	for(auto x=0; x<width_; ++x)
+		for(auto y=0; y<height_; ++y)
 			// Use a bijection to map the coordinates
-			_tiles[x + y*_width] = temp[y + _height*(_width-1-x)];
+			tiles_[x + y*width_] = temp[y + height_*(width_-1-x)];
 }
 
 void Face::Spin_CCW() {
-	if(_height==_width)
+	if(height_==width_)
 		Rotate_CCW();
 	else {
 		Rotate_CW();

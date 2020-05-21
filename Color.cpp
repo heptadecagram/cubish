@@ -7,47 +7,47 @@
 
 // Constructors
 Color::Color() {
-	_red=0;
-	_green=0;
-	_blue=0;
+	red_=0;
+	green_=0;
+	blue_=0;
 }
 
 Color::Color(double Red, double Green, double Blue) {
-	_red=Red;
-	_green=Green;
-	_blue=Blue;
+	red_=Red;
+	green_=Green;
+	blue_=Blue;
 }
 
 
 // Facilitators
 void Color::Change_To() {
-	glColor3d(_red, _green, _blue);
+	glColor3d(red_, green_, blue_);
 }
 
 
 // Inspectors
 double Color::Get_Red() const {
-	return _red;
+	return red_;
 }
 
 double Color::Get_Green() const {
-	return _green;
+	return green_;
 }
 
 double Color::Get_Blue() const {
-	return _blue;
+	return blue_;
 }
 
 bool Color::operator==(const Color& other) const {
-	return fabs(_red - other._red) < 0.01 &&
-	fabs(_green - other._green) < 0.01 &&
-	fabs(_blue - other._blue) < 0.01;
+	return fabs(red_ - other.red_) < 0.01 &&
+	fabs(green_ - other.green_) < 0.01 &&
+	fabs(blue_ - other.blue_) < 0.01;
 }
 
 
 // Mutators
 void Color::Set(double Red, double Green, double Blue) {
-	_red=Red;
-	_green=Green;
-	_blue=Blue;
+	red_=Red;
+	green_=Green;
+	blue_=Blue;
 }

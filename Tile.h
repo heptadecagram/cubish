@@ -29,7 +29,7 @@ public:
 	void Set_Color(Color_p color);
 
 protected:
-	Color_p _color;
+	Color_p color_;
 };
 
 #endif // CUBISH_TILE

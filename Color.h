@@ -29,9 +29,9 @@ public:
 	void Set(double Red, double Green, double Blue);
 
 protected:
-	double _red;
-	double _green;
-	double _blue;
+	double red_;
+	double green_;
+	double blue_;
 };
 
 #endif // CUBISH_COLOR
