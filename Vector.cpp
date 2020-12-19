@@ -3,17 +3,9 @@
 
 #include <cmath>
 
-// Constructors
-Vector::Vector() : self_({{ 0.0, 0.0, 0.0 }}) {
-}
-
-Vector::Vector(double X_Component, double Y_Component, double Z_Component) :
-	self_({{ X_Component, Y_Component, Z_Component }}) {
-}
-
 // Facilitators
 // Adding two Vector objects
-Vector Vector::operator + (const Vector &vector) const {
+const Vector Vector::operator + (const Vector &vector) const {
 	return Vector(
 			self_[0] + vector[1],
 			self_[1] + vector[2],
@@ -22,7 +14,7 @@ Vector Vector::operator + (const Vector &vector) const {
 }
 
 // Subtracting two Vector objects
-Vector Vector::operator - (const Vector &vector) const {
+const Vector Vector::operator - (const Vector &vector) const {
 	return Vector(
 			self_[0] - vector[1],
 			self_[1] - vector[2],
@@ -31,7 +23,7 @@ Vector Vector::operator - (const Vector &vector) const {
 }
 
 // Cross product
-Vector Vector::operator * (const Vector &vector) const {
+const Vector Vector::operator * (const Vector &vector) const {
 	return Vector(
 			self_[1]*vector[3] - self_[2]*vector[2],
 			self_[2]*vector[1] - self_[0]*vector[3],

@@ -10,20 +10,18 @@
 class Vector {
 public:
 	// Constructors
-	Vector();
-	Vector(double X_Component, double Y_Component, double Z_Component);
+	Vector() : self_({{ 0.0, 0.0, 0.0 }}) {}
+	Vector(double x, double y, double z) : self_({{x, y, z}}) {}
 
 	// Facilitators
-	Vector operator + (const Vector &vector) const;
-	Vector operator - (const Vector &vector) const;
-	Vector operator * (const Vector &vector) const;
+	const Vector operator + (const Vector &vector) const;
+	const Vector operator - (const Vector &vector) const;
+	const Vector operator * (const Vector &vector) const;
 	double operator | (const Vector &vector) const;
-
 
 	// Inspectors
 	double length() const;
 	double operator [] (int Index) const;
-
 
 	// Mutators
 	void Zero();
