@@ -16,7 +16,7 @@ Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Componen
 Quaternion::Quaternion(double X_Component, double Y_Component, double Z_Component, double Phi) :
 	Vector(X_Component, Y_Component, Z_Component), phi_(Phi) {}
 
-Quaternion &Quaternion::operator = (const Vector &vector) {
+Quaternion& Quaternion::operator=(const Vector& vector) {
 	Vector::operator=(vector);
 	return *this;
 }
@@ -87,7 +87,7 @@ std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() const {
 	return Matrix;
 }
 
-Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
+const Quaternion Quaternion::operator * (const Quaternion& quaternion) const {
 	return Quaternion{
 			self_[1]*quaternion[3] - self_[2]*quaternion[2],
 			self_[2]*quaternion[1] - self_[0]*quaternion[3],
@@ -95,25 +95,23 @@ Quaternion Quaternion::operator * (const Quaternion &quaternion) const {
 	};
 }
 
-double Quaternion::operator | (const Quaternion &quaternion) const {
-	return self_[0]*quaternion[1] + self_[1]*quaternion[2] +
-		self_[2]*quaternion[3];
+double Quaternion::operator | (const Quaternion& quaternion) const {
+	return self_[0]*quaternion[1] + self_[1]*quaternion[2] + self_[2]*quaternion[3];
 }
 
 
-Quaternion Quaternion::operator + (const Quaternion &quaternion) const {
-	Quaternion Temp1, Temp2, Temp3, Returner;
-
-	Temp1=*this;
+const Quaternion Quaternion::operator+(const Quaternion& quaternion) const {
+	auto Temp1 = *this;
 	Temp1.Scale(quaternion[4]);
 
-	Temp2=quaternion;
+	auto Temp2 = quaternion;
 	Temp2.Scale(phi_);
 
-	Temp3=quaternion * *this;
-	Returner = (Vector)Temp1 + (Vector)Temp2 + (Vector)Temp3;
+	auto Temp3 = quaternion * *this;
+	Quaternion Returner;
+	Returner = static_cast<Vector>(Temp1) + static_cast<Vector>(Temp2) + static_cast<Vector>(Temp3);
 
-	Returner[4]=phi_*quaternion[4] - (*this|quaternion);
+	Returner[4] = phi_*quaternion[4] - (*this|quaternion);
 
 	Returner.Normalize();
 
@@ -142,7 +140,7 @@ double Quaternion::operator [] (int Index) const {
 }
 
 // Mutators
-double &Quaternion::operator [] (int Index) {
+double& Quaternion::operator [] (int Index) {
 	switch(Index) {
 	case 1:
 		return self_[0];
@@ -159,10 +157,6 @@ double &Quaternion::operator [] (int Index) {
 	default:
 		throw std::out_of_range("&Quaternion");
 	}
-}
-
-void Quaternion::Set_Radius(double Radius) {
-	RADIUS=Radius;
 }
 
 // private functions
