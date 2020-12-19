@@ -16,7 +16,7 @@ bool Is_Option_Window_Open;
 int Option_Window_ID;
 
 // List of colors
-std::array<Color_p, 6> Option_Color_List;
+std::array<Color, 6> Option_Color_List;
 
 // These keep track of the mouse location
 bool Option_Exit, Option_Random, Option_Solved, Option_Save, Option_Load, Option_Color;
@@ -29,7 +29,7 @@ int Option_Window_Width, Option_Window_Height;
 int Option_Cube_List, Option_Exit_List, Option_Solved_List, Option_Random_List;
 int Option_Line_List, Option_Load_List, Option_Save_List;
 
-void New_Window(std::array<Color_p, 6> Color_Array) {
+void New_Window(std::array<Color, 6> Color_Array) {
 	// Get numerically set up for the window
 	Option_Color_List=Color_Array;
 	Option_Window_ID=glutCreateWindow("Options");
@@ -309,7 +309,7 @@ void Option_Reshape(int X_Size, int Y_Size) {
 	Make_All_Option_Lists();
 }
 
-int Make_Option_Cube_List(std::array<Color_p, 6> Color_Array) {
+int Make_Option_Cube_List(std::array<Color, 6> Color_Array) {
 	auto List_ID=glGenLists(1);
 
 	glNewList(List_ID, GL_COMPILE);
@@ -347,7 +347,9 @@ int Make_Option_Cube_List(std::array<Color_p, 6> Color_Array) {
 				break;
 		}
 		glTranslated(location[0], location[1], 0);
-		Color_Array[n]->Change_To();
+
+		auto color = Color_Array[n];
+		glColor3d(color.red(), color.green(), color.blue());
 		glBegin(GL_QUADS); {
 			glVertex3d(0, 0, 0);
 			glVertex3d(0, Option_Window_Height/5.0, 0);
@@ -419,19 +421,22 @@ int Make_Option_Solved_List() {
 
 		// Draw the solved cube
 		glBegin(GL_QUADS); {
-			Option_Color_List[0]->Change_To();
+			auto color = Option_Color_List[0];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(1, 1);
 			glVertex2s(7, 1);
 			glVertex2s(7, 7);
 			glVertex2s(1, 7);
 
-			Option_Color_List[2]->Change_To();
+			color = Option_Color_List[2];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(1, 7);
 			glVertex2s(3, 9);
 			glVertex2s(9, 9);
 			glVertex2s(7, 7);
 
-			Option_Color_List[3]->Change_To();
+			color = Option_Color_List[3];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(7, 1);
 			glVertex2s(7, 7);
 			glVertex2s(9, 9);
@@ -476,73 +481,85 @@ int Make_Option_Random_List() {
 		glScaled(X_Part, Y_Part, 0);
 
 		glBegin(GL_QUADS); {
-			Option_Color_List[0]->Change_To();
+			auto color = Option_Color_List[0];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(1, 1);
 			glVertex2s(4, 1);
 			glVertex2s(4, 4);
 			glVertex2s(1, 4);
 
-			Option_Color_List[1]->Change_To();
+			color = Option_Color_List[1];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(7, 1);
 			glVertex2s(4, 1);
 			glVertex2s(4, 4);
 			glVertex2s(7, 4);
 
-			Option_Color_List[2]->Change_To();
+			color = Option_Color_List[2];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(1, 7);
 			glVertex2s(4, 7);
 			glVertex2s(4, 4);
 			glVertex2s(1, 4);
 
-			Option_Color_List[3]->Change_To();
+			color = Option_Color_List[3];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(7, 7);
 			glVertex2s(4, 7);
 			glVertex2s(4, 4);
 			glVertex2s(7, 4);
 
-			Option_Color_List[4]->Change_To();
+			color = Option_Color_List[4];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(1, 7);
 			glVertex2s(2, 8);
 			glVertex2s(5, 8);
 			glVertex2s(4, 7);
 
-			Option_Color_List[5]->Change_To();
+			color = Option_Color_List[5];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(2, 8);
 			glVertex2s(3, 9);
 			glVertex2s(6, 9);
 			glVertex2s(5, 8);
 
-			Option_Color_List[0]->Change_To();
+			color = Option_Color_List[0];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(4, 7);
 			glVertex2s(5, 8);
 			glVertex2s(8, 8);
 			glVertex2s(7, 7);
 
-			Option_Color_List[1]->Change_To();
+			color = Option_Color_List[1];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(5, 8);
 			glVertex2s(6, 9);
 			glVertex2s(9, 9);
 			glVertex2s(8, 8);
 
-			Option_Color_List[2]->Change_To();
+			color = Option_Color_List[2];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(7, 7);
 			glVertex2s(8, 8);
 			glVertex2s(8, 5);
 			glVertex2s(7, 4);
 
-			Option_Color_List[3]->Change_To();
+			color = Option_Color_List[3];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(8, 8);
 			glVertex2s(9, 9);
 			glVertex2s(9, 6);
 			glVertex2s(8, 5);
 
-			Option_Color_List[4]->Change_To();
+			color = Option_Color_List[4];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(7, 4);
 			glVertex2s(8, 5);
 			glVertex2s(8, 2);
 			glVertex2s(7, 1);
 
-			Option_Color_List[5]->Change_To();
+			color = Option_Color_List[5];
+			glColor3d(color.red(), color.green(), color.blue());
 			glVertex2s(8, 5);
 			glVertex2s(9, 6);
 			glVertex2s(9, 3);

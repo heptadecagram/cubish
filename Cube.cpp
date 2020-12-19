@@ -8,7 +8,7 @@
 
 
 // Constructors
-Cube::Cube(int Width, int Height, int Depth, std::array<Color_p, 6> side_colors) {
+Cube::Cube(int Width, int Height, int Depth, std::array<Color, 6> side_colors) {
 
 	sides_[0] = Face(Width, Height, side_colors[0]);
 	sides_[1] = Face(Depth, Height, side_colors[1]);
@@ -31,7 +31,8 @@ int Cube::Make_GL_List() {
 			for(auto n2 = 0; n2 < sides_[n1].height(); ++n2) {
 				for(auto n3 = 0; n3 < sides_[n1].length(); ++n3) {
 
-					sides_[n1](n3+1, sides_[n1].height() - n2)->Get_Color()->Change_To();
+					auto color = sides_[n1](n3+1, sides_[n1].height() - n2)->Get_Color();
+					glColor3d(color.red(), color.green(), color.blue());
 
 					// Raise the height of all colored squares to avoid clipping problems
 					glBegin(GL_QUADS); {
@@ -115,7 +116,8 @@ int Cube::Make_Section_GL_List(int Side, int Depth) {
 						} glEnd();
 
 						// Pretty colored squares are being drawn here
-						sides_[n1](n3+1, sides_[n1].height() - n2)->Get_Color()->Change_To();
+						auto color = sides_[n1](n3+1, sides_[n1].height() - n2)->Get_Color();
+						glColor3d(color.red(), color.green(), color.blue());
 						glBegin(GL_QUADS); {
 							glVertex3d(n3 + 0.1, n2 + 0.1, .03);
 							glVertex3d(n3 + 0.1, n2 + 0.9, .03);
@@ -275,7 +277,8 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 				} glEnd();
 
 				// Colored squares, raised for visibility
-				sides_[n](X_Coord, sides_[n].height() - Y_Coord+1)->Get_Color()->Change_To();
+				auto color = sides_[n](X_Coord, sides_[n].height() - Y_Coord+1)->Get_Color();
+				glColor3d(color.red(), color.green(), color.blue());
 				glBegin(GL_QUADS); {
 					glVertex3d(X_Coord-0.9, Y_Coord-0.9, 0.03);
 					glVertex3d(X_Coord-0.9, Y_Coord-0.1, 0.03);
@@ -308,7 +311,8 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			for(auto n = 0; n < sides_[5].height(); ++n) {
 				for(auto nn = 0; nn < sides_[5].length(); ++nn) {
 					// Yay pretty colored squares (z-offset for viewability
-					sides_[5](nn+1, n+1)->Get_Color()->Change_To();
+					auto color = sides_[5](nn+1, n+1)->Get_Color();
+					glColor3d(color.red(), color.green(), color.blue());
 					glBegin(GL_QUADS); {
 						glVertex3d(nn+0.1, n+0.1, -0.03);
 						glVertex3d(nn+0.1, n+0.9, -0.03);
@@ -334,7 +338,8 @@ int Cube::Make_Slice_GL_List(int Side, int Depth) {
 			for(auto n = 0; n < sides_[0].height(); ++n) {
 				for(auto nn = 0; nn < sides_[0].length(); ++nn) {
 					// Change to the right color, draw the square at an offset
-					sides_[0](nn+1, sides_[0].height() - n)->Get_Color()->Change_To();
+					auto color = sides_[0](nn+1, sides_[0].height() - n)->Get_Color();
+					glColor3d(color.red(), color.green(), color.blue());
 					glBegin(GL_QUADS); {
 						glVertex3d(nn+0.1, n+0.1, 0.03);
 						glVertex3d(nn+0.1, n+0.9, 0.03);
@@ -454,13 +459,13 @@ void Cube::Undo_View_Side(int Side) {
 
 // This function saves a Cube to an open file pointer.  Pass the appropriate
 // Color information in case of sides with the same color.
-void Cube::Save(std::array<Color_p, 6> Color_List, std::ofstream& File) {
+void Cube::Save(std::array<Color, 6> Color_List, std::ofstream& File) {
 	// Iterate through the Color_List, turning the RGB values into bytes,
 	// and then put them in the file
 	for(int n=0; n<6; n++) {
-		char Red = static_cast<char>(255.0*Color_List[n]->Get_Red());
-		char Green = static_cast<char>(255.0*Color_List[n]->Get_Green());
-		char Blue = static_cast<char>(255.0*Color_List[n]->Get_Blue());
+		char Red = static_cast<char>(255.0*Color_List[n].red());
+		char Green = static_cast<char>(255.0*Color_List[n].green());
+		char Blue = static_cast<char>(255.0*Color_List[n].blue());
 		File << Red << Green << Blue;
 	}
 
@@ -484,12 +489,12 @@ void Cube::Save(std::array<Color_p, 6> Color_List, std::ofstream& File) {
 
 // This function loads a Cube from an open file pointer.  It also assigns the
 // appropriate Color_List information.  Warning: No exception handling ability yet.
-void Cube::Load(std::array<Color_p, 6>  Color_List, std::ifstream& File) {
+void Cube::Load(std::array<Color, 6>  Color_List, std::ifstream& File) {
 	// The first 18 bytes are color information
 	for(int n=0; n<6; n++) {
 		unsigned char Red=0, Green=0, Blue=0;
 		File >> Red >> Green >> Blue;
-		Color_List[n]->Set(Red/255.0, Green/255.0, Blue/255.0);
+		Color_List[n].Set(Red/255.0, Green/255.0, Blue/255.0);
 	}
 
 	// The next three bytes are dimensions

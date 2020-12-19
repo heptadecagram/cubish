@@ -10,25 +10,23 @@
 
 #include "Color.h"
 
-using Color_p = std::shared_ptr<Color>;
-
 class Tile {
 public:
 	// Constructors
 	Tile();
-	Tile(Color_p color);
+	Tile(Color color);
 
 	// Facilitators
 
 	// Inspectors
-	Color_p Get_Color() const;
+	const Color& Get_Color() const;
 	bool operator==(const Tile& other) const;
 
 	// Mutators
-	void Set_Color(Color_p color);
+	void Set_Color(Color color);
 
 protected:
-	Color_p color_;
+	Color color_;
 };
 
 #endif

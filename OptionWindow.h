@@ -11,7 +11,7 @@
 extern bool Is_Option_Window_Open;
 extern int Option_Window_ID;
 
-void New_Window(std::array<Color_p, 6> Color_Array);
+void New_Window(std::array<Color, 6> Color_Array);
 
 void Option_Display();
 
@@ -21,7 +21,7 @@ void Option_Passive_Motion(int X_Coord, int Y_Coord);
 
 void Option_Reshape(int X_Size, int Y_Size);
 
-int Make_Option_Cube_List(std::array<Color_p, 6> Color_Array);
+int Make_Option_Cube_List(std::array<Color, 6> Color_Array);
 
 int Make_Option_Exit_List();
 

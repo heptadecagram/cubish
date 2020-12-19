@@ -6,7 +6,7 @@
 // The elements of a Face are kept in a dynamic array which is kept in row-major order.
 
 // Constructors
-Face::Face(int Width, int Height, Color_p color) {
+Face::Face(int Width, int Height, Color color) {
 	height_=Height;
 	width_=Width;
 
@@ -50,7 +50,7 @@ bool Face::solved() const {
 
 // Mutators
 // Flood: Make an entire Face a single Color
-void Face::Flood(Color_p color) {
+void Face::Flood(Color color) {
 	std::fill(tiles_.begin(), tiles_.end(), std::make_shared<Tile>(color));
 }
 

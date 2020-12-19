@@ -12,16 +12,16 @@
 class Color {
 public:
 	// Constructors
-	Color();
-	Color(double Red, double Green, double Blue);
+	Color() : Color{0, 0, 0} {}
+	Color(double red, double green, double blue) : red_{red}, green_{green}, blue_{blue} {}
 
 	// Facilitators
 	void Change_To();
 
 	// Inspectors
-	double Get_Red() const;
-	double Get_Green() const;
-	double Get_Blue() const;
+	double red() const;
+	double green() const;
+	double blue() const;
 	bool operator==(const Color& other) const;
 
 	// Mutators

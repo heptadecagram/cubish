@@ -13,14 +13,14 @@
 int main(int argc, char* argv[]) {
 
 	// Create the color list and default colors
-	std::array<Color_p, 6> colors{
+	std::array<Color, 6> colors{
 		{
-			std::make_shared<Color>(1, 0, 1),
-				std::make_shared<Color>(1, 1, 1),
-				std::make_shared<Color>(0, 0, 1),
-				std::make_shared<Color>(1, 0, 0),
-				std::make_shared<Color>(0, 1, 0),
-				std::make_shared<Color>(1, 1, 0)
+			Color{1, 0, 1},
+			Color{1, 1, 1},
+			Color{0, 0, 1},
+			Color{1, 0, 0},
+			Color{0, 1, 0},
+			Color{1, 1, 0}
 		}
 	};
 

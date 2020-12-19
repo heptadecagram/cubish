@@ -23,8 +23,8 @@ using Tile_p = std::shared_ptr<Tile>;
 class Face {
 public:
 	// Constructors
-	Face() : Face(3, 3, NULL) {};
-	Face(int Width, int Height, Color_p color);
+	Face() : Face(3, 3, Color{0, 0, 0}) {};
+	Face(int Width, int Height, Color color);
 	Face(const Face& face);
 
 	Face& operator=(const Face& face);
@@ -37,7 +37,7 @@ public:
 	Tile_p& operator()(int col, int row);
 
 	// Mutators
-	void Flood(Color_p color);
+	void Flood(Color color);
 	void Rotate_CW();
 	void Rotate_CCW();
 	void Spin_CW();

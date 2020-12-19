@@ -11,12 +11,12 @@ bool Is_Color_Window_Open;
 int Color_Window_ID;
 
 // This is the address of the old Color
-Color_p Window_Color;
+Color Window_Color;
 
 int Color_Window_Size;
 bool Color_Off;
 
-void Color_Window(Color_p Old_Color) {
+void Color_Window(Color Old_Color) {
 	// Store the address of the old Color and make a window
 	Window_Color=Old_Color;
 	Color_Window_ID=glutCreateWindow("Color Picker");
@@ -81,9 +81,9 @@ void Color_Display() {
 				// If this is the old color, draw a white box
 				// around it to let the user know which one it
 				// is
-				if(static_cast<int>(Window_Color->Get_Red()*3)==n1 &&
-						static_cast<int>(Window_Color->Get_Green()*3)==n2 &&
-						static_cast<int>(Window_Color->Get_Blue()*3)==n3) {
+				if(static_cast<int>(Window_Color.red()*3)==n1 &&
+						static_cast<int>(Window_Color.green()*3)==n2 &&
+						static_cast<int>(Window_Color.blue()*3)==n3) {
 					glColor3d(.8, .8, .8);
 					glLineWidth(2);
 					glBegin(GL_LINE_STRIP); {
@@ -200,7 +200,7 @@ void Color_Mouse(int, int State, int X_Coord, int Y_Coord) {
 			return;
 
 		// Change the definition of the old color
-		Window_Color->Set(Red, Green, Blue);
+		Window_Color.Set(Red, Green, Blue);
 
 		// Prepare to close the window, redraw the option window
 		Is_Color_Window_Open=false;

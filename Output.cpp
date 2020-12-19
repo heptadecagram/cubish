@@ -14,7 +14,7 @@
 
 // Since OpenGL is written in C, functions and variables must be global in scope
 Cube Current_Cube;
-std::array<Color_p, 6> Color_List;
+std::array<Color, 6> Color_List;
 int Cube_List, Arrow_List;
 auto Window_Size=300.0;
 
@@ -33,7 +33,7 @@ int Section_List, Slice_List, Option_List;
 double Slice_Angle, Max_Angle;
 double Time_Delay;
 
-void Initialize_Window(int argc, char **argv, Cube& cube, std::array<Color_p, 6> colors) {
+void Initialize_Window(int argc, char **argv, Cube& cube, std::array<Color, 6> colors) {
 	Current_Cube=cube;
 	Current_Cube.Randomize();
 	Color_List = colors;
@@ -468,7 +468,8 @@ int Get_Cube_Section(Cube& cube, int, int) {
 
 		for(auto n2 = 0; n2 < cube[n1].height(); ++n2) {
 			for(auto n3 = 0; n3 < cube[n1].length(); ++n3) {
-				cube[n1](n3+1, cube[n1].height() - n2)->Get_Color()->Change_To();
+				auto color = cube[n1](n3+1, cube[n1].height() - n2)->Get_Color();
+				glColor3d(color.red(), color.green(), color.blue());
 				glBegin(GL_QUADS); {
 					glVertex2s(n3  , n2);
 					glVertex2s(n3  , n2+1);
