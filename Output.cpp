@@ -1,4 +1,3 @@
-
 #include "Output.h"
 
 #include <algorithm>
@@ -106,12 +105,14 @@ void Display() {
 		Rotate_View();
 
 	// This if() block attempts to adjust for speed variance on different computers
-	static int First_View=1;
-	if(First_View<50) {
+	static auto First_View{1};
+	static auto Average_Render_Time{0.0};
+
+	if (First_View < 50) {
 		time_t Begin, End;
 		struct timeb Begin_Milli, End_Milli;
 
-		Begin=time(NULL);
+		Begin = time(NULL);
 		ftime(&Begin_Milli);
 
 		// Draw things, but don't display them
@@ -128,14 +129,13 @@ void Display() {
 		ftime(&End_Milli);
 		End=time(NULL);
 
-		int Current_Render_Time;
-		if(End==Begin)
-			Current_Render_Time=End_Milli.millitm-Begin_Milli.millitm;
-		else // End!=Begin
+		auto Current_Render_Time{End_Milli.millitm - Begin_Milli.millitm};
+		if (End != Begin) {
 			Current_Render_Time=Begin_Milli.millitm-End_Milli.millitm;
-		static auto Average_Render_Time=0.0;
+		}
 
-		Average_Render_Time=(First_View*Average_Render_Time + Current_Render_Time)/First_View;
+		Average_Render_Time = (First_View*Average_Render_Time + Current_Render_Time)/First_View;
+
 		++First_View;
 
 		glutPostRedisplay();
