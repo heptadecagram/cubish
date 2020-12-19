@@ -1,7 +1,7 @@
 
-CXXFLAGS+=-std=c++14
-CXXFLAGS+=-Wall -Wextra -Wpedantic -Wstack-usage=256 -Wwrite-strings -Wfloat-equal -Waggregate-return -Winline
-CXXFLAGS+=-Werror
+CXXFLAGS += -std=c++20
+CXXFLAGS += -Wall -Wextra -Wpedantic -Wstack-usage=1024 -Wwrite-strings -Wfloat-equal -Winline
+#CXXFLAGS += -Werror
 
 TARGET=Cubish
 
@@ -22,7 +22,7 @@ endif
 
 $(TARGET): $(OBJS)
 
-debug: CXXFLAGS+=-g
+debug: CXXFLAGS += -g
 debug: $(TARGET)
 
 
