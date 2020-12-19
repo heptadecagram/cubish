@@ -25,7 +25,9 @@ public:
 	// Constructors
 	Face() : Face(3, 3, NULL) {};
 	Face(int Width, int Height, Color_p color);
-	Face(const Face &face);
+	Face(const Face& face);
+
+	Face& operator=(const Face& face);
 
 	// Inspectors
 	int height() const;

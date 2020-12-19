@@ -1,4 +1,3 @@
-
 #include "Face.h"
 
 #include <algorithm>
@@ -21,6 +20,14 @@ Face::Face(const Face &face) {
 	std::copy(face.tiles_.begin(), face.tiles_.end(), std::back_inserter(tiles_));
 }
 
+Face& Face::operator=(const Face& face) {
+	height_ = face.height_;
+	width_ = face.width_;
+
+	tiles_ = face.tiles_;
+
+	return *this;
+}
 
 // Inspectors
 int Face::height() const {
