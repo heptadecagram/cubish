@@ -1,6 +1,7 @@
 
 #include "Quaternion.h"
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
@@ -23,34 +24,36 @@ Quaternion& Quaternion::operator=(const Vector& vector) {
 
 // Facilitators
 void Quaternion::Normalize() {
-	double Scalar=self_[0]*self_[0] + self_[1]*self_[1] + self_[2]*self_[2] + phi_*phi_;
+	auto Scalar{self_[0]*self_[0] + self_[1]*self_[1] + self_[2]*self_[2] + phi_*phi_};
+
 	if(std::abs(Scalar) < 0.01) {
-		Scalar=1.0;
+		Scalar = 1.0;
 	}
+
 	Scale(1/Scalar);
-	phi_/=Scalar;
+	phi_ /= Scalar;
 }
 
 void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 		double New_X_Coord, double New_Y_Coord) {
 	if(std::abs(Old_X_Coord - New_X_Coord) < 0.01 && std::abs(Old_Y_Coord - New_Y_Coord) < 0.01) {
 		Zero();
-		phi_=1;
+		phi_ = 1;
 		return;
 	}
 
-	Vector Old(Old_X_Coord, Old_Y_Coord, Sphere_Projection(Old_X_Coord, Old_Y_Coord) );
-	Vector New(New_X_Coord, New_Y_Coord, Sphere_Projection(New_X_Coord, New_Y_Coord) );
+	Vector Old{Old_X_Coord, Old_Y_Coord, Sphere_Projection(Old_X_Coord, Old_Y_Coord)};
+	Vector New{New_X_Coord, New_Y_Coord, Sphere_Projection(New_X_Coord, New_Y_Coord)};
 
-	Vector Axis=New*Old;
+	Vector Axis{New * Old};
 
-	Vector Distance=Old-New;
-	double Theta=Distance.length()/(2*RADIUS);
+	Vector Distance{Old - New};
+	auto Theta{Distance.length() / (2*RADIUS)};
 
-	Theta = fmin(Theta, 1);
-	Theta = fmax(Theta, -1);
+	Theta = std::min(Theta, 1.0);
+	Theta = std::max(Theta, -1.0);
 
-	double Phi = 2*asin(Theta);
+	double Phi{2 * asin(Theta)};
 
 	Build(Axis, Phi);
 }
@@ -58,12 +61,13 @@ void Quaternion::Trackball(double Old_X_Coord, double Old_Y_Coord,
 void Quaternion::Build(Vector Axis, double Phi) {
 	Axis.Normalize();
 	*this = Axis;
-	Scale(sin(Phi/2));
-	phi_ = cos(Phi/2);
+	Scale(std::sin(Phi/2));
+	phi_ = std::cos(Phi/2);
 }
 
 std::unique_ptr<double[]> Quaternion::Build_Rotation_Matrix() const {
-	auto Matrix = std::make_unique<double[]>(4 * 4);
+	auto Matrix{std::make_unique<double[]>(4 * 4)};
+
 	Matrix[0*4 + 0]=1-2*(self_[1]*self_[1] + self_[2]*self_[2]);
 	Matrix[0*4 + 1]=2*(self_[0]*self_[1] - self_[2]*phi_);
 	Matrix[0*4 + 2]=2*(self_[2]*self_[0] + self_[1]*phi_);
@@ -120,7 +124,7 @@ const Quaternion Quaternion::operator+(const Quaternion& quaternion) const {
 
 
 // Inspectors
-double Quaternion::operator [] (int Index) const {
+double Quaternion::operator[](int Index) const {
 	switch(Index) {
 	case 1:
 		return self_[0];
